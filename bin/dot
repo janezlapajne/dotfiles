@@ -40,18 +40,18 @@ done
 
 export ZSH=$HOME/.dotfiles
 
-# Set macOS defaults
-$ZSH/macos/set-defaults.sh
+# # Set macOS defaults
+# $ZSH/macos/set-defaults.sh
 
-# Set macOS hostname
-$ZSH/macos/set-hostname.sh
+# # Set macOS hostname
+# $ZSH/macos/set-hostname.sh
 
-# Install homebrew
-$ZSH/homebrew/install.sh 2>&1
+# # Install homebrew
+# $ZSH/homebrew/install.sh 2>&1
 
-# Upgrade homebrew
-echo "› brew update"
-brew update
+# # Upgrade homebrew
+# echo "› brew update"
+# brew update
 
 # Install software
 echo "› script/install"

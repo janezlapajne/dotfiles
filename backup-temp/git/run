@@ -1,0 +1,6 @@
+# janez
+
+ssh-keygen -o -> copy to github
+
+ git config --global gpg.format ssh
+ git config --global user.signingkey ~/.ssh/id_rsa.pub
