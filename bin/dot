@@ -39,5 +39,5 @@ while test $# -gt 0; do
 done
 
 # Install software
-echo "› scripts/install"
-$DOTFILES_ZSH/scripts/install
+echo "› scripts/install.sh"
+$DOTFILES_ZSH/scripts/install.sh

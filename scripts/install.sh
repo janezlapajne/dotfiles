@@ -7,8 +7,8 @@ set -e
 cd "$(dirname $0)"/..
 
 # Install system packages using apt-get
-echo "› scripts/install-packages"
-$DOTFILES_ZSH/scripts/install-packages
+echo "› scripts/install-packages.sh"
+$DOTFILES_ZSH/scripts/install-packages.sh
 
 echo "running all installers"
 # Find the installers and run them iteratively
