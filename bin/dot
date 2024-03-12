@@ -38,6 +38,10 @@ while test $# -gt 0; do
 	shift
 done
 
+# Install system packages using apt-get
+echo "› scripts/install-packages.sh"
+$DOTFILES_ZSH/scripts/install-packages.sh
+
 # Install software
 echo "› scripts/install.sh"
 $DOTFILES_ZSH/scripts/install.sh

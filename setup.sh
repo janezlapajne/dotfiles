@@ -2,8 +2,8 @@
 #
 # bootstrap installs things.
 
-# cd "$(dirname "$0")/.."
-source $(pwd -P)/utils/constants.sh
+cd "$(dirname "$0")"
+source ./utils/constants.sh
 source $DOTFILES_ZSH/utils/prints.sh
 source $DOTFILES_ZSH/utils/setup-dotfiles.sh
 source $DOTFILES_ROOT/git/setup.sh
