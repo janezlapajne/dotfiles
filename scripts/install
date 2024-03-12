@@ -8,8 +8,8 @@ cd "$(dirname $0)"/..
 
 # Install system packages using apt-get
 echo "› scripts/install-packages"
-$ZSH/scripts/install-packages
+$DOTFILES_ZSH/scripts/install-packages
 
 echo "running all installers"
 # Find the installers and run them iteratively
-find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+find $DOTFILES_ROOT -name install.sh | while read installer; do sh -c "${installer}"; done

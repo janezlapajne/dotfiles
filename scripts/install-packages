@@ -7,7 +7,7 @@ packages=(
     vim
 )
 
-# Update package list and upgrade all packages 
+# Update package list and upgrade all packages
 sudo apt-get update && sudo apt-get upgrade -y
 
 # Install packages
