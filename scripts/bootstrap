@@ -3,7 +3,7 @@
 # bootstrap installs things.
 
 cd "$(dirname "$0")/.."
-DOTFILES_ROOT=$(pwd -P)
+DOTFILES_ROOT=$(pwd -P)/dotfiles
 
 set -e
 
@@ -140,8 +140,8 @@ install_dotfiles () {
 # setup_gitconfig
 install_dotfiles
 
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
+# If we're on a linux
+if [ "$(uname -s)" == "Linux" ]
 then
   info "installing dependencies"
   if source bin/dot | while read -r data; do info "$data"; done

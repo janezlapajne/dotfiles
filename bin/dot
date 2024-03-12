@@ -54,5 +54,5 @@ export ZSH=$HOME/.dotfiles
 # brew update
 
 # Install software
-echo "› script/install"
-$ZSH/script/install
+echo "› scripts/install"
+$ZSH/scripts/install

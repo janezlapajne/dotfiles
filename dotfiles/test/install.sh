@@ -1,5 +1,6 @@
 #!/bin/bash
 
 echo "Running test/install.sh"
-read -p 'Press [Enter] key to continue...'
+echo 'Press [Enter] key to continue...'
+read -e blah
 echo "Done running test/install.sh"
