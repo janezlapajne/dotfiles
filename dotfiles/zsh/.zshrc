@@ -1,61 +1,44 @@
-# Load general paths firts
+# Load general paths first
 source $HOME/.dotfiles/utils/paths.sh
 
-# your project folder that we can `c [tab]` to
-# export PROJECTS=~/programs
+# Stash environment variables in ~/.localrc. This means they'll stay out
+# of main dotfiles repository (which may be public, like this one)
+if [[ -e ~/.localrc ]]; then
+	source ~/.localrc
+fi
 
-# # Stash your environment variables in ~/.localrc. This means they'll stay out
-# # of your main dotfiles repository (which may be public, like this one), but
-# # you'll have access to them in your scripts.
-# if [[ -a ~/.localrc ]]
-# then
-#   source ~/.localrc
-# fi
+# All .zsh files in dotfiles dir
+typeset -U config_files
+config_files=($DOTFILES_ROOT/**/*.zsh)
 
-# # all of our zsh files
-# typeset -U config_files
-# config_files=($ZSH/**/*.zsh)
+# 1.) Load the path files
+for file in ${(M)config_files:#*/path.zsh}
+do
+  source $file
+done
 
-# # load the path files
-# for file in ${(M)config_files:#*/path.zsh}
-# do
-#   source $file
-# done
+# 2.) Load everything but the path and completion files
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+do
+  source $file
+done
 
-# # load everything but the path and completion files
-# for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-# do
-#   source $file
-# done
+# 3.) Initialize autocomplete, otherwise functions won't be loaded
+autoload -U compinit
+compinit
+# load every completion after autocomplete loads
+for file in ${(M)config_files:#*/completion.zsh}
+do
+  source $file
+done
 
-# # initialize autocomplete here, otherwise functions won't be loaded
-# autoload -U compinit
-# compinit
-
-# # load every completion after autocomplete loads
-# for file in ${(M)config_files:#*/completion.zsh}
-# do
-#   source $file
-# done
-
-# unset config_files
-
-# # Better history
-# # Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
-# autoload -U up-line-or-beginning-search
-# autoload -U down-line-or-beginning-search
-# zle -N up-line-or-beginning-search
-# zle -N down-line-or-beginning-search
-# bindkey "^[[A" up-line-or-beginning-search # Up
-# bindkey "^[[B" down-line-or-beginning-search # Down
+unset config_files
 
 ################################################################################ from original .zshrc
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
