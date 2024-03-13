@@ -5,6 +5,7 @@ packages=(
     git
     python3
     vim
+    xclip
 )
 
 # Update package list and upgrade all packages
