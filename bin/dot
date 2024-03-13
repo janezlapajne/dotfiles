@@ -39,9 +39,17 @@ while test $# -gt 0; do
 done
 
 # Install system packages using apt-get
-echo "› scripts/install-packages.sh"
-$DOTFILES_ZSH/scripts/install-packages.sh
+info "› scripts/install-packages.sh"
+if $DOTFILES_ZSH/scripts/install-packages.sh; then
+	success "Packages installed successfully."
+else
+	fail "Error installing packages."
+fi
 
 # Install software
-echo "› scripts/install.sh"
-$DOTFILES_ZSH/scripts/install.sh
+info "› scripts/install.sh"
+if $DOTFILES_ZSH/scripts/install.sh; then
+	success "Installation scripts executed successfully."
+else
+	fail "Error executing installation scripts."
+fi
