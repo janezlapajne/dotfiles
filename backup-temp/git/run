@@ -1,6 +1,8 @@
 # janez
 
-ssh-keygen -o -> copy to github
+ssh-keygen -o - to github >copy
 
- git config --global gpg.format ssh
- git config --global user.signingkey ~/.ssh/id_rsa.pub
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_rsa.pub
+
+# Poglej git config v old dotfiles

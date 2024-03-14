@@ -6,6 +6,10 @@ packages=(
     python3
     vim
     xclip
+    zsh
+    curl
+    wget
+    tmux
 )
 
 # Update package list and upgrade all packages
