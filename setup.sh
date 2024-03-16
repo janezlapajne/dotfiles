@@ -6,14 +6,10 @@ cd "$(dirname "$0")"
 source ./utils/paths.sh
 source $DOTFILES_ZSH/utils/prints.sh
 source $DOTFILES_ZSH/utils/setup-dotfiles.sh
-source $DOTFILES_ROOT/git/setup.sh
 
 set -e
 
 echo ''
-
-# setup_gitconfig
-setup_dotfiles
 
 # If we're on a linux
 if [ "$(uname -s)" == "Linux" ]; then
@@ -23,6 +19,25 @@ if [ "$(uname -s)" == "Linux" ]; then
   else
     fail "error installing dependencies"
   fi
+fi
+
+# Link all the dotfiles
+setup_dotfiles
+
+# Export variables defined in .env
+while IFS='=' read -r key value; do
+  # if key and value not empty:
+  if [ -n "$key" ] && [ -n "$value" ]; then
+    export $key=$value
+  fi
+done <.env
+
+# Run all setup scripts
+info "› scripts/setup-all.sh"
+if $DOTFILES_ZSH/scripts/setup-all.sh | while read -r data; do info "$data"; done; then
+  success "Setup scripts executed successfully."
+else
+  fail "Error executing setup scripts."
 fi
 
 echo ''
