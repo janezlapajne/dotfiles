@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # List of packages to install
 packages=(
     git

@@ -34,7 +34,7 @@ done <.env
 
 # Run all setup scripts
 info "› scripts/setup-all.sh"
-if $DOTFILES_ZSH/scripts/setup-all.sh | while read -r data; do info "$data"; done; then
+if source $DOTFILES_ZSH/scripts/setup-all.sh | while read -r data; do info "$data"; done; then
   success "Setup scripts executed successfully."
 else
   fail "Error executing setup scripts."
