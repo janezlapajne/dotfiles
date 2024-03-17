@@ -9,7 +9,7 @@ output_file=".env.example"
 
 # Add warnining to the file
 echo "################################################
-# Example ".env" file 
+# Example ".env" file
 # Use command:  $ tail -n +7 .env.example > .env
 # -> to create .env file from .env.example
 ################################################ \n" >$output_file

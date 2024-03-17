@@ -8,11 +8,11 @@ if ! [ -f $DOTFILES_ROOT/git/.gitconfig.local ]; then
 	info 'Setup gitconfig'
 
 	git_credential='cache'
-	if [ "$(uname -s)" == "Darwin" ]; then
-		git_credential='osxkeychain'
-	fi
 
-	sed -e "s/AUTHORNAME/$GIT_NAME/g" -e "s/AUTHOREMAIL/$GIT_EMAIL/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" $DOTFILES_ROOT/git/.gitconfig.local.example >$DOTFILES_ROOT/git/.gitconfig.local
+	sed -e "s|USER_NAME|$GIT_NAME|g" \
+		-e "s|USER_EMAIL|$GIT_EMAIL|g" \
+		-e "s|CREDENTIAL_HELPER|$GIT_CREDENTIAL_HELPER|g" \
+		$DOTFILES_ROOT/git/.gitconfig.local.example >$DOTFILES_ROOT/git/.gitconfig.local
 
 	success 'Gitconfig setup complete'
 else

@@ -1,0 +1,53 @@
+[include]
+path = ~/.gitconfig.local
+
+[user]
+signingkey = ~/.ssh/id_rsa.pub
+
+[gpg]
+format = ssh
+
+[hub]
+protocol = https
+
+[alias]
+co = checkout
+promote = !$DOTFILES_ZSH/bin/git-promote
+wtf = !$DOTFILES_ZSH/bin/git-wtf
+rank-contributors = !$DOTFILES_ZSH/bin/git-rank-contributors
+count = !git shortlog -sn
+
+[color]
+diff = auto
+status = auto
+branch = auto
+ui = true
+
+[core]
+excludesfile = ~/.gitignore
+editor = code
+
+[help]
+autocorrect = 1
+
+[init]
+defaultBranch = main
+
+# [credential]
+# helper = GIT_CREDENTIAL_HELPER
+
+# [apply]
+# whitespace = nowarn
+
+# [mergetool]
+# keepBackup = false
+
+# [difftool]
+# prompt = false
+
+# [push]
+# # See `git help config` (search for push.default)
+# # for more information on different options of the below setting.
+# #
+# # Setting to git 2.0 default to suppress warning message
+# default = simple
