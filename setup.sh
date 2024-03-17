@@ -11,7 +11,7 @@ set -e
 
 echo ''
 
-# If we're on a linux
+# If we're on a linux, run dot to install dependencies
 if [ "$(uname -s)" == "Linux" ]; then
   info "installing dependencies"
   if source $DOTFILES_ZSH/bin/dot | while read -r data; do info "$data"; done; then
@@ -20,9 +20,6 @@ if [ "$(uname -s)" == "Linux" ]; then
     fail "error installing dependencies"
   fi
 fi
-
-# Link all the dotfiles
-setup_dotfiles
 
 # Export variables defined in .env
 while IFS='=' read -r key value; do
@@ -39,5 +36,8 @@ else
   fail "Error executing setup scripts."
 fi
 
+# Link all the dotfiles
+setup_dotfiles
+
 echo ''
-echo '  All installed!'
+echo '  Done!'

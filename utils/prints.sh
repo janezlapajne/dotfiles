@@ -17,3 +17,7 @@ fail() {
 	echo ''
 	exit
 }
+
+warn() {
+	printf "\r\033[2K  [\033[0;33mWARN\033[0m] $1\n"
+}

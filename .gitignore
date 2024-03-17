@@ -1,2 +1,2 @@
-git/gitconfig.local.symlink
+.gitconfig.local
 .env

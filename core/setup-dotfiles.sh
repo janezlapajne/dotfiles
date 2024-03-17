@@ -78,7 +78,7 @@ setup_dotfiles() {
 
 	local overwrite_all=false backup_all=false skip_all=false
 
-	for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '.*' -not -path "*.zsh" -not -path "*.sh"); do
+	for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '.*' -not -path "*.zsh" -not -path "*.sh" -not -path "*.example"); do
 		dst="$HOME/$(basename "${src}")"
 		info "$src -> $dst"
 		link_file "$src" "$dst"
