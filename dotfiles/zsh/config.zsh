@@ -23,10 +23,25 @@ source $ZSH/oh-my-zsh.sh
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt SHARE_HISTORY
 
-# Turn off all beeps
-unsetopt BEEP
+# Setup options
+setopt SHARE_HISTORY      # share history across sessions
+setopt APPEND_HISTORY     # adds history
+setopt INC_APPEND_HISTORY # adds history incrementally
+setopt EXTENDED_HISTORY   # add timestamps to history
+setopt HIST_VERIFY
+setopt HIST_IGNORE_ALL_DUPS # don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+# setopt NO_BG_NICE
+# setopt NO_HUP
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS   # allow functions to have local traps
+setopt PROMPT_SUBST
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt IGNORE_EOF
+setopt NO_LIST_BEEP
+unsetopt BEEP # Turn off all beeps
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
@@ -34,6 +49,12 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+
+# Add functions to fpath
+chmod go-w "$DOTFILES_ZSH"
+chmod go-w "$DOTFILES_ZSH/functions"
+fpath=($DOTFILES_ZSH/functions $fpath)
+autoload -U $DOTFILES_ZSH/functions/*(:t)
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select() {

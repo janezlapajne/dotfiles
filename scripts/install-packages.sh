@@ -18,6 +18,7 @@ packages=(
     curl
     wget
     tmux
+    atop
 )
 
 # Update package list and upgrade all packages

@@ -1,12 +1,12 @@
+# Reload settings
+alias reload!='. ~/.zshrc'
+
 # Enable color support of ls and also add handy aliases
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 # Some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 alias ls='ls -hN --color=auto --group-directories-first'
 alias l.='ls -d .* --color=auto'
 
@@ -30,7 +30,7 @@ alias fgrep='fgrep --color=auto'
 # Handy shortcuts
 alias h='history'
 alias j='jobs -l'
-alias c='clear'
+alias cls='clear'
 
 # Confirmation
 alias mv='mv -i'
