@@ -16,5 +16,5 @@ if ! [ -f $DOTFILES_ROOT/git/.gitconfig.local ]; then
 
 	success 'Gitconfig setup complete'
 else
-	warn 'Gitconfig already setup. Delete `.gitconfig.local` and run setup again to overwrite.'
+	warn 'Gitconfig already setup. Delete `$DOTFILES_ROOT/git/.gitconfig.local` and run setup again to overwrite.'
 fi

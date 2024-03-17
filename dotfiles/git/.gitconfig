@@ -25,7 +25,8 @@ ui = true
 
 [core]
 excludesfile = ~/.gitignore
-editor = code
+editor = code --wait
+longpaths = true
 
 [help]
 autocorrect = 1
