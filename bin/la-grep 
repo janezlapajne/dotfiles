@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Find file in a directory by name
+#
+# $1 - The name of the file to search for.
+#
+# Examples
+#
+#   la-grep "file"
+#
+
+ls -alF | grep $1 --color=auto
