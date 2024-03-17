@@ -9,12 +9,12 @@ HIST_STAMPS="dd.mm.yyyy"
 # Download zip (do not clone) and extract to .oh-my-zsh\custom\plugins + rename
 # Must have unix line ending
 plugins=(
-	git
-	zsh-interactive-cd
+	# git
+	# zsh-interactive-cd
 	# zsh-navigation-tools
-	vi-mode
+	# vi-mode
 	# z
-	tmux
+	# tmux
 )
 
 source $ZSH/oh-my-zsh.sh

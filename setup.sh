@@ -3,9 +3,9 @@
 # bootstrap installs things.
 
 cd "$(dirname "$0")"
-source ./utils/paths.sh
+source ./core/paths.sh
 source $DOTFILES_ZSH/utils/prints.sh
-source $DOTFILES_ZSH/utils/setup-dotfiles.sh
+source $DOTFILES_ZSH/core/setup-dotfiles.sh
 
 set -e
 

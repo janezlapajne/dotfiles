@@ -38,7 +38,7 @@ while test $# -gt 0; do
 	shift
 done
 
-source $dotfilesDirectory/utils/paths.sh
+source $dotfilesDirectory/core/paths.sh
 source $DOTFILES_ZSH/utils/prints.sh
 
 # Install system packages using apt-get

@@ -1,5 +1,5 @@
 # Load general paths first
-source $HOME/.dotfiles/utils/paths.sh
+source $HOME/.dotfiles/core/paths.sh
 
 # Stash environment variables in ~/.localrc. This means they'll stay out
 # of main dotfiles repository (which may be public, like this one)
