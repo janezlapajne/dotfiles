@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+#
+# Update .env.example file from .env file
 
 # Create example from .env file
 # Define the input and output files

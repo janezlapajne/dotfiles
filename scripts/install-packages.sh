@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
+#
+# Install or update system packages using apt-get
 
 set -e
+
+source $DOTFILES_ZSH/utils/prints.sh
+
+info "Installing packages -› scripts/install-packages.sh"
 
 # List of packages to install
 packages=(

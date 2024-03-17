@@ -4,7 +4,14 @@
 
 set -e
 
-echo "Running all installers"
+source $DOTFILES_ZSH/utils/prints.sh
 
-# Find the installers and run them iteratively
-find $DOTFILES_ROOT -name install.sh | while read installer; do sh -c "${installer}"; done
+info "Running all installers -› scripts/install.sh"
+
+find $DOTFILES_ROOT -name install.sh | while read installer; do
+	if sh -c "${installer}"; then
+		success "$installer executed successfully."
+	else
+		fail "Error executing $installer."
+	fi
+done

@@ -42,7 +42,6 @@ source $dotfilesDirectory/utils/paths.sh
 source $DOTFILES_ZSH/utils/prints.sh
 
 # Install system packages using apt-get
-info "› scripts/install-packages.sh"
 if $DOTFILES_ZSH/scripts/install-packages.sh; then
 	success "Packages installed successfully."
 else
@@ -50,7 +49,6 @@ else
 fi
 
 # Install software supporting dotfiles
-info "› scripts/install.sh"
 if $DOTFILES_ZSH/scripts/install.sh; then
 	success "Installation scripts executed successfully."
 else
