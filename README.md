@@ -43,7 +43,7 @@ This will symlink the appropriate files in subdirectories of `.dotfiles/dotfiles
 
 ## 🛠 Configuration
 
-For a proper configuration, the environment variables, described below, need to be specified.
+To ensure correct configuration, it's essential to define the environment variables outlined below.
 
 ### Git
 
@@ -96,31 +96,31 @@ The following diagram provides a schematic representation of the project's folde
 ```
 .dotfiles/
 │
-├── setup.sh				-> Main script to setup the dotfiles
-├── .env					-> Configuration variables
+├── setup.sh                -> Main script to setup the dotfiles
+├── .env                    -> Configuration variables
 │
-├── bin/					-> Various utility scripts (added to $PATH)
-│   ├── dot 				-> main update script
-│   └── ... 				-> other scripts
+├── bin/                    -> Various utility scripts (added to $PATH)
+│   ├── dot                 -> main update script
+│   └── ...                 -> other scripts
 │
-├── core/					-> Core setup scripts
+├── core/                   -> Core setup scripts
 │   ├── paths.sh
 │   └── setup-dotfiles.sh
 │
-├── dotfiles/				-> Configuration for various tools
-│   ├── zsh/ 				-> main shell configuration
+├── dotfiles/               -> Configuration for various tools
+│   ├── zsh/                -> main shell configuration
 │   └── .../
 │
-├── functions/				-> Utility functions (added to $PATH)
+├── functions/              -> Utility functions (added to $PATH)
 │   └── ...
 │
-├── scripts/				-> Main scripts
-│   ├── install.sh			-> executes all install.sh scripts
-│   ├── setup-all.sh		-> executes all setup.sh scripts
-│   ├── install-packages.sh	-> installs system packages using apt-get
-│   └── update-env.sh		-> updates .env.example (used during development)
+├── scripts/                -> Main scripts
+│   ├── install.sh          -> executes all install.sh scripts
+│   ├── setup-all.sh        -> executes all setup.sh scripts
+│   ├── install-packages.sh -> installs system packages using apt-get
+│   └── update-env.sh       -> updates .env.example (used during development)
 │
-└── utils/					-> Utility scripts used inside repo
+└── utils/                  -> Utility scripts used inside repo
     └── ...
 ```
 
@@ -134,13 +134,11 @@ This project follows a specific set of conventions for organization and function
 - **dotfiles/\*\*/install.sh**: Any file named `install.sh` is executed when the `scripts/install.sh` script is run. These files have a `.sh` extension instead of `.zsh` to prevent them from being loaded automatically.
 - **dotfiles/\*\*/setup.sh**: Any file named `setup.sh` is executed when the `scripts/setup-all.sh` script is run. Like `install.sh` files, these have a `.sh` extension to prevent automatic loading.
 - **dotfiles/\*\*/\.\***: Any file starting with a `.` is symlinked into the `$HOME` directory when the main `setup.sh` script is executed. This allows for easy management of dotfiles.
+- **bin/dot**: This is a simple script designed to manage dependencies and system packages. It not only installs and updates dependencies but also upgrades system packages. To maintain an up-to-date and efficient environment, it's recommended to execute this script periodically.
 
 ## 🎉 Additional notes
 
-`dot` is a simple script that installs some dependencies, sets sane macOS
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
+We greatly appreciate any contribution, no matter how small. If you've identified a problem with the setup, we encourage you to first browse through both open and closed issues to see if it has been addressed before. If it's a new issue, please don't hesitate to create a new one on GitHub. If you're interested in correcting an existing issue or expanding the project's functionality, we welcome your involvement. Simply fork the repository, make your changes, and then submit a pull request on GitHub. Questions are also welcome. If you're unsure about something or need clarification, feel free to post an issue on GitHub.
 
 ## 🤝 License
 
