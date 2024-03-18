@@ -31,7 +31,7 @@ The configuration of the dotfiles is driven by environment variables. To establi
 tail -n +7 .env.example > .env
 ```
 
-This command generates an `.env` file, which serves as the blueprint for defining your variables. For detailed guidance on configuring your environment, refer to the **Configuration** section.
+This command generates an `.env` file, which serves as the blueprint for defining variables. For detailed guidance on configuring the environment, refer to the **Configuration** section.
 
 3. Execute the setup procedure by running
 
@@ -91,32 +91,49 @@ SSH_PASSPHRASE=
 
 ## 📖 Folder Structure
 
-There's a few special files in the hierarchy.
-
-- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
-  available everywhere.
-- **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
-  environment.
-- **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
-  expected to setup `$PATH` or similar.
-- **topic/completion.zsh**: Any file named `completion.zsh` is loaded
-  last and is expected to setup autocomplete.
-- **topic/install.sh**: Any file named `install.sh` is executed when you run `script/install`. To avoid being loaded automatically, its extension is `.sh`, not `.zsh`.
-- **topic/\*.symlink**: Any file ending in `*.symlink` gets symlinked into
-  your `$HOME`. This is so you can keep all of those versioned in your dotfiles
-  but still keep those autoloaded files in your home directory. These get
-  symlinked in when you run `script/bootstrap`.
+The following diagram provides a schematic representation of the project's folder structure. Each directory and file is briefly described to give an overview of their purpose and function within the project:
 
 ```
-sklearn-project-template/
+.dotfiles/
 │
-├── main.py - main script to start training and (optionally) testing
+├── setup.sh				-> Main script to setup the dotfiles
+├── .env					-> Configuration variables
 │
-├── base/ - abstract base classes
-│   ├── base_data_loader.py
-│   ├── base_model.py
-│   └── base_optimizer.py
+├── bin/					-> Various utility scripts (added to $PATH)
+│   ├── dot 				-> main update script
+│   └── ... 				-> other scripts
+│
+├── core/					-> Core setup scripts
+│   ├── paths.sh
+│   └── setup-dotfiles.sh
+│
+├── dotfiles/				-> Configuration for various tools
+│   ├── zsh/ 				-> main shell configuration
+│   └── .../
+│
+├── functions/				-> Utility functions (added to $PATH)
+│   └── ...
+│
+├── scripts/				-> Main scripts
+│   ├── install.sh			-> executes all install.sh scripts
+│   ├── setup-all.sh		-> executes all setup.sh scripts
+│   ├── install-packages.sh	-> installs system packages using apt-get
+│   └── update-env.sh		-> updates .env.example (used during development)
+│
+└── utils/					-> Utility scripts used inside repo
+    └── ...
 ```
+
+This project follows a specific set of conventions for organization and functionality:
+
+- **bin/**: This directory contains utility scripts. Any script placed here will be added to the `$PATH` and made accessible from anywhere in the system.
+- **functions/**: This directory is for utility functions. Like the `bin/` directory, anything placed here will be added to the `$PATH` and can be used globally.
+- **dotfiles/\*\*/\*.zsh**: Any file with a `.zsh` extension located in the `dotfiles/` directory or its subdirectories will be loaded into the environment.
+- **dotfiles/\*\*/path.zsh**: Any file named `path.zsh` is loaded before other files. It's expected to set up `$PATH` or similar environment variables.
+- **dotfiles/\*\*/completion.zsh**: Any file named `completion.zsh` is loaded last and is expected to set up autocomplete functionality.
+- **dotfiles/\*\*/install.sh**: Any file named `install.sh` is executed when the `scripts/install.sh` script is run. These files have a `.sh` extension instead of `.zsh` to prevent them from being loaded automatically.
+- **dotfiles/\*\*/setup.sh**: Any file named `setup.sh` is executed when the `scripts/setup-all.sh` script is run. Like `install.sh` files, these have a `.sh` extension to prevent automatic loading.
+- **dotfiles/\*\*/\.\***: Any file starting with a `.` is symlinked into the `$HOME` directory when the main `setup.sh` script is executed. This allows for easy management of dotfiles.
 
 ## 🎉 Additional notes
 
