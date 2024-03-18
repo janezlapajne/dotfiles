@@ -1,35 +1,45 @@
 # 🔥 Elevate Your Development Experience 🔥
 
-A collection of heavily opinionated dotfiles for streamlining and personalizing development environment. These configurations reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
-
+A collection of heavily opinionated dotfiles for personalized development environment. These configurations reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
 
 ## 🔍 Overview
 
-The setup is designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment:
+The setup is designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment. Some of the tools included:
 
 - [Oh-My-Zsh](https://ohmyz.sh/): A community-driven framework for managing Zsh configuration, which includes helpful features such as plugin and theme support.
 - [Tmux](https://github.com/tmux/tmux): A terminal multiplexer that enables multiple terminal sessions within a single window.
 - [Vim](https://www.vim.org/): A highly configurable text editor built to facilitate efficient text editing.
 - [Git](https://git-scm.com/): A distributed version control system used to track changes in source code during software development.
-- [Atuin](https://github.com/atuin/atuin): A replacement for shell's history that syncs across multiple machines and provides advanced features like search and analytics.
+- [Atuin](https://github.com/atuinsh/atuin): A replacement for shell's history that syncs across multiple machines and provides advanced features like search and analytics.
 
 The setup is flexible and can easily accommodate the integration of additional plugins as per the user's requirements.
 
 ## 🕐 Quickstart
 
-Run this:
+1. Begin by cloning the repository and navigating into the directory
 
-``` bash
+```bash
 git clone https://github.com/janezlapajne/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
+```
+
+2. Setup environment variables
+
+The configuration of the dotfiles is driven by environment variables. To establish a basic configuration, execute the following command:
+
+```bash
+tail -n +7 .env.example > .env
+```
+
+This command generates an `.env` file, which serves as the blueprint for defining your variables. For detailed guidance on configuring your environment, refer to the **Configuration** section.
+
+3. Execute the setup procedure by running
+
+```bash
 ./setup.sh
 ```
 
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
-
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+This will symlink the appropriate files in `.dotfiles/dotfiles` to home directory.
 
 `dot` is a simple script that installs some dependencies, sets sane macOS
 defaults, and so on. Tweak this script, and occasionally run `dot` from
@@ -37,6 +47,8 @@ time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
 ## 🛠 Configuration
+
+tail -n +7 .env.example > .env
 
 env variables
 
@@ -69,9 +81,12 @@ sklearn-project-template/
 │   └── base_optimizer.py
 ```
 
+## 🎉 Additional notes
+
 ## 🤝 License
+
 This project is licensed under the MIT License. See [LICENSE](https://github.com/janezlapajne/dotfiles/blob/main/LICENCE.md) for more details.
 
 ## 🏆 Acknowledgements
-This work was inspired by the [dotfiles](https://github.com/holman/dotfiles) project by Zach Holman.
 
+This work was inspired by the [dotfiles](https://github.com/holman/dotfiles) project by Zach Holman. Moreover, this project directly incorporates certain code snippets and design patterns for enhanced functionality.
