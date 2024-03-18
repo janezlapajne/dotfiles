@@ -39,18 +39,55 @@ This command generates an `.env` file, which serves as the blueprint for definin
 ./setup.sh
 ```
 
-This will symlink the appropriate files in `.dotfiles/dotfiles` to home directory.
-
-`dot` is a simple script that installs some dependencies, sets sane macOS
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
+This will symlink the appropriate files in subdirectories of `.dotfiles/dotfiles` to home directory.
 
 ## 🛠 Configuration
 
-tail -n +7 .env.example > .env
+For a proper configuration, the environment variables, described below, need to be specified.
 
-env variables
+### Git
+
+- `GIT_NAME`: Name to appear in Git commits.
+- `GIT_EMAIL`: Email to appear in Git commits.
+- `GIT_CREDENTIAL_HELPER`: The path to the Git credential helper executable. This is used by Git to remember the credentials.
+
+Example:
+
+```
+GIT_NAME=name
+GIT_EMAIL=email@example.com
+GIT_CREDENTIAL_HELPER=/mnt/c/Program/Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe
+```
+
+> :exclamation: **Note:** To use this you need to install [git-credential-manager](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md)
+
+### Atuin
+
+- `ATUIN_USERNAME`: Atuin username.
+- `ATUIN_EMAIL`: The email address associated with Atuin account.
+- `ATUIN_PASSWORD:` The password for Atuin account.
+- `ATUIN_KEY:` _(Optional)_ Atuin key, used for syncing shell history across devices.
+
+Example:
+
+```
+ATUIN_USERNAME=name
+ATUIN_EMAIL=email@example.com
+ATUIN_PASSWORD=password
+ATUIN_KEY=
+```
+
+### SSH
+
+- `SSH_EMAIL`: The email address used when generating SSH key.
+- `SSH_PASSPHRASE`: _(Optional)_ The passphrase for SSH key.
+
+Example:
+
+```
+SSH_EMAIL=email@example.com
+SSH_PASSPHRASE=
+```
 
 ## 📖 Folder Structure
 
@@ -82,6 +119,11 @@ sklearn-project-template/
 ```
 
 ## 🎉 Additional notes
+
+`dot` is a simple script that installs some dependencies, sets sane macOS
+defaults, and so on. Tweak this script, and occasionally run `dot` from
+time to time to keep your environment fresh and up-to-date. You can find
+this script in `bin/`.
 
 ## 🤝 License
 
