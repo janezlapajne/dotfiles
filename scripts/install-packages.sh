@@ -19,6 +19,8 @@ packages=(
 	wget
 	tmux
 	atop
+	httpie
+	pipx
 )
 
 # Update package list and upgrade all packages
