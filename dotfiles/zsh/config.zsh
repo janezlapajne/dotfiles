@@ -76,7 +76,10 @@ preexec() { echo -ne '\e[5 q'; } # Use beam shape cursor for each new prompt.
 bindkey -v
 export KEYTIMEOUT=1
 
-# Edit line in vim with ctrl-e:
+# Edit line in code with ctrl-e:
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# Init Atuin for better history
+eval "$(atuin init zsh)"

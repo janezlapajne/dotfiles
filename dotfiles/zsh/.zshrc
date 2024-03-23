@@ -33,6 +33,3 @@ do
 done
 
 unset config_files
-
-# Init Atuin for better history
-eval "$(atuin init zsh)"
