@@ -84,3 +84,10 @@ alias rdirn='readlink -f'
 # Random commands
 alias mkd='mkdir -pv'
 alias ccat='highlight --out-format=ansi'
+
+# Define alias for clip based on INSIDE_WSL - copy to clipboard
+if [[ $INSIDE_WSL -eq 1 ]]; then
+	alias clip='clip.exe'
+else
+	alias clip='xclip -selection clipboard'
+fi
