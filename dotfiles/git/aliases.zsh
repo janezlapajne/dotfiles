@@ -10,3 +10,5 @@ alias gb='git branch'
 alias gs='git status -sb'
 alias gac='git add -A && git commit -m'
 alias ge='git-edit-new'
+
+alias lzg='lazygit'
