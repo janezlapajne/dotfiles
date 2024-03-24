@@ -1,5 +1,5 @@
 # Reload settings
-alias reload!='. ~/.zshrc'
+alias rr='. ~/.zshrc'
 
 # Enable color support of ls and also add handy aliases
 alias grep='grep --color=auto'
