@@ -1,0 +1,18 @@
+#!/bin/zsh
+#
+# Copy command output to clipboard
+#
+# $1 - Command
+#
+# Examples
+#
+#   cpc echo hello
+#
+
+cpc() {
+	if [[ $INSIDE_WSL -eq 1 ]]; then
+		eval $* | clip.exe
+	else
+		eval $* | xclip -selection clipboard
+	fi
+}

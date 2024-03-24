@@ -6,7 +6,7 @@
 #
 # Examples
 #
-#   la-grep "file"
+#   lag "file"
 #
 
 ls -alF | grep $1 --color=auto
