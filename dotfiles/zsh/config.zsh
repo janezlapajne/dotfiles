@@ -83,3 +83,6 @@ bindkey '^e' edit-command-line
 
 # Init Atuin for better history
 eval "$(atuin init zsh)"
+
+# Init aliases for github copilot
+eval "$(gh copilot alias -- zsh)"
