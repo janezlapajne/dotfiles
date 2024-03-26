@@ -7,5 +7,8 @@ sudo mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packa
 	sudo apt update &&
 	sudo apt install gh -y
 
+# gh auth login
+# TODO: add token to .env file
+
 # Install extensions
-gh extension install github/gh-copilot
+# gh extension install github/gh-copilot
