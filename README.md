@@ -107,6 +107,9 @@ The following diagram provides a schematic representation of the project's folde
 │   ├── paths.sh
 │   └── setup-dotfiles.sh
 │
+├── docs/                   -> Documentation, notes, etc.
+│   └── ...
+│
 ├── dotfiles/               -> Configuration for various tools
 │   ├── zsh/                -> main shell configuration
 │   └── .../
@@ -127,14 +130,15 @@ The following diagram provides a schematic representation of the project's folde
 This project follows a specific set of conventions for organization and functionality:
 
 - **bin/**: This directory contains utility scripts. Any script placed here will be added to the `$PATH` and made accessible from anywhere in the system.
+- **bin/dot**: This is a simple script designed to manage dependencies and system packages. It not only installs and updates dependencies but also upgrades system packages. To maintain an up-to-date and efficient environment, it's recommended to execute this script periodically.
+- **docs**: This directory serves as a repository for documentation, notes, and frequently used commands, among other things. It's a convenient location for storing any information that might be needed at hand.
 - **functions/**: This directory is for utility functions. Like the `bin/` directory, anything placed here will be added to the `$PATH` and can be used globally.
 - **dotfiles/\*\*/\*.zsh**: Any file with a `.zsh` extension located in the `dotfiles/` directory or its subdirectories will be loaded into the environment.
 - **dotfiles/\*\*/path.zsh**: Any file named `path.zsh` is loaded before other files. It's expected to set up `$PATH` or similar environment variables.
 - **dotfiles/\*\*/completion.zsh**: Any file named `completion.zsh` is loaded last and is expected to set up autocomplete functionality.
-- **dotfiles/\*\*/install.sh**: Any file named `install.sh` is executed when the `scripts/install.sh` script is run. These files have a `.sh` extension instead of `.zsh` to prevent them from being loaded automatically.
-- **dotfiles/\*\*/setup.sh**: Any file named `setup.sh` is executed when the `scripts/setup-all.sh` script is run. Like `install.sh` files, these have a `.sh` extension to prevent automatic loading.
+- **dotfiles/\*\*/install.sh**: Any file named `install.sh` is executed when the `scripts/install.sh` script is run. These files have a `.sh` extension instead of `.zsh` to prevent them from being loaded automatically. These scripts are run each time the `bin/dot` script is run.
+- **dotfiles/\*\*/setup.sh**: Any file named `setup.sh` is executed when the `scripts/setup-all.sh` script is run. Like `install.sh` files, these have a `.sh` extension to prevent automatic loading. The `setup.sh` scripts are run after `install.sh` scripts and only when the `scripts/setup.sh` script is run.
 - **dotfiles/\*\*/\.\***: Any file starting with a `.` is symlinked into the `$HOME` directory when the main `setup.sh` script is executed. This allows for easy management of dotfiles.
-- **bin/dot**: This is a simple script designed to manage dependencies and system packages. It not only installs and updates dependencies but also upgrades system packages. To maintain an up-to-date and efficient environment, it's recommended to execute this script periodically.
 
 ## 🎉 Additional notes
 
