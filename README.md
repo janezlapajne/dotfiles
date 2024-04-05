@@ -59,7 +59,7 @@ GIT_EMAIL=email@example.com
 GIT_CREDENTIAL_HELPER=/mnt/c/Program/Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe
 ```
 
-> :exclamation: **Note:** To use this you need to install [git-credential-manager](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md)
+> :exclamation: **Note:** For the Git credential helper to work, [git-credential-manager](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md) needs to be installed. The exact location of *git-credential-wincred.exe* may vary depending on the specific Git installation.
 
 ### Atuin
 
