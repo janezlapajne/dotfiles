@@ -41,6 +41,16 @@ done
 source $dotfilesDirectory/core/paths.sh
 source $DOTFILES_ZSH/utils/prints.sh
 
+# Update repository by pulling latest changes
+(
+	cd $DOTFILES_ZSH
+	if git pull --ff-only; then
+		success "Repository updated successfully."
+	else
+		fail "Error updating repository. Fast-forward merge not possible."
+	fi
+)
+
 # Install system packages using apt-get
 if $DOTFILES_ZSH/scripts/install-packages.sh; then
 	success "Packages installed successfully."
