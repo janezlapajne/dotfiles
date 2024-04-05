@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if command -v atuin >/dev/null 2>&1; then
 	echo "Atuin already installed"
 else
