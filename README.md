@@ -94,37 +94,37 @@ SSH_PASSPHRASE=
 The following diagram provides a schematic representation of the project's folder structure. Each directory and file is briefly described to give an overview of their purpose and function within the project:
 
 ```
-.dotfiles/
+📚 .dotfiles/
 │
-├── setup.sh                -> Main script to setup the dotfiles
-├── .env                    -> Configuration variables
+├── 🚀 setup.sh                -> Main script to setup the dotfiles
+├── 🛠️ .env                    -> Configuration variables
 │
-├── bin/                    -> Various utility scripts (added to $PATH)
-│   ├── dot                 -> main update script
-│   └── ...                 -> other scripts
+├── 📂 bin/                    -> Various utility scripts (added to $PATH)
+│   ├── 📄 dot                 -> main update script
+│   └── 📄 ...                 -> other scripts
 │
-├── core/                   -> Core setup scripts
-│   ├── paths.sh
-│   └── setup-dotfiles.sh
+├── 📂 core/                   -> Core setup scripts
+│   ├── 📄 paths.sh
+│   └── 📄 setup-dotfiles.sh
 │
-├── docs/                   -> Documentation, notes, etc.
-│   └── ...
+├── 📂 docs/                   -> Documentation, notes, etc.
+│   └── 📄 ...
 │
-├── dotfiles/               -> Configuration for various tools
-│   ├── zsh/                -> main shell configuration
-│   └── .../
+├── 📂 dotfiles/               -> Configuration for various tools
+│   ├── 📂 zsh/                -> main shell configuration
+│   └── 📂 .../
 │
-├── functions/              -> Utility functions (added to $PATH)
-│   └── ...
+├── 📂 functions/              -> Utility functions (added to $PATH)
+│   └── 📄 ...
 │
-├── scripts/                -> Main scripts
-│   ├── install.sh          -> executes all install.sh scripts
-│   ├── setup-all.sh        -> executes all setup.sh scripts
-│   ├── install-packages.sh -> installs system packages using apt-get
-│   └── update-env.sh       -> updates .env.example (used during development)
+├── 📂 scripts/                -> Main scripts
+│   ├── 📄 install.sh          -> executes all install.sh scripts
+│   ├── 📄 setup-all.sh        -> executes all setup.sh scripts
+│   ├── 📄 install-packages.sh -> installs system packages using apt-get
+│   └── 📄 update-env.sh       -> updates .env.example (used during development)
 │
-└── utils/                  -> Utility scripts used inside repo
-    └── ...
+└── 📂 utils/                  -> Utility scripts used inside repo
+    └── 📄 ...
 ```
 
 This project follows a specific set of conventions for organization and functionality:
