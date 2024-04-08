@@ -15,6 +15,7 @@ plugins=(
 	vi-mode
 	z
 	tmux
+	alias-finder
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -80,6 +81,12 @@ export KEYTIMEOUT=1
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# alias-finder plugin
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
+zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
 
 # Init Atuin for better history
 eval "$(atuin init zsh)"
