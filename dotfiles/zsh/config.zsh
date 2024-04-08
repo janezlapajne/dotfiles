@@ -10,6 +10,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Must have unix line ending
 plugins=(
 	git
+	docker
 	zsh-interactive-cd
 	zsh-navigation-tools
 	vi-mode
@@ -87,6 +88,10 @@ zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
 zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
 zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
 zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
+
+# Docker plugin
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 # Init Atuin for better history
 eval "$(atuin init zsh)"
