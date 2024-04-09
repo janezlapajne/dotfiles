@@ -9,6 +9,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Download zip (do not clone) and extract to .oh-my-zsh\custom\plugins + rename
 # Must have unix line ending
 plugins=(
+	aliases
 	alias-finder
 	docker
 	docker-compose
@@ -19,9 +20,6 @@ plugins=(
 	vi-mode
 	zoxide
 	zsh-interactive-cd
-	zsh-navigation-tools
-	# zsh-autosuggestions
-	# zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -105,4 +103,4 @@ eval "$(atuin init zsh)"
 eval "$(gh copilot alias -- zsh)"
 
 # Init zoxide
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
