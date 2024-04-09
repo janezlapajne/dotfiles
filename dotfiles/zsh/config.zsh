@@ -11,12 +11,17 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(
 	git
 	docker
+	docker-compose
 	zsh-interactive-cd
 	zsh-navigation-tools
 	vi-mode
-	z
 	tmux
 	alias-finder
+	# zsh-autosuggestions
+	# zsh-syntax-highlighting
+	gh
+	zoxide
+	ssh
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -98,3 +103,6 @@ eval "$(atuin init zsh)"
 
 # Init aliases for github copilot
 eval "$(gh copilot alias -- zsh)"
+
+# Init zoxide
+eval "$(zoxide init zsh)"

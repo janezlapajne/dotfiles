@@ -21,6 +21,7 @@ packages=(
 	atop
 	httpie
 	pipx
+	fzf
 )
 
 # Update package list and upgrade all packages
