@@ -13,3 +13,6 @@ curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
 # zoxide
 curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+
+# fkill
+npm install --global fkill-cli
