@@ -10,18 +10,18 @@ info "Installing packages -› scripts/install-packages.sh"
 
 # List of packages to install
 packages=(
-	git
-	python3
-	vim
-	xclip
-	zsh
-	curl
-	wget
-	tmux
 	atop
+	curl
+	fzf
+	git
 	httpie
 	pipx
-	fzf
+	python3
+	tmux
+	vim
+	wget
+	xclip
+	zsh
 )
 
 # Update package list and upgrade all packages

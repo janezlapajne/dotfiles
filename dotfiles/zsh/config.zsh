@@ -9,19 +9,19 @@ HIST_STAMPS="dd.mm.yyyy"
 # Download zip (do not clone) and extract to .oh-my-zsh\custom\plugins + rename
 # Must have unix line ending
 plugins=(
-	git
+	alias-finder
 	docker
 	docker-compose
+	gh
+	git
+	ssh
+	tmux
+	vi-mode
+	zoxide
 	zsh-interactive-cd
 	zsh-navigation-tools
-	vi-mode
-	tmux
-	alias-finder
 	# zsh-autosuggestions
 	# zsh-syntax-highlighting
-	gh
-	zoxide
-	ssh
 )
 
 source $ZSH/oh-my-zsh.sh
