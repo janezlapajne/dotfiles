@@ -13,6 +13,7 @@ plugins=(
 	alias-finder
 	docker
 	docker-compose
+	fd
 	gh
 	git
 	ssh
@@ -100,3 +101,6 @@ eval "$(gh copilot alias -- zsh)"
 
 # Init zoxide
 eval "$(zoxide init zsh --cmd cd)"
+
+# Init fuck
+eval $(thefuck --alias)

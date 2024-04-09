@@ -16,3 +16,17 @@ curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | 
 
 # fkill
 npm install --global fkill-cli
+
+# The fuck
+pip3 install thefuck --user --upgrade
+
+# Tldr
+pip3 install tldr
+
+# Bat
+sudo apt install bat
+ln -s $(which batcat) ~/.local/bin/bat
+
+# Fd-find
+sudo apt install fd-find
+ln -s $(which fdfind) ~/.local/bin/fd
