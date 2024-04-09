@@ -58,6 +58,13 @@ else
 	fail "Error installing packages."
 fi
 
+# Install other tools without using apt-get
+if $DOTFILES_ZSH/scripts/install-tools.sh; then
+	success "Tools installed successfully."
+else
+	fail "Error installing tools."
+fi
+
 # Install software supporting dotfiles
 if $DOTFILES_ZSH/scripts/install.sh; then
 	success "Installation scripts executed successfully."

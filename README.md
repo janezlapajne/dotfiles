@@ -118,9 +118,10 @@ The following diagram provides a schematic representation of the project's folde
 │   └── 📄 ...
 │
 ├── 📂 scripts/                -> Main scripts
+│   ├── 📄 install-packages.sh -> installs system packages using apt-get
+│   ├── 📄 install-tools.sh    -> installs other tools, using pip3, npm etc.
 │   ├── 📄 install.sh          -> executes all install.sh scripts
 │   ├── 📄 setup-all.sh        -> executes all setup.sh scripts
-│   ├── 📄 install-packages.sh -> installs system packages using apt-get
 │   └── 📄 update-env.sh       -> updates .env.example (used during development)
 │
 └── 📂 utils/                  -> Utility scripts used inside repo
