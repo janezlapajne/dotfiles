@@ -24,9 +24,17 @@ pip3 install thefuck --user --upgrade
 pip3 install tldr
 
 # Bat
-sudo apt install bat
-ln -s $(which batcat) ~/.local/bin/bat
+sudo apt install -y bat
+if [ ! -e ~/.local/bin/bat ]; then
+	ln -s $(which batcat) ~/.local/bin/bat
+else
+	warn "Symbolic link ~/.local/bin/bat already exists."
+fi
 
 # Fd-find
-sudo apt install fd-find
-ln -s $(which fdfind) ~/.local/bin/fd
+sudo apt install -y fd-find
+if [ ! -e ~/.local/bin/fd ]; then
+	ln -s $(which fdfind) ~/.local/bin/fd
+else
+	warn "Symbolic link ~/.local/bin/fd already exists."
+fi
