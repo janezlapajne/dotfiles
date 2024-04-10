@@ -8,21 +8,6 @@ source $DOTFILES_ZSH/utils/prints.sh
 
 info "Installing tools -› scripts/install-tools.sh"
 
-# pdm
-curl -sSL https://pdm-project.org/install-pdm.py | python3 -
-
-# zoxide
-curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-
-# fkill
-npm install --global fkill-cli
-
-# The fuck
-pip3 install thefuck --user --upgrade
-
-# Tldr
-pip3 install tldr
-
 # Bat
 sudo apt install -y bat
 if [ ! -e ~/.local/bin/bat ]; then
@@ -38,3 +23,18 @@ if [ ! -e ~/.local/bin/fd ]; then
 else
 	warn "Symbolic link ~/.local/bin/fd already exists."
 fi
+
+# fkill
+npm install --global fkill-cli
+
+# pdm
+curl -sSL https://pdm-project.org/install-pdm.py | python3 -
+
+# The fuck
+pip3 install thefuck --user --upgrade
+
+# Tldr
+pip3 install tldr
+
+# zoxide
+curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
