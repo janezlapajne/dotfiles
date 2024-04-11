@@ -2,9 +2,14 @@
 
 set -e
 
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-	echo "Installing Tmux Plugin Manager"
-	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ -d "$HOME/.tmux" ]; then
+	echo "Updating .tmux"
+	cd $HOME/.tmux
+	git pull
 else
-	echo "Tmux Plugin Manager already installed"
+	echo "Cloning .tmux"
+	git clone https://github.com/gpakosz/.tmux.git $HOME/.tmux
 fi
+
+cat $HOME/.tmux/.tmux.conf.local >$HOME/.dotfiles/dotfiles/tmux/.tmux.conf.local
+cat $HOME/.tmux/.tmux.conf >$HOME/.dotfiles/dotfiles/tmux/.tmux.conf
