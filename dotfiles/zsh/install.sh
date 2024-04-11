@@ -11,3 +11,9 @@ else
 	source $HOME/.oh-my-zsh/oh-my-zsh.sh
 	omz update
 fi
+
+# Install starship theme
+source $DOTFILES_ZSH/.env
+if [ "$TERMINAL_THEME_STARSHIP" = true ]; then
+	curl -sS https://starship.rs/install.sh | sh -s -- -y
+fi

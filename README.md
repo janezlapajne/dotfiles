@@ -89,6 +89,33 @@ SSH_EMAIL=email@example.com
 SSH_PASSPHRASE=
 ```
 
+### Terminal
+
+- `TERMINAL_THEME_STARSHIP`: _(Optional)_ Bool value whether to use [starship](https://github.com/starship/starship) theme.
+
+Example:
+
+```
+TERMINAL_THEME_STARSHIP=true
+```
+
+> :exclamation: **Note:**
+> For optimal usage of the `starship` theme in both the terminal and Visual Studio Code, it is recommended to install the `FiraCode Nerd Font`:
+>
+> 1. Visit [Nerd Fonts](https://www.nerdfonts.com/font-downloads) and download "FiraCode Nerd Font".
+> 2. Install the font by double-clicking on the downloaded file.
+>
+> To use the font in Windows Terminal:
+>
+> 1. Go to Settings and navigate to Defaults > Appearance > Font Face.
+> 2. Select `FiraCode Nerd Font` from the dropdown menu.
+>
+> To use the font in Visual Studio Code:
+>
+> 1. Open the settings (File > Preferences > Settings or `Ctrl + ,`).
+> 2. Search for `terminal.integrated.fontFamily`.
+> 3. Set the value to `FiraCode Nerd Font` → This will update the setting as follows: `"terminal.integrated.fontFamily": "FiraCode Nerd Font"`.
+
 ## 📖 Folder Structure
 
 The following diagram provides a schematic representation of the project's folder structure. Each directory and file is briefly described to give an overview of their purpose and function within the project:

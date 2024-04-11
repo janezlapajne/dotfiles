@@ -31,6 +31,7 @@ zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
 zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
 
 source $ZSH/oh-my-zsh.sh # ----> init oh-my-zsh
+source $DOTFILES_ZSH/.env
 
 # History
 HISTFILE=~/.zsh_history
@@ -73,3 +74,8 @@ eval "$(zoxide init zsh --cmd cd)"
 
 # Init fuck
 eval $(thefuck --alias)
+
+# Init starship theme in terminal, else use default $ZSH_THEME
+if [ "$TERMINAL_THEME_STARSHIP" = true ]; then
+	eval "$(starship init zsh)"
+fi
