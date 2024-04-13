@@ -1,6 +1,6 @@
 # 🔥 Elevate Your Development Experience 🔥
 
-A collection of heavily opinionated dotfiles for personalized development environment. These configurations reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
+A collection of heavily opinionated terminal configurations for personalized development environment. These settings reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
 
 ## 🔍 Overview
 
