@@ -1,9 +1,10 @@
 ## Tmux
 
+See: [features](https://github.com/gpakosz/.tmux?tab=readme-ov-file#features).
 
 **Shortcut Key**:
 
-Remapped key to `ctrl + w`  (default: `ctrl + b`)
+Remapped key to `ctrl + a`  (default: `ctrl + b`)
 
 **Sessions**:
 
@@ -29,8 +30,8 @@ Remapped key to `ctrl + w`  (default: `ctrl + b`)
 
 **Panes**:
 
-- Vertical split: `|`
-- Horizontal split: `-`
+- Vertical split: `-`
+- Horizontal split: `_`
 - Swap panes: `o`
 - Show pane numbers: `q`
 - Kill pane: `x`
