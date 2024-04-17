@@ -2,6 +2,8 @@
 
 A collection of heavily opinionated terminal configurations for personalized development environment. These settings reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
 
+![terminal-start](./docs/images/terminal-start.png)
+
 ## 🔍 Overview
 
 The setup is designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment. Some of the tools included:
