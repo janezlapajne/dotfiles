@@ -10,6 +10,7 @@ if ! gh auth status -h github.com &>/dev/null; then
 	info "Not logged in to GitHub, starting login process..."
 	gh auth login --web -h github.com
 	gh extension install github/gh-copilot
+	gh extension install dlvhdr/gh-dash
 	success "Successfully logged in to GitHub."
 else
 	info "Already logged in to GitHub."
