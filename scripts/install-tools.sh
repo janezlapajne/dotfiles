@@ -30,9 +30,6 @@ npm install --global fkill-cli
 # pdm
 curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
-# The fuck
-pip3 install thefuck --user --upgrade
-
 # Tldr
 pip3 install tldr
 

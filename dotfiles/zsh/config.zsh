@@ -11,7 +11,6 @@ plugins=(
 	alias-finder
 	docker
 	docker-compose
-	fd
 	gh
 	git
 	ssh
