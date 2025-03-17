@@ -22,6 +22,7 @@ packages=(
 	wget
 	xclip
 	zsh
+	ripgrep
 )
 
 # Update package list and upgrade all packages
