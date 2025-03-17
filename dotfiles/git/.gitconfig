@@ -1,6 +1,11 @@
 [include]
 path = ~/.gitconfig.local
 
+[core]
+excludesfile = ~/.gitignore
+editor = code --wait
+longpaths = true
+
 [user]
 signingkey = ~/.ssh/id_rsa.pub
 
@@ -9,6 +14,9 @@ format = ssh
 
 [hub]
 protocol = https
+
+[init]
+defaultBranch = main
 
 [alias]
 co = checkout
@@ -23,19 +31,48 @@ status = auto
 branch = auto
 ui = true
 
-[core]
-excludesfile = ~/.gitignore
-editor = code --wait
-longpaths = true
-
 [help]
-autocorrect = 1
+autocorrect = prompt
 
-[init]
-defaultBranch = main
+[column]
+ui = auto
 
-# [credential]
-# helper = GIT_CREDENTIAL_HELPER
+[branch]
+sort = -committerdate
+
+[tag]
+sort = version:refname
+
+[diff]
+algorithm = histogram
+colorMoved = plain
+mnemonicPrefix = true
+renames = true
+
+[push]
+default = simple
+autoSetupRemote = true
+followTags = true
+
+[fetch]
+prune = true
+pruneTags = true
+all = true
+
+[rebase]
+autoSquash = true
+autoStash = true
+updateRefs = true
+
+[pull]
+rebase = true
+
+# [rerere]
+# enabled = true
+# autoupdate = true
+
+# [commit]
+# verbose = true
 
 # [apply]
 # whitespace = nowarn
@@ -46,9 +83,10 @@ defaultBranch = main
 # [difftool]
 # prompt = false
 
-# [push]
-# # See `git help config` (search for push.default)
-# # for more information on different options of the below setting.
-# #
-# # Setting to git 2.0 default to suppress warning message
-# default = simple
+# [core]
+# fsmonitor = true
+# untrackedCache = true
+
+# [merge]
+# (just 'diff3' if git version <2.3)
+# conflictstyle = zdiff3
