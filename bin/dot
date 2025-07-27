@@ -51,14 +51,14 @@ source $DOTFILES_ZSH/utils/prints.sh
 	fi
 )
 
-# Install system packages using apt-get
+# Install system packages
 if $DOTFILES_ZSH/scripts/install-packages.sh; then
 	success "Packages installed successfully."
 else
 	fail "Error installing packages."
 fi
 
-# Install other tools without using apt-get
+# Install other tools
 if $DOTFILES_ZSH/scripts/install-tools.sh; then
 	success "Tools installed successfully."
 else

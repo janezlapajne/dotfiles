@@ -85,9 +85,11 @@ alias rdirn='readlink -f'
 alias mkd='mkdir -pv'
 alias ccat='highlight --out-format=ansi'
 
-# Define alias for clip based on INSIDE_WSL - copy to clipboard
+# Define alias for clip based on platform - copy to clipboard
 if [[ $INSIDE_WSL -eq 1 ]]; then
 	alias clip='clip.exe'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	alias clip='pbcopy'
 else
 	alias clip='xclip -selection clipboard'
 fi

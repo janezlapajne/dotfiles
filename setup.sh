@@ -11,14 +11,11 @@ set -e
 
 echo ''
 
-# If we're on a linux, run dot to install dependencies
-if [ "$(uname -s)" == "Linux" ]; then
-	info "Installing dependencies"
-	if source $DOTFILES_ZSH/bin/dot | while read -r data; do info "$data"; done; then
-		success "Dependencies installed"
-	else
-		fail "Error installing dependencies"
-	fi
+info "Installing dependencies"
+if source $DOTFILES_ZSH/bin/dot | while read -r data; do info "$data"; done; then
+	success "Dependencies installed"
+else
+	fail "Error installing dependencies"
 fi
 
 # Export variables defined in .env

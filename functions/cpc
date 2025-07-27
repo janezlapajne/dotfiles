@@ -12,6 +12,8 @@
 cpc() {
 	if [[ $INSIDE_WSL -eq 1 ]]; then
 		eval $* | clip.exe
+	elif [[ "$OSTYPE" == "darwin"* ]]; then
+		eval $* | pbcopy
 	else
 		eval $* | xclip -selection clipboard
 	fi

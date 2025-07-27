@@ -57,12 +57,13 @@ setopt NO_LIST_BEEP
 unsetopt BEEP # Turn off all beeps
 
 # Add functions to fpath
-chmod go-w "$DOTFILES_ZSH"
-chmod go-w "$DOTFILES_ZSH/functions"
+# chmod go-w "$DOTFILES_ZSH"
+# chmod go-w "$DOTFILES_ZSH/functions"
 fpath=($DOTFILES_ZSH/functions $fpath)
 autoload -U $DOTFILES_ZSH/functions/*(:t)
 
 # Init Atuin for better history
+source "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
 
 # Init aliases for github copilot
@@ -70,9 +71,6 @@ eval "$(gh copilot alias -- zsh)"
 
 # Init zoxide
 eval "$(zoxide init zsh --cmd cd)"
-
-# Init fuck
-eval $(thefuck --alias)
 
 # Init starship theme in terminal, else use default $ZSH_THEME
 if [ "$TERMINAL_THEME_STARSHIP" = true ]; then
