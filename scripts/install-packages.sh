@@ -47,6 +47,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		jq
 		lazydocker
 		lazygit
+		yazi
 	)
 
 	# Update Homebrew and upgrade all packages
