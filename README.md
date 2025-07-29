@@ -6,7 +6,9 @@ A collection of heavily opinionated terminal configurations for personalized dev
 
 ## 🔍 Overview
 
-The setup is designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment. Some of the tools included:
+The setup was initially designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. However, with the change of my primary operating system to [macOS](https://www.apple.com/macos/), the setup has been adapted. The current implementation is optimized for macOS, while the WSL setup remains available but is no longer actively maintained.
+
+The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment. Some of the tools included:
 
 - [Oh-My-Zsh](https://ohmyz.sh/): A community-driven framework for managing Zsh configuration, which includes helpful features such as plugin and theme support.
 - [Tmux](https://github.com/tmux/tmux): A terminal multiplexer that enables multiple terminal sessions within a single window.
@@ -38,6 +40,7 @@ This command generates an `.env` file, which serves as the blueprint for definin
 3. Execute the setup procedure by running
 
 ```bash
+source .env
 ./setup.sh
 ```
 
@@ -58,6 +61,9 @@ Example:
 ```
 GIT_NAME=name
 GIT_EMAIL=email@example.com
+# For macOS
+GIT_CREDENTIAL_HELPER=osxkeychain
+# For WSL
 GIT_CREDENTIAL_HELPER=/mnt/c/Program/Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe
 ```
 
@@ -79,6 +85,8 @@ ATUIN_PASSWORD=password
 ATUIN_KEY=
 ```
 
+If you encounter issues logging in to Atuin during setup, you can manually authenticate by following the steps on the [Atuin docs page](https://docs.atuin.sh/guide/sync/).
+
 ### SSH
 
 - `SSH_EMAIL`: The email address used when generating SSH key.
@@ -90,6 +98,8 @@ Example:
 SSH_EMAIL=email@example.com
 SSH_PASSPHRASE=
 ```
+
+Alternatively, if you already have an SSH key, you can copy your private key to `~/.ssh/id_rsa` and your public key to `~/.ssh/id_rsa.pub`.
 
 ### Terminal
 
@@ -147,7 +157,7 @@ The following diagram provides a schematic representation of the project's folde
 │   └── 📄 ...
 │
 ├── 📂 scripts/                -> Main scripts
-│   ├── 📄 install-packages.sh -> installs system packages using apt-get
+│   ├── 📄 install-packages.sh -> installs system packages using package manager (Homebrew/apt-get)
 │   ├── 📄 install-tools.sh    -> installs other tools, using pip3, npm etc.
 │   ├── 📄 install.sh          -> executes all install.sh scripts
 │   ├── 📄 setup-all.sh        -> executes all setup.sh scripts
