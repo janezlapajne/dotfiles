@@ -1,0 +1,40 @@
+" Normal mode (recursive, like VSCode's vim.normalModeKeyBindings)
+nmap š }
+nmap đ {
+
+" Normal mode non-recursive (like vim.normalModeKeyBindingsNonRecursive)
+nnoremap L H
+nnoremap H L
+nnoremap Y y$
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap za :action CollapseExpandRegion<CR>
+nnoremap zM :action CollapseAllRegions<CR>
+nnoremap zR :action ExpandAllRegions<CR>
+
+" Operator-pending mode (like vim.operatorPendingModeKeyBindings)
+omap L $
+omap H ^
+
+" Visual mode (like vim.visualModeKeyBindings)
+xmap L $
+xmap H ^
+xmap đ {
+xmap š }
+
+" Navigation
+nnoremap <C-h> :action PreviousTab<CR>
+nnoremap <C-l> :action NextTab<CR>
+xnoremap <C-h> :action PreviousTab<CR>
+xnoremap <C-l> :action NextTab<CR>
+inoremap <C-h> <Esc>:action PreviousTab<CR>a
+inoremap <C-l> <Esc>:action NextTab<CR>a
+
+set clipboard=unnamedplus
+set ideajoin
+
+" Comment
+nnoremap gcc :action CommentByLineComment<CR>
+xnoremap gc :action CommentByLineComment<CR>
+nnoremap gbc :action CommentByBlockComment<CR>
+xìinoremap gb :action CommentByBlockComment<CR>
