@@ -38,9 +38,10 @@ alias cp='cp -i'
 alias ln='ln -i'
 
 # Parenting changing perms on /
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
+# Uncomment flag on linux
+alias chown='chown' # --preserve-root'
+alias chmod='chmod' # --preserve-root'
+alias chgrp='chgrp' # --preserve-root'
 
 # Become root
 alias root='sudo -i'
