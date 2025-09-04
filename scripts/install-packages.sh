@@ -48,6 +48,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		lazydocker
 		lazygit
 		yazi
+		ffmpeg
+		p7zip
+		poppler
+		resvg
+		imagemagick
 	)
 
 	# Update Homebrew and upgrade all packages
