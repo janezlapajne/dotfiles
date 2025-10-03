@@ -53,6 +53,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		poppler
 		resvg
 		imagemagick
+		eza
 	)
 
 	# Update Homebrew and upgrade all packages
