@@ -74,6 +74,9 @@ eval "$(gh copilot alias -- zsh)"
 # Init zoxide
 eval "$(zoxide init zsh --cmd cd)"
 
+# Init navi
+eval "$(navi widget zsh)"
+
 # Init starship theme in terminal, else use default $ZSH_THEME
 if [ "$TERMINAL_THEME_STARSHIP" = true ]; then
 	eval "$(starship init zsh)"

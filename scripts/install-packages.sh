@@ -54,6 +54,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		resvg
 		imagemagick
 		eza
+		navi
 	)
 
 	# Update Homebrew and upgrade all packages
