@@ -80,7 +80,7 @@ unsetopt correct
 setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
 setopt NO_LIST_BEEP
-unsetopt BEEP # Turn off all beeps
+# unsetopt BEEP # Turn off all beeps
 
 # Add functions to fpath
 # chmod go-w "$DOTFILES_ZSH"
@@ -100,6 +100,9 @@ eval "$(zoxide init zsh --cmd cd)"
 
 # Init navi
 eval "$(navi widget zsh)"
+
+# Init Homebrew
+eval "$(brew shellenv)"
 
 # Init starship theme in terminal, else use default $ZSH_THEME
 if [ "$TERMINAL_THEME_STARSHIP" = true ]; then
