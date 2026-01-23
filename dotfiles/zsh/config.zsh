@@ -92,9 +92,6 @@ autoload -U $DOTFILES_ZSH/functions/*(:t)
 source "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
 
-# Init aliases for github copilot
-eval "$(gh copilot alias -- zsh)"
-
 # Init zoxide
 eval "$(zoxide init zsh --cmd cd)"
 

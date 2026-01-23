@@ -29,6 +29,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		fzf
 		git
 		gh
+		copilot-cli
 		httpie
 		pipx
 		python3
