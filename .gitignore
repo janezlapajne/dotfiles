@@ -2,3 +2,5 @@
 .tmux.conf.local
 .env
 .history
+.claude
+CLAUDE.md
