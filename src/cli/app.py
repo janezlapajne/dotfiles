@@ -4,7 +4,7 @@ import subprocess
 import typer
 
 from cli import log
-from cli.config import Config
+from cli.config import DEFAULT_EDITOR, Config
 from cli.env import update_env as _update_env
 from cli.packages import install_packages
 from cli.runner import run
@@ -23,7 +23,7 @@ def main(
     config = Config.load()
 
     if edit:
-        editor = os.environ.get("EDITOR", "vim")
+        editor = os.environ.get("EDITOR", DEFAULT_EDITOR)
         subprocess.run([editor, str(config.dotfiles_zsh)])
         raise typer.Exit()
 

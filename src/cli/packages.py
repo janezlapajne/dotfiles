@@ -8,8 +8,7 @@ from cli.runner import command_exists, run
 def install_packages(config: Config) -> None:
     log.info("Installing packages")
 
-    packages_toml = config.dotfiles_zsh / "conf" / "packages.toml"
-    with open(packages_toml, "rb") as f:
+    with open(config.packages_file, "rb") as f:
         pkg_config = tomllib.load(f)
 
     brew_packages: list[str] = pkg_config["brew"]["packages"]

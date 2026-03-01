@@ -11,8 +11,8 @@ _HEADER = """\
 
 
 def update_env(config: Config) -> None:
-    input_file = config.dotfiles_zsh / ".env"
-    output_file = config.dotfiles_zsh / ".env.example"
+    input_file = config.env_file
+    output_file = config.env_example_file
 
     if not input_file.exists():
         log.fail(".env file not found. Create one from .env.example first.")
