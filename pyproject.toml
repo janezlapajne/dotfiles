@@ -3,7 +3,7 @@ name = "dotfiles"
 version = "1.0.0"
 description = "Personal dotfiles management CLI"
 requires-python = ">=3.12"
-dependencies = ["typer>=0.9", "rich>=13"]
+dependencies = ["typer>=0.9", "rich>=13", "python-dotenv>=1.0"]
 
 [project.scripts]
 dotfiles = "cli.app:app_main"

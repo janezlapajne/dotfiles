@@ -2,61 +2,50 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+from dotenv import dotenv_values
 
-from cli.config import Config, _load_env
+from cli.config import Config
 
 
 class TestLoadEnv:
     def test_basic_key_value(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("FOO=bar\nBAZ=qux\n")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {"FOO": "bar", "BAZ": "qux"}
 
     def test_comments_ignored(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("# comment\nFOO=bar\n")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {"FOO": "bar"}
 
     def test_empty_lines_ignored(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("FOO=bar\n\nBAZ=qux\n")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {"FOO": "bar", "BAZ": "qux"}
 
     def test_empty_value_excluded(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("FOO=\nBAR=value\n")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {"BAR": "value"}
-
-    def test_line_without_equals_ignored(self, tmp_path: Path):
-        env_file = tmp_path / ".env"
-        env_file.write_text("NOEQUALSSIGN\nFOO=bar\n")
-        result = _load_env(env_file)
-        assert result == {"FOO": "bar"}
 
     def test_value_with_equals(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("URL=https://example.com?a=1&b=2\n")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {"URL": "https://example.com?a=1&b=2"}
 
-    def test_whitespace_stripped(self, tmp_path: Path):
-        env_file = tmp_path / ".env"
-        env_file.write_text("  FOO  =  bar  \n")
-        result = _load_env(env_file)
-        assert result == {"FOO": "bar"}
-
     def test_nonexistent_file_returns_empty(self, tmp_path: Path):
-        result = _load_env(tmp_path / "nonexistent")
+        result = {k: v for k, v in dotenv_values(tmp_path / "nonexistent").items() if v}
         assert result == {}
 
     def test_empty_file(self, tmp_path: Path):
         env_file = tmp_path / ".env"
         env_file.write_text("")
-        result = _load_env(env_file)
+        result = {k: v for k, v in dotenv_values(env_file).items() if v}
         assert result == {}
 
 

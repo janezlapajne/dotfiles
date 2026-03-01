@@ -1,23 +1,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-
-def _load_env(path: Path) -> dict[str, str]:
-    env: dict[str, str] = {}
-    if not path.exists():
-        return env
-    for line in path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        key = key.strip()
-        value = value.strip()
-        if key and value:
-            env[key] = value
-    return env
+from dotenv import dotenv_values
 
 
 @dataclass(frozen=True)
@@ -31,7 +15,7 @@ class Config:
         return self.dotfiles_zsh / "conf" / "dotfiles"
 
     @classmethod
-    def load(cls) -> Config:
+    def load(cls) -> "Config":
         dotfiles_zsh = Path.home() / ".dotfiles"
-        env = _load_env(dotfiles_zsh / ".env")
+        env = {k: v for k, v in dotenv_values(dotfiles_zsh / ".env").items() if v}
         return cls(dotfiles_zsh=dotfiles_zsh, env=env)
