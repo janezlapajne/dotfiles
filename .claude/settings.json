@@ -1,0 +1,17 @@
+{
+	"permissions": {
+		"allow": [
+			"Read(/**)",
+			"Edit(/**)",
+			"Write(/**)",
+			"Glob(/**)",
+			"Grep(/**)",
+			"Bash(*)"
+		],
+		"defaultMode": "acceptEdits"
+	},
+	"sandbox": {
+		"enabled": true,
+		"autoAllowBashIfSandboxed": true
+	}
+}
