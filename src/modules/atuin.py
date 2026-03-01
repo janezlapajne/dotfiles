@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from cli import log
 from cli.runner import command_exists, run
 from modules.base import DotfileModule

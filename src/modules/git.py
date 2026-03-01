@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from cli import log
 from modules.base import DotfileModule
 

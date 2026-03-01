@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from cli.config import Config
 from modules.git import GitModule
 

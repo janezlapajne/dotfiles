@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from cli.config import Config
 from modules.atuin import AtuinModule
 from modules.base import DotfileModule
