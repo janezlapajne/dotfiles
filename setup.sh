@@ -1,40 +1,15 @@
 #!/usr/bin/env bash
-#
-# bootstrap installs things.
-
-cd "$(dirname "$0")"
-source ./core/paths.sh
-source $DOTFILES_ZSH/utils/prints.sh
-source $DOTFILES_ZSH/core/setup-dotfiles.sh
-
 set -e
+cd "$(dirname "$0")"
 
-echo ''
-
-info "Installing dependencies"
-if source $DOTFILES_ZSH/bin/dot | while read -r data; do info "$data"; done; then
-	success "Dependencies installed"
-else
-	fail "Error installing dependencies"
+# Ensure uv is available
+if ! command -v uv &>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Export variables defined in .env
-while IFS='=' read -r key value; do
-	# if key and value not empty:
-	if [ -n "$key" ] && [ -n "$value" ]; then
-		export $key=$value
-	fi
-done <.env
+# Install the dotfiles package as a uv tool (editable mode)
+uv tool install --editable . --force
 
-# Run all setup scripts
-if source $DOTFILES_ZSH/scripts/setup-all.sh | while read -r data; do info "$data"; done; then
-	success "Setup scripts executed successfully."
-else
-	fail "Error executing setup scripts."
-fi
-
-# Link all the dotfiles
-setup_dotfiles
-
-echo ''
-echo '  Done!'
+# Run the full bootstrap
+dotfiles setup

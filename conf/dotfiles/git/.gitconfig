@@ -1,0 +1,92 @@
+[include]
+path = ~/.gitconfig.local
+
+[core]
+excludesfile = ~/.gitignore
+editor = code --wait
+longpaths = true
+
+[user]
+signingkey = ~/.ssh/id_rsa.pub
+
+[gpg]
+format = ssh
+
+[hub]
+protocol = https
+
+[init]
+defaultBranch = main
+
+[alias]
+co = checkout
+promote = !$DOTFILES_ZSH/conf/bin/git-promote
+wtf = !$DOTFILES_ZSH/conf/bin/git-wtf
+rank-contributors = !$DOTFILES_ZSH/conf/bin/git-rank-contributors
+count = !git shortlog -sn
+
+[color]
+diff = auto
+status = auto
+branch = auto
+ui = true
+
+[help]
+autocorrect = prompt
+
+[column]
+ui = auto
+
+[branch]
+sort = -committerdate
+
+[tag]
+sort = version:refname
+
+[diff]
+algorithm = histogram
+colorMoved = plain
+mnemonicPrefix = true
+renames = true
+
+[push]
+default = simple
+autoSetupRemote = true
+followTags = true
+
+[fetch]
+prune = true
+pruneTags = true
+all = true
+
+[rebase]
+autoSquash = true
+autoStash = true
+updateRefs = true
+
+[pull]
+rebase = true
+
+# [rerere]
+# enabled = true
+# autoupdate = true
+
+# [commit]
+# verbose = true
+
+# [apply]
+# whitespace = nowarn
+
+# [mergetool]
+# keepBackup = false
+
+# [difftool]
+# prompt = false
+
+# [core]
+# fsmonitor = true
+# untrackedCache = true
+
+# [merge]
+# (just 'diff3' if git version <2.3)
+# conflictstyle = zdiff3
