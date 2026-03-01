@@ -1,0 +1,38 @@
+[brew]
+packages = [
+    "curl",
+    "fzf",
+    "git",
+    "gh",
+    "copilot-cli",
+    "httpie",
+    "pipx",
+    "python3",
+    "tmux",
+    "vim",
+    "wget",
+    "zsh",
+    "ripgrep",
+    "htop",
+    "tlrc",
+    "zoxide",
+    "bat",
+    "fd",
+    "pdm",
+    "uv",
+    "jq",
+    "lazydocker",
+    "lazygit",
+    "yazi",
+    "ffmpeg",
+    "p7zip",
+    "poppler",
+    "resvg",
+    "imagemagick",
+    "eza",
+    "navi",
+]
+
+casks = [
+    "font-fira-code-nerd-font",
+]

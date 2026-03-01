@@ -1,48 +1,19 @@
+import tomllib
+
 from cli import log
 from cli.config import Config
 from cli.runner import command_exists, run
 
-MACOS_PACKAGES: list[str] = [
-    "curl",
-    "fzf",
-    "git",
-    "gh",
-    "copilot-cli",
-    "httpie",
-    "pipx",
-    "python3",
-    "tmux",
-    "vim",
-    "wget",
-    "zsh",
-    "ripgrep",
-    "htop",
-    "tlrc",
-    "zoxide",
-    "bat",
-    "fd",
-    "pdm",
-    "uv",
-    "jq",
-    "lazydocker",
-    "lazygit",
-    "yazi",
-    "ffmpeg",
-    "p7zip",
-    "poppler",
-    "resvg",
-    "imagemagick",
-    "eza",
-    "navi",
-]
-
-MACOS_CASKS: list[str] = [
-    "font-fira-code-nerd-font",
-]
-
 
 def install_packages(config: Config) -> None:
     log.info("Installing packages")
+
+    packages_toml = config.dotfiles_zsh / "conf" / "packages.toml"
+    with open(packages_toml, "rb") as f:
+        pkg_config = tomllib.load(f)
+
+    brew_packages: list[str] = pkg_config["brew"]["packages"]
+    brew_casks: list[str] = pkg_config["brew"]["casks"]
 
     if not command_exists("brew"):
         log.info("Installing Homebrew...")
@@ -54,10 +25,10 @@ def install_packages(config: Config) -> None:
     run(["brew", "update"])
     run(["brew", "upgrade"])
 
-    for cask in MACOS_CASKS:
+    for cask in brew_casks:
         run(["brew", "install", "--cask", cask])
 
-    for pkg in MACOS_PACKAGES:
+    for pkg in brew_packages:
         run(["brew", "install", pkg])
 
     log.success("Packages installed successfully.")
