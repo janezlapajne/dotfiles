@@ -12,4 +12,4 @@ fi
 uv tool install --editable . --force
 
 # Run the full bootstrap
-dotfiles setup
+dot --setup

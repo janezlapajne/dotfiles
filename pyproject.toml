@@ -6,8 +6,7 @@ requires-python = ">=3.12"
 dependencies = ["typer>=0.9", "rich>=13", "python-dotenv>=1.0"]
 
 [project.scripts]
-dotfiles = "cli.app:app_main"
-dot = "cli.app:dot_main"
+dot = "cli.app:app_main"
 
 [dependency-groups]
 dev = ["pytest>=8.0", "pytest-mock>=3.12", "ruff>=0.9"]

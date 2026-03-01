@@ -11,14 +11,36 @@ from cli.runner import run
 from cli.symlinks import setup_dotfiles
 from modules import get_all_modules
 
-app = typer.Typer(help="Dotfiles management CLI")
 
-
-@app.command()
-def setup() -> None:
-    """Full bootstrap: install packages, tools, modules, run setup, create symlinks."""
+def main(
+    edit: bool = typer.Option(False, "-e", "--edit", help="Open dotfiles directory for editing"),
+    setup: bool = typer.Option(False, "--setup", help="Full bootstrap: install, setup, symlink"),
+    env_update: bool = typer.Option(
+        False, "--env-update", help="Regenerate .env.example from .env"
+    ),
+) -> None:
+    """Dotfiles management CLI."""
     config = Config.load()
 
+    if edit:
+        editor = os.environ.get("EDITOR", "vim")
+        subprocess.run([editor, str(config.dotfiles_zsh)])
+        raise typer.Exit()
+
+    if env_update:
+        _update_env(config)
+        raise typer.Exit()
+
+    if setup:
+        _do_setup(config)
+        raise typer.Exit()
+
+    # Default behavior
+    _do_update(config)
+
+
+def _do_setup(config: Config) -> None:
+    """Full bootstrap: install packages, tools, modules, run setup, create symlinks."""
     log.info("Installing dependencies")
     install_packages(config)
 
@@ -34,23 +56,11 @@ def setup() -> None:
 
     setup_dotfiles(config)
 
-    print()
-    print("  Done!")
+    log.success("Done!")
 
 
-@app.command()
-def dot(
-    edit: bool = typer.Option(False, "-e", "--edit", help="Open dotfiles directory for editing"),
-) -> None:
+def _do_update(config: Config) -> None:
     """Maintenance: pull latest, install packages/tools/modules."""
-    config = Config.load()
-
-    if edit:
-        editor = os.environ.get("EDITOR", "vim")
-        subprocess.run([editor, str(config.dotfiles_zsh)])
-        raise typer.Exit()
-
-    # Update repository
     log.info("Updating repository...")
     result = run(["git", "pull", "--ff-only"], cwd=config.dotfiles_zsh, check=False)
     if result.returncode == 0:
@@ -58,31 +68,13 @@ def dot(
     else:
         log.fail("Error updating repository. Fast-forward merge not possible.")
 
-    # Install packages
     install_packages(config)
 
-    # Install modules
     for module in get_all_modules(config):
         module.run_install()
 
     log.success("Installation scripts executed successfully.")
 
 
-@app.command(name="update-env")
-def update_env_cmd() -> None:
-    """Regenerate .env.example from .env."""
-    config = Config.load()
-    _update_env(config)
-
-
 def app_main() -> None:
-    app()
-
-
-def dot_main() -> None:
-    """Entry point for the `dot` shortcut command."""
-    # Simulate calling `dotfiles dot` with sys.argv forwarded
-    import sys
-
-    sys.argv = ["dotfiles", "dot"] + sys.argv[1:]
-    app()
+    typer.run(main)
