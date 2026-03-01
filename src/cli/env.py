@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from cli import log
 from cli.config import Config
 

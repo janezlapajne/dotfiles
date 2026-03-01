@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cli.runner import command_exists, run
+from cli.runner import run
 from modules.base import DotfileModule
 
 
