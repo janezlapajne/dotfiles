@@ -6,8 +6,6 @@ from modules.base import DotfileModule
 
 
 class VimModule(DotfileModule):
-    name = "vim"
-
     def install(self) -> None:
         vim_runtime = Path.home() / ".vim_runtime"
         if vim_runtime.is_dir():

@@ -6,8 +6,6 @@ from modules.base import DotfileModule
 
 
 class SshModule(DotfileModule):
-    name = "ssh"
-
     def setup(self) -> None:
         key_path = Path.home() / ".ssh" / "id_rsa"
         if key_path.exists():

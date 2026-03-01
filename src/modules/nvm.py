@@ -3,8 +3,6 @@ from modules.base import DotfileModule
 
 
 class NvmModule(DotfileModule):
-    name = "nvm"
-
     def install(self) -> None:
         run(
             "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash",

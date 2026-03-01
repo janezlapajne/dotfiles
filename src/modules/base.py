@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 from cli import log
 from cli.config import Config
@@ -6,8 +6,8 @@ from cli.config import Config
 
 class DotfileModule(ABC):
     @property
-    @abstractmethod
-    def name(self) -> str: ...
+    def name(self) -> str:
+        return type(self).__name__
 
     def __init__(self, config: Config) -> None:
         self.config = config

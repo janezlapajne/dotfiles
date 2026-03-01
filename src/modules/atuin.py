@@ -4,8 +4,6 @@ from modules.base import DotfileModule
 
 
 class AtuinModule(DotfileModule):
-    name = "atuin"
-
     def install(self) -> None:
         if command_exists("atuin"):
             log.info("Atuin already installed")

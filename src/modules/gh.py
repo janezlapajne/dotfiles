@@ -4,8 +4,6 @@ from modules.base import DotfileModule
 
 
 class GhModule(DotfileModule):
-    name = "gh"
-
     def install(self) -> None:
         # Update copilot extension if logged in
         result = run(

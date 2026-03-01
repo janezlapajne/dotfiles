@@ -5,8 +5,6 @@ from modules.base import DotfileModule
 
 
 class ZshModule(DotfileModule):
-    name = "zsh"
-
     def install(self) -> None:
         oh_my_zsh = Path.home() / ".oh-my-zsh"
         if not oh_my_zsh.is_dir():

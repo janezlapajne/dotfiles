@@ -3,8 +3,6 @@ from modules.base import DotfileModule
 
 
 class GitModule(DotfileModule):
-    name = "git"
-
     def setup(self) -> None:
         local_config = self.config.dotfiles_root / "git" / ".gitconfig.local"
         if local_config.exists():

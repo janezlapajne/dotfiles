@@ -6,8 +6,6 @@ from modules.base import DotfileModule
 
 
 class TmuxModule(DotfileModule):
-    name = "tmux"
-
     def install(self) -> None:
         tmux_dir = Path.home() / ".tmux"
         if tmux_dir.is_dir():
