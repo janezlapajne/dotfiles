@@ -1,5 +1,6 @@
 # Load general paths first
-source $HOME/.dotfiles/conf/core/paths.sh
+export DOTFILES_ZSH=$HOME/.dotfiles
+export DOTFILES_ROOT=$DOTFILES_ZSH/conf/dotfiles
 
 # Stash environment variables in ~/.localrc. This means they'll stay out
 # of main dotfiles repository (which may be public, like this one)
