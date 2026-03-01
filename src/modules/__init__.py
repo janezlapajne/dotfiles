@@ -1,7 +1,6 @@
 from cli.config import Config
 from modules.atuin import AtuinModule
 from modules.base import DotfileModule
-from modules.docker import DockerModule
 from modules.gh import GhModule
 from modules.git import GitModule
 from modules.nvm import NvmModule
@@ -14,7 +13,6 @@ from modules.zsh import ZshModule
 _MODULE_CLASSES: list[type[DotfileModule]] = [
     ZshModule,
     AtuinModule,
-    DockerModule,
     GhModule,
     GitModule,
     NvmModule,

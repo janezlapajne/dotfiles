@@ -24,6 +24,3 @@ class ZshModule(DotfileModule):
                 "curl -sS https://starship.rs/install.sh | sh -s -- -y",
                 shell=True,
             )
-
-    def setup(self) -> None:
-        pass
