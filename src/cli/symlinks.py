@@ -36,10 +36,7 @@ def _find_dotfiles(dotfiles_root: Path) -> list[Path]:
             # Depth 2: nested dirs (e.g. .ssh/config)
             if item.is_dir() and not item.name.startswith("."):
                 for nested in sorted(item.iterdir()):
-                    if (
-                        nested.name.startswith(".")
-                        and nested.suffix not in _EXCLUDED_SUFFIXES
-                    ):
+                    if nested.name.startswith(".") and nested.suffix not in _EXCLUDED_SUFFIXES:
                         results.append(nested)
     return results
 

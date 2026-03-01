@@ -9,8 +9,7 @@ class GitModule(DotfileModule):
         local_config = self.config.dotfiles_root / "git" / ".gitconfig.local"
         if local_config.exists():
             log.warn(
-                "Gitconfig already setup. Delete"
-                f" {local_config} and run setup again to overwrite."
+                f"Gitconfig already setup. Delete {local_config} and run setup again to overwrite."
             )
             return
 

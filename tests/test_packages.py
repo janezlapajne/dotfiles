@@ -38,11 +38,7 @@ class TestInstallPackages:
         assert ["brew", "update"] in cmds
         assert ["brew", "upgrade"] in cmds
         # Check at least one package install
-        assert any(
-            c == ["brew", "install", pkg]
-            for c in cmds
-            for pkg in MACOS_PACKAGES
-        )
+        assert any(c == ["brew", "install", pkg] for c in cmds for pkg in MACOS_PACKAGES)
 
     def test_macos_installs_homebrew_if_missing(self, macos_config: Config, mocker):
         mock_run = mocker.patch("cli.packages.run")

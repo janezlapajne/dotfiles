@@ -26,9 +26,7 @@ class TestRun:
 
     def test_run_string_command_with_shell(self, mocker):
         mock_run = mocker.patch("cli.runner.subprocess.run")
-        mock_run.return_value = subprocess.CompletedProcess(
-            args="echo hello", returncode=0
-        )
+        mock_run.return_value = subprocess.CompletedProcess(args="echo hello", returncode=0)
         run("echo hello", shell=True)
         mock_run.assert_called_once_with(
             "echo hello",
@@ -57,9 +55,7 @@ class TestRun:
 
     def test_run_check_false_no_exception(self, mocker):
         mock_run = mocker.patch("cli.runner.subprocess.run")
-        mock_run.return_value = subprocess.CompletedProcess(
-            args=["fail"], returncode=1
-        )
+        mock_run.return_value = subprocess.CompletedProcess(args=["fail"], returncode=1)
         result = run(["fail"], check=False)
         assert result.returncode == 1
 

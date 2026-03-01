@@ -84,7 +84,11 @@ class TestFindDotfiles:
 
     def test_finds_multiple_modules(self, tmp_path: Path):
         config = _make_config(tmp_path)
-        for mod_name, dotfile in [("git", ".gitconfig"), ("vim", ".vimrc"), ("tmux", ".tmux.conf")]:
+        for mod_name, dotfile in [
+            ("git", ".gitconfig"),
+            ("vim", ".vimrc"),
+            ("tmux", ".tmux.conf"),
+        ]:
             mod_dir = config.dotfiles_root / mod_name
             mod_dir.mkdir()
             (mod_dir / dotfile).touch()

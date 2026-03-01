@@ -30,17 +30,14 @@ class TmuxModule(DotfileModule):
         (tmux_module_dir / "tmux.conf.local").write_text(
             (tmux_dir / ".tmux.conf.local").read_text()
         )
-        (tmux_module_dir / ".tmux.conf").write_text(
-            (tmux_dir / ".tmux.conf").read_text()
-        )
+        (tmux_module_dir / ".tmux.conf").write_text((tmux_dir / ".tmux.conf").read_text())
 
     def setup(self) -> None:
         tmux_module_dir = self.config.dotfiles_root / "tmux"
         local_conf = tmux_module_dir / ".tmux.conf.local"
         if local_conf.exists():
             log.warn(
-                "Local tmux already setup. Delete"
-                f" {local_conf} and run setup again to overwrite."
+                f"Local tmux already setup. Delete {local_conf} and run setup again to overwrite."
             )
             return
 
