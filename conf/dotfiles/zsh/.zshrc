@@ -2,12 +2,6 @@
 export DOTFILES_ZSH=$HOME/.dotfiles
 export DOTFILES_ROOT=$DOTFILES_ZSH/conf/dotfiles
 
-# Stash environment variables in ~/.localrc. This means they'll stay out
-# of main dotfiles repository (which may be public, like this one)
-if [[ -e ~/.localrc ]]; then
-	source ~/.localrc
-fi
-
 # All .zsh files in dotfiles dir
 typeset -U config_files
 config_files=($DOTFILES_ROOT/**/*.zsh)
@@ -37,3 +31,8 @@ do
 done
 
 unset config_files
+
+# Load local config last so machine-specific overrides always win
+if [[ -e ~/.localrc ]]; then
+	source ~/.localrc
+fi
