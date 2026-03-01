@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from modules.ssh import SshModule
 
 
@@ -60,7 +60,6 @@ class TestSshSetup:
         config = Config(
             dotfiles_zsh=tmp_path,
             home=tmp_path / "home",
-            os=OperatingSystem.MACOS,
             env={"SSH_EMAIL": "test@example.com", "SSH_PASSPHRASE": ""},
         )
         fake_home = config.home

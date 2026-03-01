@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from cli.symlinks import _find_dotfiles, setup_dotfiles
 
 
@@ -19,7 +19,6 @@ def _make_config(tmp_path: Path) -> Config:
     return Config(
         dotfiles_zsh=dotfiles_zsh,
         home=home,
-        os=OperatingSystem.MACOS,
         env={},
     )
 

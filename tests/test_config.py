@@ -5,25 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from cli.config import Config, OperatingSystem, _load_env
-
-
-class TestOperatingSystem:
-    def test_detect_macos(self):
-        with patch("cli.config.platform.system", return_value="Darwin"):
-            assert OperatingSystem.detect() == OperatingSystem.MACOS
-
-    def test_detect_linux(self):
-        with patch("cli.config.platform.system", return_value="Linux"):
-            assert OperatingSystem.detect() == OperatingSystem.LINUX
-
-    def test_detect_unknown_defaults_to_linux(self):
-        with patch("cli.config.platform.system", return_value="Windows"):
-            assert OperatingSystem.detect() == OperatingSystem.LINUX
-
-    def test_enum_values(self):
-        assert OperatingSystem.MACOS.value == "macos"
-        assert OperatingSystem.LINUX.value == "linux"
+from cli.config import Config, _load_env
 
 
 class TestLoadEnv:

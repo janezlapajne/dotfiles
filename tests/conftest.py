@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 
 
 @pytest.fixture
@@ -29,7 +29,6 @@ def macos_config(tmp_path: Path) -> Config:
     return Config(
         dotfiles_zsh=dotfiles_zsh,
         home=tmp_path / "home",
-        os=OperatingSystem.MACOS,
         env={
             "GIT_NAME": "Test User",
             "GIT_EMAIL": "test@example.com",
@@ -42,18 +41,4 @@ def macos_config(tmp_path: Path) -> Config:
             "ATUIN_KEY": "mykey",
             "TERMINAL_THEME_STARSHIP": "false",
         },
-    )
-
-
-@pytest.fixture
-def linux_config(tmp_path: Path) -> Config:
-    """Config pointing at a temporary directory, simulating Linux."""
-    dotfiles_zsh = tmp_path / ".dotfiles"
-    dotfiles_zsh.mkdir()
-    (dotfiles_zsh / "conf" / "dotfiles").mkdir(parents=True)
-    return Config(
-        dotfiles_zsh=dotfiles_zsh,
-        home=tmp_path / "home",
-        os=OperatingSystem.LINUX,
-        env={},
     )

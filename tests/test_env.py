@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from cli.env import update_env
 
 
@@ -15,7 +15,6 @@ class TestUpdateEnv:
         return Config(
             dotfiles_zsh=dotfiles_zsh,
             home=tmp_path / "home",
-            os=OperatingSystem.MACOS,
             env={},
         )
 

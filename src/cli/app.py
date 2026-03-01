@@ -11,7 +11,6 @@ from cli.env import update_env as _update_env
 from cli.packages import install_packages
 from cli.runner import run
 from cli.symlinks import setup_dotfiles
-from cli.tools import install_tools
 from modules import get_all_modules
 
 app = typer.Typer(help="Dotfiles management CLI")
@@ -24,7 +23,6 @@ def setup() -> None:
 
     log.info("Installing dependencies")
     install_packages(config)
-    install_tools(config)
 
     for module in get_all_modules(config):
         module.run_install()
@@ -64,9 +62,6 @@ def dot(
 
     # Install packages
     install_packages(config)
-
-    # Install tools
-    install_tools(config)
 
     # Install modules
     for module in get_all_modules(config):

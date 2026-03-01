@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from modules.atuin import AtuinModule
 
 
@@ -46,7 +46,6 @@ class TestAtuinSetup:
         config = Config(
             dotfiles_zsh=tmp_path,
             home=tmp_path / "home",
-            os=OperatingSystem.MACOS,
             env={
                 "ATUIN_USERNAME": "user",
                 "ATUIN_EMAIL": "user@test.com",
@@ -68,7 +67,6 @@ class TestAtuinSetup:
         config = Config(
             dotfiles_zsh=tmp_path,
             home=tmp_path / "home",
-            os=OperatingSystem.MACOS,
             env={},
         )
         module = AtuinModule(config)

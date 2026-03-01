@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from modules.base import DotfileModule
 
 
@@ -32,7 +32,7 @@ class TestDotfileModule:
             class BadModule(DotfileModule):
                 pass
 
-            BadModule(Config(os=OperatingSystem.MACOS, env={}))
+            BadModule(Config(env={}))
 
     def test_concrete_module_name(self, macos_config: Config):
         module = ConcreteModule(macos_config)

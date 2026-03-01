@@ -1,21 +1,7 @@
 from __future__ import annotations
 
-import platform
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
-
-
-class OperatingSystem(Enum):
-    MACOS = "macos"
-    LINUX = "linux"
-
-    @classmethod
-    def detect(cls) -> OperatingSystem:
-        system = platform.system()
-        if system == "Darwin":
-            return cls.MACOS
-        return cls.LINUX
 
 
 def _load_env(path: Path) -> dict[str, str]:
@@ -40,7 +26,6 @@ def _load_env(path: Path) -> dict[str, str]:
 class Config:
     dotfiles_zsh: Path = field(default_factory=lambda: Path.home() / ".dotfiles")
     home: Path = field(default_factory=Path.home)
-    os: OperatingSystem = field(default_factory=OperatingSystem.detect)
     env: dict[str, str] = field(default_factory=dict)
 
     @property

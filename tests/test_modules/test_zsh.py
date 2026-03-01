@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import patch
 
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from modules.zsh import ZshModule
 
 
@@ -44,7 +44,6 @@ class TestZshInstall:
         config = Config(
             dotfiles_zsh=tmp_path,
             home=fake_home,
-            os=OperatingSystem.MACOS,
             env={"TERMINAL_THEME_STARSHIP": "true"},
         )
 

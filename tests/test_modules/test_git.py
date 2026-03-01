@@ -1,28 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
-
-import pytest
-
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from modules.git import GitModule
-
-
-class TestGitModuleInstall:
-    def test_skips_on_macos(self, macos_config: Config, mocker):
-        mock_run = mocker.patch("modules.git.run")
-        module = GitModule(macos_config)
-        module.install()
-        mock_run.assert_not_called()
-
-    def test_installs_lazygit_on_linux(self, linux_config: Config, mocker):
-        mock_run = mocker.patch("modules.git.run")
-        module = GitModule(linux_config)
-        module.install()
-        mock_run.assert_called_once()
-        call_args = mock_run.call_args
-        assert call_args[1]["shell"] is True
-        assert "lazygit" in call_args[0][0]
 
 
 class TestGitModuleSetup:

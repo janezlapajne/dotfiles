@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-import pytest
-
-from cli.config import Config, OperatingSystem
+from cli.config import Config
 from cli.packages import (
-    LINUX_PACKAGES,
     MACOS_CASKS,
     MACOS_PACKAGES,
     install_packages,
@@ -15,9 +12,6 @@ class TestPackageLists:
     def test_macos_packages_not_empty(self):
         assert len(MACOS_PACKAGES) > 0
 
-    def test_linux_packages_not_empty(self):
-        assert len(LINUX_PACKAGES) > 0
-
     def test_macos_casks_not_empty(self):
         assert len(MACOS_CASKS) > 0
 
@@ -25,17 +19,12 @@ class TestPackageLists:
         for pkg in ["git", "vim", "zsh", "tmux", "curl", "fzf", "ripgrep"]:
             assert pkg in MACOS_PACKAGES, f"Missing essential macOS package: {pkg}"
 
-    def test_linux_packages_contains_essentials(self):
-        for pkg in ["git", "vim", "zsh", "tmux", "curl", "fzf", "ripgrep"]:
-            assert pkg in LINUX_PACKAGES, f"Missing essential Linux package: {pkg}"
-
     def test_macos_has_brew_specific_packages(self):
         for pkg in ["gh", "uv", "eza", "bat", "fd", "lazygit"]:
             assert pkg in MACOS_PACKAGES
 
     def test_no_duplicate_packages(self):
         assert len(MACOS_PACKAGES) == len(set(MACOS_PACKAGES))
-        assert len(LINUX_PACKAGES) == len(set(LINUX_PACKAGES))
         assert len(MACOS_CASKS) == len(set(MACOS_CASKS))
 
 
@@ -76,25 +65,3 @@ class TestInstallPackages:
         cmds = [call.args[0] for call in mock_run.call_args_list]
         for cask in MACOS_CASKS:
             assert ["brew", "install", "--cask", cask] in cmds
-
-    def test_linux_uses_apt(self, linux_config: Config, mocker):
-        mock_run = mocker.patch("cli.packages.run")
-
-        install_packages(linux_config)
-
-        cmds = [call.args[0] for call in mock_run.call_args_list]
-        assert ["sudo", "apt-get", "update"] in cmds
-        assert ["sudo", "apt-get", "upgrade", "-y"] in cmds
-        assert any(
-            c == ["sudo", "apt-get", "install", "-y", pkg]
-            for c in cmds
-            for pkg in LINUX_PACKAGES
-        )
-
-    def test_linux_does_not_call_brew(self, linux_config: Config, mocker):
-        mock_run = mocker.patch("cli.packages.run")
-
-        install_packages(linux_config)
-
-        cmds = [call.args[0] for call in mock_run.call_args_list]
-        assert not any("brew" in str(c) for c in cmds)
