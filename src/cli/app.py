@@ -5,7 +5,7 @@ import typer
 
 from cli import log
 from cli.config import DEFAULT_EDITOR, Config
-from cli.env import update_env as _update_env
+from cli.env import update_env
 from cli.packages import install_packages
 from cli.runner import run
 from cli.symlinks import setup_dotfiles
@@ -28,7 +28,7 @@ def main(
         raise typer.Exit()
 
     if env_update:
-        _update_env(config)
+        update_env(config)
         raise typer.Exit()
 
     if setup:
