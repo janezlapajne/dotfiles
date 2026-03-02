@@ -9,6 +9,4 @@
 #   cpc echo hello
 #
 
-cpc() {
-	eval $* | pbcopy
-}
+eval $* | pbcopy
