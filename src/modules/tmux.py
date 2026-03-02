@@ -1,13 +1,12 @@
-from pathlib import Path
-
 from cli import log
+from cli.config import TMUX_CONF, TMUX_CONF_LOCAL, TMUX_CONF_LOCAL_TEMPLATE
 from cli.runner import run
 from modules.base import DotfileModule
 
 
 class TmuxModule(DotfileModule):
     def install(self) -> None:
-        tmux_dir = Path.home() / ".tmux"
+        tmux_dir = self.config.tmux_dir
         if tmux_dir.is_dir():
             log.info("Updating .tmux")
             run(["git", "pull"], cwd=tmux_dir)
@@ -23,16 +22,18 @@ class TmuxModule(DotfileModule):
                 ]
             )
 
-        tmux_module_dir = self.config.dotfiles_root / "tmux"
+        tmux_module_dir = self.config.tmux_module_dir
         # Copy config files from cloned repo to dotfiles module
-        (tmux_module_dir / "tmux.conf.local").write_text(
-            (tmux_dir / ".tmux.conf.local").read_text()
+        (tmux_module_dir / TMUX_CONF_LOCAL_TEMPLATE).write_text(
+            (tmux_dir / TMUX_CONF_LOCAL).read_text()
         )
-        (tmux_module_dir / ".tmux.conf").write_text((tmux_dir / ".tmux.conf").read_text())
+        (tmux_module_dir / TMUX_CONF).write_text(
+            (tmux_dir / TMUX_CONF).read_text()
+        )
 
     def setup(self) -> None:
-        tmux_module_dir = self.config.dotfiles_root / "tmux"
-        local_conf = tmux_module_dir / ".tmux.conf.local"
+        tmux_module_dir = self.config.tmux_module_dir
+        local_conf = tmux_module_dir / TMUX_CONF_LOCAL
         if local_conf.exists():
             log.warn(
                 f"Local tmux already setup. Delete {local_conf} and run setup again to overwrite."
@@ -40,7 +41,7 @@ class TmuxModule(DotfileModule):
             return
 
         log.info("Setup tmux config")
-        source = tmux_module_dir / "tmux.conf.local"
+        source = tmux_module_dir / TMUX_CONF_LOCAL_TEMPLATE
         if source.exists():
             local_conf.write_text(source.read_text())
             log.success("Setup complete")

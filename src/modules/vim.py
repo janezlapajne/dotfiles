@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from cli import log
 from cli.runner import run
 from modules.base import DotfileModule
@@ -7,7 +5,7 @@ from modules.base import DotfileModule
 
 class VimModule(DotfileModule):
     def install(self) -> None:
-        vim_runtime = Path.home() / ".vim_runtime"
+        vim_runtime = self.config.vim_runtime_dir
         if vim_runtime.is_dir():
             log.info("Updating .vim_runtime")
             run(["git", "reset", "--hard"], cwd=vim_runtime)

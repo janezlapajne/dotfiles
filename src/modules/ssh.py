@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from cli import log
 from cli.runner import run
 from modules.base import DotfileModule
@@ -7,7 +5,7 @@ from modules.base import DotfileModule
 
 class SshModule(DotfileModule):
     def setup(self) -> None:
-        key_path = Path.home() / ".ssh" / "id_rsa"
+        key_path = self.config.ssh_key_path
         if key_path.exists():
             log.warn(
                 "SSH key already setup. Delete ~/.ssh/id_rsa and run setup again to overwrite."
