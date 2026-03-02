@@ -1,10 +1,19 @@
 import sys
+import termios
 import tomllib
+import tty
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 
 from cli import log
 from cli.config import Config
+
+
+class Action(Enum):
+    SKIP = "skip"
+    OVERWRITE = "overwrite"
+    BACKUP = "backup"
 
 
 @dataclass(frozen=True)
@@ -16,8 +25,6 @@ class SymlinkEntry:
 def _read_char() -> str:
     if not sys.stdin.isatty():
         return "s"
-    import termios
-    import tty
 
     fd = sys.stdin.fileno()
     old = termios.tcgetattr(fd)
@@ -64,15 +71,44 @@ def _validate_symlinks(entries: list[SymlinkEntry]) -> list[SymlinkEntry]:
         resolved_dst = entry.dst.resolve()
         if resolved_dst in seen_dst:
             log.fail(
-                f"Duplicate destination {entry.dst} "
-                f"(from {entry.src} and {seen_dst[resolved_dst]})"
+                f"Duplicate destination {entry.dst} (from {entry.src} and {seen_dst[resolved_dst]})"
             )
-            sys.exit(1)
 
         seen_dst[resolved_dst] = str(entry.src)
         valid.append(entry)
 
     return valid
+
+
+def _short(path: Path, home: Path) -> str:
+    """Replace the home directory prefix with ~ for display."""
+    s = str(path)
+    prefix = str(home)
+    if s == prefix or s.startswith(prefix + "/"):
+        return "~" + s[len(prefix) :]
+    return s
+
+
+def _prompt_action(dst: Path, src_name: str, home: Path) -> tuple[Action, bool]:
+    """Prompt user for conflict resolution. Returns (action, apply_to_all)."""
+    log.user(
+        f"File already exists: {_short(dst, home)} ({src_name})\n"
+        "       \\[s]kip, \\[S]kip all, \\[o]verwrite, \\[O]verwrite all, \\[b]ackup, \\[B]ackup all?"
+    )
+    key = _read_char()
+    match key:
+        case "o":
+            return Action.OVERWRITE, False
+        case "O":
+            return Action.OVERWRITE, True
+        case "b":
+            return Action.BACKUP, False
+        case "B":
+            return Action.BACKUP, True
+        case "S":
+            return Action.SKIP, True
+        case _:
+            return Action.SKIP, False
 
 
 def setup_dotfiles(config: Config) -> None:
@@ -81,67 +117,44 @@ def setup_dotfiles(config: Config) -> None:
     entries = _load_symlinks(config)
     entries = _validate_symlinks(entries)
 
-    overwrite_all = False
-    backup_all = False
-    skip_all = False
+    home = config.home
+    sticky_action: Action | None = None
 
     for entry in entries:
         src = entry.src
         dst = entry.dst
-        log.info(f"{src} -> {dst}")
-
-        overwrite = False
-        backup = False
-        skip = False
 
         if dst.exists() or dst.is_symlink():
-            if not overwrite_all and not backup_all and not skip_all:
-                current_target = None
-                if dst.is_symlink():
-                    current_target = dst.resolve()
-                if current_target == src.resolve():
-                    skip = True
-                else:
-                    log.user(
-                        f"File already exists: {dst} ({src.name}), what do you want to do?\n"
-                        "        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-                    )
-                    action = _read_char()
-                    match action:
-                        case "o":
-                            overwrite = True
-                        case "O":
-                            overwrite_all = True
-                        case "b":
-                            backup = True
-                        case "B":
-                            backup_all = True
-                        case "s":
-                            skip = True
-                        case "S":
-                            skip_all = True
+            # Already-correct symlink: silently skip
+            if dst.is_symlink() and dst.resolve() == src.resolve():
+                continue
 
-            overwrite = overwrite or overwrite_all
-            backup = backup or backup_all
-            skip = skip or skip_all
+            # Determine action: use sticky or prompt
+            if sticky_action is not None:
+                action = sticky_action
+            else:
+                action, apply_all = _prompt_action(dst, src.name, home)
+                if apply_all:
+                    sticky_action = action
 
-            if overwrite:
+            if action is Action.SKIP:
+                log.success(f"skipped {_short(dst, home)}")
+                continue
+
+            if action is Action.BACKUP:
+                backup_path = dst.with_suffix(dst.suffix + ".backup")
+                dst.rename(backup_path)
+                log.success(f"backed up {_short(dst, home)} -> {_short(backup_path, home)}")
+
+            if action is Action.OVERWRITE:
                 if dst.is_dir() and not dst.is_symlink():
                     import shutil
 
                     shutil.rmtree(dst)
                 else:
                     dst.unlink()
-                log.success(f"removed {dst}")
+                log.success(f"removed {_short(dst, home)}")
 
-            if backup:
-                dst.rename(dst.with_suffix(dst.suffix + ".backup"))
-                log.success(f"moved {dst} to {dst}.backup")
-
-            if skip:
-                log.success(f"skipped {src}")
-
-        if not skip:
-            dst.parent.mkdir(parents=True, exist_ok=True)
-            dst.symlink_to(src)
-            log.success(f"linked {src} to {dst}")
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.symlink_to(src)
+        log.success(f"linked {_short(src, home)} -> {_short(dst, home)}")
