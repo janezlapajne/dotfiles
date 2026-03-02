@@ -9,6 +9,7 @@ DOTFILES_SUBDIR = "dotfiles"
 ENV_FILE = ".env"
 ENV_EXAMPLE_FILE = ".env.example"
 PACKAGES_FILE = "packages.toml"
+SYMLINKS_FILE = "symlinks.toml"
 DEFAULT_EDITOR = "vim"
 
 
@@ -33,6 +34,10 @@ class Config:
     @property
     def packages_file(self) -> Path:
         return self.conf_dir / PACKAGES_FILE
+
+    @property
+    def symlinks_file(self) -> Path:
+        return self.conf_dir / SYMLINKS_FILE
 
     @property
     def dotfiles_root(self) -> Path:

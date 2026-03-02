@@ -1,10 +1,16 @@
 import sys
+import tomllib
+from dataclasses import dataclass
 from pathlib import Path
 
 from cli import log
 from cli.config import Config
 
-_EXCLUDED_SUFFIXES = {".zsh", ".sh", ".example"}
+
+@dataclass(frozen=True)
+class SymlinkEntry:
+    src: Path
+    dst: Path
 
 
 def _read_char() -> str:
@@ -24,32 +30,64 @@ def _read_char() -> str:
     return ch
 
 
-def _find_dotfiles(dotfiles_root: Path) -> list[Path]:
-    results: list[Path] = []
-    for child in sorted(dotfiles_root.iterdir()):
-        if not child.is_dir():
+def _load_symlinks(config: Config) -> list[SymlinkEntry]:
+    with open(config.symlinks_file, "rb") as f:
+        data = tomllib.load(f)
+
+    symlinks_section = data["symlinks"]
+    dotfiles_root = config.dotfiles_root
+    home = config.home
+    entries: list[SymlinkEntry] = []
+
+    for rel_src in symlinks_section.get("root", []):
+        src = dotfiles_root / rel_src
+        dst = home / Path(rel_src).name
+        entries.append(SymlinkEntry(src=src, dst=dst))
+
+    for rel_src, target_dir in symlinks_section.get("targets", {}).items():
+        src = dotfiles_root / rel_src
+        dst = home / target_dir / Path(rel_src).name
+        entries.append(SymlinkEntry(src=src, dst=dst))
+
+    return entries
+
+
+def _validate_symlinks(entries: list[SymlinkEntry]) -> list[SymlinkEntry]:
+    valid: list[SymlinkEntry] = []
+    seen_dst: dict[Path, str] = {}
+
+    for entry in entries:
+        if not entry.src.exists():
+            log.warn(f"Source does not exist, skipping: {entry.src}")
             continue
-        # Depth 1: direct dotfiles in module dirs
-        for item in sorted(child.iterdir()):
-            if item.name.startswith(".") and item.suffix not in _EXCLUDED_SUFFIXES:
-                results.append(item)
-            # Depth 2: nested dirs (e.g. .ssh/config)
-            if item.is_dir() and not item.name.startswith("."):
-                for nested in sorted(item.iterdir()):
-                    if nested.name.startswith(".") and nested.suffix not in _EXCLUDED_SUFFIXES:
-                        results.append(nested)
-    return results
+
+        resolved_dst = entry.dst.resolve()
+        if resolved_dst in seen_dst:
+            log.fail(
+                f"Duplicate destination {entry.dst} "
+                f"(from {entry.src} and {seen_dst[resolved_dst]})"
+            )
+            sys.exit(1)
+
+        seen_dst[resolved_dst] = str(entry.src)
+        valid.append(entry)
+
+    return valid
 
 
 def setup_dotfiles(config: Config) -> None:
     log.info("Installing dotfiles")
 
+    entries = _load_symlinks(config)
+    entries = _validate_symlinks(entries)
+
     overwrite_all = False
     backup_all = False
     skip_all = False
 
-    for src in _find_dotfiles(config.dotfiles_root):
-        dst = config.home / src.name
+    for entry in entries:
+        src = entry.src
+        dst = entry.dst
         log.info(f"{src} -> {dst}")
 
         overwrite = False
@@ -104,5 +142,6 @@ def setup_dotfiles(config: Config) -> None:
                 log.success(f"skipped {src}")
 
         if not skip:
+            dst.parent.mkdir(parents=True, exist_ok=True)
             dst.symlink_to(src)
             log.success(f"linked {src} to {dst}")
