@@ -1,4 +1,5 @@
 # Load general paths first
+export ZSH="$HOME/.oh-my-zsh"
 export DOTFILES_ZSH=$HOME/.dotfiles
 export DOTFILES_ROOT=$DOTFILES_ZSH/conf/dotfiles
 
