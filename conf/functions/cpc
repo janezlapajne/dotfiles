@@ -9,4 +9,4 @@
 #   cpc echo hello
 #
 
-eval $* | pbcopy
+"$@" | pbcopy

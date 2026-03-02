@@ -2,4 +2,4 @@
 #
 # vscode requires `--wait` if you're editing interactively in a prompt.
 #
-EDITOR="$EDITOR --wait" $@
+EDITOR="$EDITOR --wait" "$@"

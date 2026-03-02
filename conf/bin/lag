@@ -9,4 +9,4 @@
 #   lag "file"
 #
 
-ls -alF | grep $1 --color=auto
+ls -alF | grep --color=auto -- "$1"
