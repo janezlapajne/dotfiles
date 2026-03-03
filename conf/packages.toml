@@ -34,4 +34,4 @@ packages = [
 	"worktrunk",
 ]
 
-casks = ["font-fira-code-nerd-font"]
+casks = ["font-fira-code-nerd-font", "git-credential-manager"]
