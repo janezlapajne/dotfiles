@@ -1,3 +1,5 @@
+set clipboard=unnamed
+
 " Hold alt+j/k
 map <Esc>j <A-j>
 map <Esc>k <A-k>

@@ -2,17 +2,18 @@
 # Files symlinked to $HOME/<filename> (the common case)
 # Source paths relative to conf/dotfiles/
 root = [
-    "git/.gitconfig",
-    "git/.gitconfig.local",
-    "vim/.vimrc",
-    "vim/.my_vimrc",
-    "vim/.ideavimrc",
-    "zsh/.zshrc",
-    "tmux/.tmux.conf",
-    "tmux/.tmux.conf.local",
+	"git/.gitconfig",
+	"git/.gitconfig.local",
+	"vim/.vimrc",
+	"vim/.my_vimrc",
+	"vim/.ideavimrc",
+	"zsh/.zshrc",
+	"tmux/.tmux.conf",
+	"tmux/.tmux.conf.local",
 ]
 
 # Custom destinations: source = "target_dir_relative_to_home"
 # Filename is preserved, value is the parent directory.
 # Example: "starship/starship.toml" = ".config"  ->  ~/.config/starship.toml
 [symlinks.targets]
+"karabiner/karabiner.json" = ".config/karabiner"
