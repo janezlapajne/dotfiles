@@ -82,8 +82,8 @@ GIT_CREDENTIAL_HELPER=osxkeychain
 
 - `ATUIN_USERNAME`: Atuin username.
 - `ATUIN_EMAIL`: The email address associated with Atuin account.
-- `ATUIN_PASSWORD:` The password for Atuin account.
-- `ATUIN_KEY:` _(Optional)_ Atuin key, used for syncing shell history across devices.
+- `ATUIN_PASSWORD`: The password for Atuin account.
+- `ATUIN_KEY`: _(Optional)_ Atuin key, used for syncing shell history across devices.
 
 Example:
 
