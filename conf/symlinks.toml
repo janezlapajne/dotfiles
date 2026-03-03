@@ -5,7 +5,7 @@ root = [
 	"git/.gitconfig",
 	"git/.gitconfig.local",
 	"vim/.vimrc",
-	"vim/.my_vimrc",
+	"vim/.vimrc.local",
 	"vim/.ideavimrc",
 	"zsh/.zshrc",
 	"tmux/.tmux.conf",
