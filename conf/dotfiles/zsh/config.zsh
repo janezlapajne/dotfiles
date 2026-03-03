@@ -43,6 +43,9 @@ eval "$(navi widget zsh)"
 # Init Homebrew
 eval "$(brew shellenv)"
 
+# Init worktrunk
+eval "$(wt config shell init zsh)"
+
 # Init starship theme in terminal, else use default $ZSH_THEME
 if grep -q '^TERMINAL_THEME_STARSHIP=true$' "$DOTFILES_ZSH/.env" 2>/dev/null; then
 	eval "$(starship init zsh)"
