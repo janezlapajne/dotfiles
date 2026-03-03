@@ -1,4 +1,4 @@
-# 🔥 Elevate Your Development Experience 🔥
+# Elevate Your Development Experience 🔥
 
 A collection of heavily opinionated terminal configurations for personalized development environment. These settings reflect my preferred tools and workflows. Feel free to explore, use, and adapt them to your own needs.
 
@@ -6,7 +6,7 @@ A collection of heavily opinionated terminal configurations for personalized dev
 
 ## 🔍 Overview
 
-The setup was initially designed to enhance the development experience on the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/), leveraging the capabilities of the Ubuntu Linux system. However, with the change of my primary operating system to [macOS](https://www.apple.com/macos/), the setup has been adapted. The current implementation is optimized for macOS, while the WSL setup remains available but is no longer actively maintained.
+This setup is designed for [macOS](https://www.apple.com/macos/) and is not intended for use on other operating systems.
 
 The current configuration of dotfiles employs a variety of tools, each contributing to a sophisticated development environment. Some of the tools included:
 
@@ -20,7 +20,7 @@ The setup is flexible and can easily accommodate the integration of additional p
 
 ## 🕐 Quickstart
 
-1. Begin by cloning the repository and navigating into the directory
+1. Clone the repository and navigate into the directory
 
 ```bash
 git clone https://github.com/janezlapajne/dotfiles.git ~/.dotfiles
@@ -29,26 +29,40 @@ cd ~/.dotfiles
 
 2. Setup environment variables
 
-The configuration of the dotfiles is driven by environment variables. To establish a basic configuration, execute the following command:
+The configuration is driven by environment variables. Create a `.env` file from the template:
 
 ```bash
 tail -n +7 .env.example > .env
 ```
 
-This command generates an `.env` file, which serves as the blueprint for defining variables. For detailed guidance on configuring the environment, refer to the **Configuration** section.
+Edit the `.env` file with your values. For detailed guidance, refer to the **Configuration** section.
 
-3. Execute the setup procedure by running
+3. Run the setup script
 
 ```bash
-source .env
 ./setup.sh
 ```
 
-This will symlink the appropriate files in subdirectories of `.dotfiles/dotfiles` to home directory.
+This script will:
+
+- Install [uv](https://github.com/astral-sh/uv) (fast Python package manager) if not already available
+- Install the `dot` CLI tool via `uv tool install`
+- Run the full bootstrap (`dot --setup`): install Homebrew packages, run all modules, and create symlinks
+
+### Usage
+
+After the initial setup, the `dot` command is available globally:
+
+```bash
+dot              # Update: git pull, install packages, run module installs
+dot --setup      # Full bootstrap: install, setup, and symlink everything
+dot -e/--edit    # Open dotfiles config directory in your editor
+dot --env-update # Regenerate .env.example from current .env
+```
 
 ## 🛠 Configuration
 
-To ensure correct configuration, it's essential to define the environment variables outlined below.
+To ensure correct configuration, define the environment variables in your `.env` file.
 
 ### Git
 
@@ -61,13 +75,8 @@ Example:
 ```
 GIT_NAME=name
 GIT_EMAIL=email@example.com
-# For macOS
 GIT_CREDENTIAL_HELPER=osxkeychain
-# For WSL
-GIT_CREDENTIAL_HELPER=/mnt/c/Program/Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe
 ```
-
-> :exclamation: **Note:** For the Git credential helper to work, [git-credential-manager](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md) needs to be installed. The exact location of *git-credential-wincred.exe* may vary depending on the specific Git installation.
 
 ### Atuin
 
@@ -99,7 +108,7 @@ SSH_EMAIL=email@example.com
 SSH_PASSPHRASE=
 ```
 
-Alternatively, if you already have an SSH key, you can copy your private key to `~/.ssh/id_rsa` and your public key to `~/.ssh/id_rsa.pub`.
+Alternatively, if you already have an SSH key, you can copy your private key to `~/.ssh/id_ed25519` and your public key to `~/.ssh/id_ed25519.pub`.
 
 ### Terminal
 
@@ -112,81 +121,77 @@ TERMINAL_THEME_STARSHIP=true
 ```
 
 > :exclamation: **Note:**
-> For optimal usage of the `starship` theme in both the terminal and Visual Studio Code, it is recommended to install the `FiraCode Nerd Font`:
->
-> 1. Visit [Nerd Fonts](https://www.nerdfonts.com/font-downloads) and download "FiraCode Nerd Font".
-> 2. Install the font by double-clicking on the downloaded file.
->
-> To use the font in Windows Terminal:
->
-> 1. Go to Settings and navigate to Defaults > Appearance > Font Face.
-> 2. Select `FiraCode Nerd Font` from the dropdown menu.
+> For optimal usage of the `starship` theme in both the terminal and Visual Studio Code, it is recommended to install the `FiraCode Nerd Font` (installed automatically via Homebrew cask during setup).
 >
 > To use the font in Visual Studio Code:
 >
 > 1. Open the settings (File > Preferences > Settings or `Ctrl + ,`).
 > 2. Search for `terminal.integrated.fontFamily`.
-> 3. Set the value to `FiraCode Nerd Font` → This will update the setting as follows: `"terminal.integrated.fontFamily": "FiraCode Nerd Font"`.
+> 3. Set the value to `FiraCode Nerd Font`.
 
 ## 📖 Folder Structure
 
-The following diagram provides a schematic representation of the project's folder structure. Each directory and file is briefly described to give an overview of their purpose and function within the project:
-
 ```
-📚 .dotfiles/
+.dotfiles/
 │
-├── 🚀 setup.sh                -> Main script to setup the dotfiles
-├── 🛠️ .env                    -> Configuration variables
+├── setup.sh                        -> Bootstrap script (installs uv + dot CLI)
+├── pyproject.toml                  -> Python project config (dependencies, CLI entry point)
+├── uv.lock                         -> Dependency lock file
+├── .env                            -> Configuration variables (user-specific, not committed)
+├── .env.example                    -> Template for .env
+├── .python-version                 -> Python version specification
 │
-├── 📂 bin/                    -> Various utility scripts (added to $PATH)
-│   ├── 📄 dot                 -> main update script
-│   └── 📄 ...                 -> other scripts
+├── src/                            -> Python source code
+│   ├── cli/                        -> CLI application
+│   │   ├── app.py                  -> Main entry point (dot command)
+│   │   ├── config.py               -> Configuration management
+│   │   ├── symlinks.py             -> Symlink creation with conflict resolution
+│   │   ├── packages.py             -> Homebrew package management
+│   │   ├── env.py                  -> .env.example generation
+│   │   ├── runner.py               -> Subprocess runner utilities
+│   │   └── log.py                  -> Rich-based logging
+│   │
+│   ├── modules/                    -> Pluggable installation modules
+│   │   ├── base.py                 -> Abstract base class (DotfileModule)
+│   │   └── ...                     -> Modules for other tools
+│   │
+│   └── main.py                     -> Entry point
 │
-├── 📂 core/                   -> Core setup scripts
-│   ├── 📄 paths.sh
-│   └── 📄 setup-dotfiles.sh
+├── conf/                           -> Configuration and dotfiles
+│   ├── packages.toml               -> Homebrew packages and casks to install
+│   ├── symlinks.toml               -> Symlink mappings (source -> $HOME)
+│   │
+│   ├── bin/                        -> Utility scripts (added to $PATH)
+│   │   └── ...
+│   │
+│   ├── functions/                  -> Zsh functions (added to $PATH)
+│   │   └── ...
+│   │
+│   └── dotfiles/                   -> Files symlinked to $HOME
+│       ├── zsh/                    -> .zshrc, config, OMZ init
+│       └── .../
 │
-├── 📂 docs/                   -> Documentation, notes, etc.
-│   └── 📄 ...
-│
-├── 📂 dotfiles/               -> Configuration for various tools
-│   ├── 📂 zsh/                -> main shell configuration
-│   └── 📂 .../
-│
-├── 📂 functions/              -> Utility functions (added to $PATH)
-│   └── 📄 ...
-│
-├── 📂 scripts/                -> Main scripts
-│   ├── 📄 install-packages.sh -> installs system packages using package manager (Homebrew/apt-get)
-│   ├── 📄 install-tools.sh    -> installs other tools, using pip3, npm etc.
-│   ├── 📄 install.sh          -> executes all install.sh scripts
-│   ├── 📄 setup-all.sh        -> executes all setup.sh scripts
-│   └── 📄 update-env.sh       -> updates .env.example (used during development)
-│
-└── 📂 utils/                  -> Utility scripts used inside repo
-    └── 📄 ...
+└── docs/                           -> Documentation and images
 ```
 
-This project follows a specific set of conventions for organization and functionality:
+## 🧩 Module System
 
-- **bin/**: This directory contains utility scripts. Any script placed here will be added to the `$PATH` and made accessible from anywhere in the system.
-- **bin/dot**: This is a simple script designed to manage dependencies and system packages. It not only installs and updates dependencies but also upgrades system packages. To maintain an up-to-date and efficient environment, it's recommended to execute this script periodically.
-- **docs**: This directory serves as a repository for documentation, notes, and frequently used commands, among other things. It's a convenient location for storing any information that might be needed at hand.
-- **functions/**: This directory is for utility functions. Like the `bin/` directory, anything placed here will be added to the `$PATH` and can be used globally.
-- **dotfiles/\*\*/\*.zsh**: Any file with a `.zsh` extension located in the `dotfiles/` directory or its subdirectories will be loaded into the environment.
-- **dotfiles/\*\*/path.zsh**: Any file named `path.zsh` is loaded before other files. It's expected to set up `$PATH` or similar environment variables.
-- **dotfiles/\*\*/completion.zsh**: Any file named `completion.zsh` is loaded last and is expected to set up autocomplete functionality.
-- **dotfiles/\*\*/install.sh**: Any file named `install.sh` is executed when the `scripts/install.sh` script is run. These files have a `.sh` extension instead of `.zsh` to prevent them from being loaded automatically. These scripts are run each time the `bin/dot` script is run.
-- **dotfiles/\*\*/setup.sh**: Any file named `setup.sh` is executed when the `scripts/setup-all.sh` script is run. Like `install.sh` files, these have a `.sh` extension to prevent automatic loading. The `setup.sh` scripts are run after `install.sh` scripts and only when the `scripts/setup.sh` script is run.
-- **dotfiles/\*\*/\.\***: Any file starting with a `.` is symlinked into the `$HOME` directory when the main `setup.sh` script is executed. This allows for easy management of dotfiles.
+Each tool is managed by a self-contained Python module in `src/modules/`. Modules inherit from `DotfileModule` and implement:
 
-## 🎉 Additional notes
+- `install()` — installation logic (run on both setup and update)
+- `setup()` — interactive configuration (run only during full setup)
 
-We greatly appreciate any contribution, no matter how small. If you've identified a problem with the setup, we encourage you to first browse through both open and closed issues to see if it has been addressed before. If it's a new issue, please don't hesitate to create a new one on GitHub. If you're interested in correcting an existing issue or expanding the project's functionality, we welcome your involvement. Simply fork the repository, make your changes, and then submit a pull request on GitHub. Questions are also welcome. If you're unsure about something or need clarification, feel free to post an issue on GitHub.
+Modules are executed in the following order (Zsh first as a dependency, then alphabetical)
 
-## 🤝 License
+## 📜 Conventions
 
-This project is licensed under the MIT License. See [LICENSE](https://github.com/janezlapajne/dotfiles/blob/main/LICENCE.md) for more details.
+- **conf/bin/**: Executable scripts added to `$PATH`, accessible from anywhere.
+- **conf/functions/**: Zsh functions added to `$PATH`, usable globally.
+- **conf/dotfiles/\*\*/\*.zsh**: Files with a `.zsh` extension are loaded into the shell environment.
+- **conf/dotfiles/\*\*/path.zsh**: Loaded first — expected to set up `$PATH` or similar environment variables.
+- **conf/dotfiles/\*\*/completion.zsh**: Loaded last — expected to set up autocomplete.
+- **conf/packages.toml**: Homebrew packages and casks to install.
+- **conf/symlinks.toml**: Declares which dotfiles are symlinked to `$HOME` (or custom targets).
 
 ## 🏆 Acknowledgements
 
