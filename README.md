@@ -108,7 +108,7 @@ SSH_EMAIL=email@example.com
 SSH_PASSPHRASE=
 ```
 
-Alternatively, if you already have an SSH key, you can copy your private key to `~/.ssh/id_ed25519` and your public key to `~/.ssh/id_ed25519.pub`.
+Alternatively, if you already have an SSH key, you can copy your private key to `~/.ssh/id_rsa` and your public key to `~/.ssh/id_rsa.pub`.
 
 ### Terminal
 
