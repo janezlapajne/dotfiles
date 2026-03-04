@@ -46,3 +46,9 @@ alias mkd='mkdir -pv'
 
 # Copy to clipboard
 alias clip='pbcopy'
+
+# Worktrunk
+alias wts='wt switch'
+alias wtc='wt switch --create'
+alias wtl='wt list --full'
+alias wtr='wt remove'
