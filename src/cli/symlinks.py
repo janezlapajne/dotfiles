@@ -1,3 +1,4 @@
+import shutil
 import sys
 import termios
 import tomllib
@@ -14,6 +15,7 @@ class Action(Enum):
     SKIP = "skip"
     OVERWRITE = "overwrite"
     BACKUP = "backup"
+    ADOPT = "adopt"
 
 
 @dataclass(frozen=True)
@@ -64,7 +66,7 @@ def _validate_symlinks(entries: list[SymlinkEntry]) -> list[SymlinkEntry]:
     seen_dst: dict[Path, str] = {}
 
     for entry in entries:
-        if not entry.src.exists():
+        if not entry.src.exists() and not entry.dst.exists():
             log.warn(f"Source does not exist, skipping: {entry.src}")
             continue
 
@@ -93,7 +95,7 @@ def _prompt_action(dst: Path, src_name: str, home: Path) -> tuple[Action, bool]:
     """Prompt user for conflict resolution. Returns (action, apply_to_all)."""
     log.user(
         f"File already exists: {_short(dst, home)} ({src_name})\n"
-        "       \\[s]kip, \\[S]kip all, \\[o]verwrite, \\[O]verwrite all, \\[b]ackup, \\[B]ackup all?"
+        "       \\[s]kip, \\[S]kip all, \\[o]verwrite, \\[O]verwrite all, \\[b]ackup, \\[B]ackup all, \\[a]dopt, \\[A]dopt all?"
     )
     key = _read_char()
     match key:
@@ -105,10 +107,23 @@ def _prompt_action(dst: Path, src_name: str, home: Path) -> tuple[Action, bool]:
             return Action.BACKUP, False
         case "B":
             return Action.BACKUP, True
+        case "a":
+            return Action.ADOPT, False
+        case "A":
+            return Action.ADOPT, True
         case "S":
             return Action.SKIP, True
         case _:
             return Action.SKIP, False
+
+
+def _adopt(src: Path, dst: Path, home: Path) -> None:
+    """Move existing file into dotfiles and replace with symlink."""
+
+    src.parent.mkdir(parents=True, exist_ok=True)
+    shutil.move(str(dst), str(src))
+    dst.symlink_to(src)
+    log.success(f"adopted {_short(dst, home)} -> {_short(src, home)}")
 
 
 def setup_dotfiles(config: Config) -> None:
@@ -141,6 +156,10 @@ def setup_dotfiles(config: Config) -> None:
                 log.success(f"skipped {_short(dst, home)}")
                 continue
 
+            if action is Action.ADOPT:
+                _adopt(src, dst, home)
+                continue
+
             if action is Action.BACKUP:
                 backup_path = dst.with_suffix(dst.suffix + ".backup")
                 dst.rename(backup_path)
@@ -148,8 +167,6 @@ def setup_dotfiles(config: Config) -> None:
 
             if action is Action.OVERWRITE:
                 if dst.is_dir() and not dst.is_symlink():
-                    import shutil
-
                     shutil.rmtree(dst)
                 else:
                     dst.unlink()
