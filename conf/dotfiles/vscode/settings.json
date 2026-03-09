@@ -431,6 +431,73 @@
     "gitlab.duoAgentPlatform.enabled": false,
     "gitlab.duoChat.enabled": false,
     "gitlab.duoCodeSuggestions.enabled": false,
+    "gitlab.customQueries": [
+        {
+            "name": "Issue: Open",
+            "type": "issues",
+            "state": "opened",
+            "scope": "assigned_to_me",
+            "excludeLabels": [
+                "state::In Progress",
+                "state::In Review",
+                "state::Resolved",
+                "state::In Testing"
+            ],
+            "noItemText": "No open issues without a state.",
+            "maxResults": 30
+        },
+        {
+            "name": "Issue: In Progress",
+            "type": "issues",
+            "state": "opened",
+            "scope": "assigned_to_me",
+            "labels": [
+                "state::In Progress"
+            ],
+            "noItemText": "No issues in progress.",
+            "maxResults": 20
+        },
+        {
+            "name": "Issue: In Review",
+            "type": "issues",
+            "state": "opened",
+            "scope": "assigned_to_me",
+            "labels": [
+                "state::In Review"
+            ],
+            "noItemText": "No issues in review.",
+            "maxResults": 20
+        },
+        {
+            "name": "Issue: Resolved",
+            "type": "issues",
+            "state": "opened",
+            "scope": "assigned_to_me",
+            "labels": [
+                "state::Resolved"
+            ],
+            "noItemText": "No resolved issues.",
+            "maxResults": 20
+        },
+        {
+            "name": "Issue: In Testing",
+            "type": "issues",
+            "state": "opened",
+            "scope": "assigned_to_me",
+            "labels": [
+                "state::In Testing"
+            ],
+            "noItemText": "No issues in testing.",
+            "maxResults": 20
+        },
+        {
+            "name": "Merge Requests",
+            "type": "merge_requests",
+            "scope": "assigned_to_me",
+            "state": "opened",
+            "noItemText": "No merge requests assigned to you."
+        },
+    ],
     // #########################################################
     // Python
     "python.languageServer": "Pylance",
