@@ -43,6 +43,7 @@ alias du='du -ch'
 
 # Random commands
 alias mkd='mkdir -pv'
+alias rp='realpath'
 
 # Copy to clipboard
 alias clip='pbcopy'
@@ -57,4 +58,4 @@ alias wtlog='cat "$(find "$(realpath "$(git rev-parse --git-common-dir)")/wt-log
 
 # Other
 alias idea='open -a "IntelliJ IDEA"'
-
+alias cl='claude'
