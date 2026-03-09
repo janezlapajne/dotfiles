@@ -1,0 +1,12 @@
+# Auto-fetch if last fetch was more than 6 hours ago
+[pre-switch]
+fetch = """
+FETCH_HEAD="$(git rev-parse --git-common-dir)/FETCH_HEAD"
+if [ "$(find "$FETCH_HEAD" -mmin +360 2>/dev/null)" ] || [ ! -f "$FETCH_HEAD" ]; then
+    git fetch
+fi
+"""
+
+# farming-data-layer specific hooks
+[projects."gitlab.com/login5/login-eko/reports/farming-data-layer"]
+post-create.setup = "bash ~/.config/worktrunk/setup-farming-data-layer.sh {{ worktree_path }}"

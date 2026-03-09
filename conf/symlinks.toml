@@ -17,3 +17,5 @@ root = [
 # Example: "starship/starship.toml" = ".config"  ->  ~/.config/starship.toml
 [symlinks.targets]
 "karabiner/karabiner.json" = ".config/karabiner"
+"worktrunk/config.toml" = ".config/worktrunk"
+"worktrunk/setup-farming-data-layer.sh" = ".config/worktrunk"
