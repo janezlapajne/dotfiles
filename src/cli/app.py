@@ -15,6 +15,7 @@ from modules import get_all_modules
 def main(
     edit: bool = typer.Option(False, "-e", "--edit", help="Open dotfiles directory for editing"),
     setup: bool = typer.Option(False, "--setup", help="Full bootstrap: install, setup, symlink"),
+    symlink_only: bool = typer.Option(False, "--symlink-only", help="Only create dotfile symlinks"),
     env_update: bool = typer.Option(
         False, "--env-update", help="Regenerate .env.example from .env"
     ),
@@ -33,6 +34,11 @@ def main(
 
     if setup:
         _do_setup(config)
+        raise typer.Exit()
+
+    if symlink_only:
+        setup_dotfiles(config)
+        log.success("Dotfiles symlinked successfully.")
         raise typer.Exit()
 
     # Default behavior

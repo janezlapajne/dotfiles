@@ -54,10 +54,11 @@ This script will:
 After the initial setup, the `dot` command is available globally:
 
 ```bash
-dot              # Update: git pull, install packages, run module installs
-dot --setup      # Full bootstrap: install, setup, and symlink everything
-dot -e/--edit    # Open dotfiles config directory in your editor
-dot --env-update # Regenerate .env.example from current .env
+dot                # Update: git pull, install packages, run module installs
+dot --setup        # Full bootstrap: install, setup, and symlink everything
+dot --symlink-only # Only create dotfile symlinks
+dot -e/--edit      # Open dotfiles config directory in your editor
+dot --env-update   # Regenerate .env.example from current .env
 ```
 
 ## 🛠 Configuration
