@@ -1,0 +1,526 @@
+{
+    //Editor settings
+    "editor.minimap.enabled": false,
+    "editor.suggestSelection": "first",
+    "editor.cursorSurroundingLines": 3,
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.tabSize": 4,
+    "editor.cursorStyle": "line",
+    "editor.insertSpaces": false,
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
+        "source.fixAll.eslint": "always"
+    },
+    "editor.inlineSuggest.enabled": true,
+    "editor.stickyScroll.enabled": true,
+    "editor.stickyTabStops": true,
+    "files.autoSave": "afterDelay",
+    "settingsSync.ignoredExtensions": [],
+    "settingsSync.ignoredSettings": [],
+    "security.workspace.trust.untrustedFiles": "newWindow",
+    "window.zoomLevel": -1,
+    "files.associations": {
+        "*.page-template": "vue",
+        "*.layout-template": "vue",
+        "*.vue": "vue",
+        // "*.sql": "jinja-sql",
+        // "*.yml": "jinja-yaml",
+        // "*.yaml": "jinja-yaml"
+    },
+    // Formatters per language
+    "cSpell.language": "en",
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[dockercompose]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[properties]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jinja-sql]": {
+        "editor.defaultFormatter": "sqlfluff.vscode-sqlfluff"
+    },
+    "[jinja-yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[git-commit]": {
+        "editor.rulers": [
+            50
+        ]
+    },
+    "[python]": {
+        "editor.rulers": [
+            {
+                "column": 80,
+                "color": "#e2d8e21f"
+            },
+            {
+                "column": 100,
+                "color": "#e9b2b2c4"
+            }
+        ],
+        "editor.defaultFormatter": "charliermarsh.ruff",
+    },
+    //Terminal settings
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+    "terminal.integrated.fontLigatures.enabled": true,
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "terminal.integrated.scrollback": 20000,
+    "terminal.integrated.inheritEnv": true,
+    // "terminal.integrated.env.linux": {
+    //     "PYTHONPATH": "${workspaceFolder}"
+    // },
+    "terminal.integrated.stickyScroll.enabled": false,
+    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.enableVisualBell": true,
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    // "terminal.integrated.suggest.insertTrailingSpace": true,
+    "terminal.integrated.suggest.selectionMode": "always",
+    //Terminal color sheme
+    "workbench.colorCustomizations": {
+        "terminal.foreground": "#ca8c35",
+        "terminalCursor.background": "#A89984",
+        "terminalCursor.foreground": "#ccc8c2",
+        "terminal.ansiBlack": "#1D2021",
+        "terminal.ansiBlue": "#153941",
+        "terminal.ansiBrightBlack": "#665C54",
+        "terminal.ansiBrightBlue": "#126d80",
+        "terminal.ansiBrightCyan": "#8BA59B",
+        "terminal.ansiBrightGreen": "#2b581b",
+        "terminal.ansiBrightMagenta": "#8F4673",
+        "terminal.ansiBrightRed": "#FB543F",
+        "terminal.ansiBrightWhite": "#FDF4C1",
+        "terminal.ansiBrightYellow": "#FAC03B",
+        "terminal.ansiCyan": "#8BA59B",
+        "terminal.ansiGreen": "#a4ca96",
+        "terminal.ansiMagenta": "#8F4673",
+        "terminal.ansiRed": "#FB543F",
+        "terminal.ansiWhite": "#A89984",
+        "terminal.ansiYellow": "#FAC03B",
+        "statusBar.background": "#8FBCBB",
+        "statusBar.noFolderBackground": "#8FBCBB",
+        "statusBar.debuggingBackground": "#8FBCBB",
+        "statusBar.foreground": "#000000",
+        "statusBar.debuggingForeground": "#000000"
+    },
+    //VScode appearance
+    "workbench.activityBar.location": "top",
+    "workbench.colorTheme": "Monokai",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.sideBar.location": "left",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook",
+        "*.npz": "default"
+    },
+    "monokaiPro.fileIconsMonochrome": true,
+    "workbench.secondarySideBar.defaultVisibility": "visible",
+    // #########################################################
+    // Vim
+    "vim.smartRelativeLine": false,
+    "vim.vimrc.enable": true,
+    "vim.easymotion": true,
+    "vim.leader": "<space>",
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.highlightedyank.enable": true,
+    "vim.highlightedyank.duration": 1000,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "m"
+            ],
+            "commands": [
+                "bookmarks.toggle"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "b"
+            ],
+            "commands": [
+                "bookmarks.list"
+            ]
+        },
+        {
+            "before": [
+                "<C-n>"
+            ], // ctrl+n
+            "commands": [
+                ":nohl"
+            ]
+        },
+        {
+            "before": [
+                "s"
+            ],
+            "after": [
+                "<leader>",
+                "<leader>",
+                "s"
+            ]
+        },
+        {
+            "before": [
+                "š"
+            ],
+            "after": [
+                "}"
+            ]
+        },
+        {
+            "before": [
+                "đ"
+            ],
+            "after": [
+                "{"
+            ]
+        }
+        // {
+        //     "before": ["<C>, <Alt>, h"],
+        //     "after": ["workbench.action.moveEditorToPreviousGroup"]
+        // },
+        // {
+        //     "before": ["<C>, <Alt>, Ł"],
+        //     "after": ["workbench.action.moveEditorToNextGroup"]
+        // },
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<leader>",
+                "o"
+            ],
+            "after": [
+                "o",
+                "<Esc>"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "O"
+            ],
+            "after": [
+                "O",
+                "<Esc>"
+            ]
+        },
+        {
+            "before": [
+                "<C-y>"
+            ],
+            "after": [
+                "<C-y>",
+                "<C-y>",
+                "<C-y>",
+                "<C-y>",
+                "<C-y>"
+            ]
+        },
+        {
+            "before": [
+                "<C-e>"
+            ],
+            "after": [
+                "<C-e>",
+                "<C-e>",
+                "<C-e>",
+                "<C-e>",
+                "<C-e>"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "H"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "L"
+            ]
+        },
+    ],
+    "vim.operatorPendingModeKeyBindings": [
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "đ"
+            ],
+            "after": [
+                "{"
+            ]
+        },
+        {
+            "before": [
+                "š"
+            ],
+            "after": [
+                "}"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "p"
+            ],
+            "commands": [
+                "editor.action.clipboardPasteAction"
+            ]
+        }
+    ],
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors.normal": [
+        "#8FBCBB",
+        "#000000"
+    ],
+    "vim.statusBarColors.insert": "#BF616A",
+    "vim.statusBarColors.visual": "#B48EAD",
+    "vim.statusBarColors.visualline": "#B48EAD",
+    "vim.statusBarColors.visualblock": "#A3BE8C",
+    "vim.statusBarColors.replace": "#D08770",
+    "vim.statusBarColors.commandlineinprogress": "#007ACC",
+    "vim.statusBarColors.searchinprogressmode": "#007ACC",
+    "vim.statusBarColors.easymotionmode": "#007ACC",
+    "vim.statusBarColors.easymotioninputmode": "#007ACC",
+    "vim.statusBarColors.surroundinputmode": "#007ACC",
+    // #########################################################
+    // Git
+    "git.enableCommitSigning": true,
+    "git-graph.repository.commits.showSignatureStatus": true,
+    "git-graph.repository.sign.commits": true,
+    "git-graph.repository.sign.tags": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.blame.editorDecoration.enabled": true,
+    "githubIssues.queries": [
+        {
+            "label": "My Issues",
+            "query": "default"
+        },
+        {
+            "label": "Created Issues",
+            "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+        }
+    ],
+    "diffEditor.ignoreTrimWhitespace": false,
+    "git.ignoreRebaseWarning": true,
+    "git.enableSmartCommit": true,
+    // Copilot
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "quarto": false
+    },
+    "github.copilot.advanced": {
+        "authProvider": "github"
+    },
+    "chat.agent.enabled": true,
+    "github.copilot.chat.codesearch.enabled": true,
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "github.copilot.editor.enableCodeActions": true,
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Extract the issue number from the branch name (e.g., for '333-traceability-major-refactoring-2', extract '#333') and prefix the commit message with it. If no issue number is found at the start of the branch name, omit the prefix. Keep the message clear, concise, and informative about what changed and why."
+        }
+    ],
+    "gitlab.duoAgentPlatform.enabled": false,
+    "gitlab.duoChat.enabled": false,
+    "gitlab.duoCodeSuggestions.enabled": false,
+    // #########################################################
+    // Python
+    "python.languageServer": "Pylance",
+    "python.testing.pytestEnabled": true,
+    // "python.linting.enabled": true,
+    // "python.linting.flake8Enabled": true,
+    // "python.linting.lintOnSave": true,
+    // "python.envFile": "${workspaceFolder}/.env",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    // "python.formatting.provider": "black",
+    // "python.formatting.blackArgs": [
+    //     "--line-length",
+    //     "105"
+    // ],
+    "python.analysis.autoFormatStrings": true,
+    // "python.analysis.autoImportCompletions": true,
+    "python.analysis.addImport.exactMatchOnly": true,
+    "python.analysis.typeCheckingMode": "standard",
+    "jupyter.askForKernelRestart": false,
+    "jupyter.alwaysTrustNotebooks": true,
+    "jupyter.widgetScriptSources": [
+        "jsdelivr.com",
+        "unpkg.com"
+    ],
+    // Notebook
+    "notebook.output.textLineLimit": 1000,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    // Markdown
+    "markdown.updateLinksOnFileMove.enabled": "prompt",
+    "markdown.validate.enabled": true,
+    // dbt & bq
+    "dbt.enableNewLineagePanel": true,
+    "dbt.perspectiveTheme": "Vintage",
+    "dbt.queryLimit": 5000,
+    "dbt.lineage.defaultExpansion": 3,
+    "dbt.lineage.showNonSelectEdges": true,
+    // "sqltools.connections": [
+    //     {
+    //         "name": "BigQuery",
+    //         "authenticator": "SERVICE_ACCOUNT",
+    //         "location": "us-central1",
+    //         "previewLimit": 50,
+    //         "driver": "BigQuery",
+    //         "keyfile": "X.iam.gserviceaccount.com.json"
+    //     }
+    // ],
+    "sqltools.useNodeRuntime": true,
+    "sqltools.highlightQuery": false,
+    // Other
+    "extensions.experimental.affinity": {},
+    "remote.autoForwardPortsSource": "hybrid",
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+        "*.sqlite": "${capture}.${extname}-*",
+        "*.db": "${capture}.${extname}-*",
+        "*.sqlite3": "${capture}.${extname}-*",
+        "*.db3": "${capture}.${extname}-*",
+        "*.sdb": "${capture}.${extname}-*",
+        "*.s3db": "${capture}.${extname}-*"
+    },
+    "docker.extension.enableComposeLanguageServer": false,
+    "security.promptForLocalFileProtocolHandling": false,
+    "security.promptForRemoteFileProtocolHandling": false,
+    "chat.mcp.gallery.enabled": true,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "claudeCode.preferredLocation": "panel",
+    "scm.repositories.explorer": true,
+    "chat.useAgentSkills": true,
+    "@azure.argTenant": "",
+    //
+    // "terminal.integrated.profiles.osx": {
+    //     "bash": null,
+    //     "tmux": {
+    //         "path": "bash",
+    //         "args": [
+    //             "-c",
+    //             "tmux new -ADs ${PWD##*/}"
+    //         ],
+    //         "icon": "terminal-tmux",
+    //     },
+    // },
+    // "terminal.integrated.defaultProfile.osx": "tmux",
+}

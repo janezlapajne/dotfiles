@@ -19,3 +19,5 @@ root = [
 "karabiner/karabiner.json" = ".config/karabiner"
 "worktrunk/config.toml" = ".config/worktrunk"
 "worktrunk/setup-farming-data-layer.sh" = ".config/worktrunk"
+"vscode/settings.json" = "Library/Application Support/Code/User"
+"vscode/keybindings.json" = "Library/Application Support/Code/User"
