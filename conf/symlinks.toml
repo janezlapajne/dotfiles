@@ -21,3 +21,4 @@ root = [
 "worktrunk/setup-farming-data-layer.sh" = ".config/worktrunk"
 "vscode/settings.json" = "Library/Application Support/Code/User"
 "vscode/keybindings.json" = "Library/Application Support/Code/User"
+"claude/settings.json" = ".claude"

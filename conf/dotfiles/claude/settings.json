@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(sudo:*)",
+      "Bash(chmod:*)",
+      "Bash(chown:*)",
+      "Bash(docker:*)",
+      "Bash(systemctl:*)",
+      "Bash(service:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)",
+      "Write(/etc/**)",
+      "Write(/usr/**)",
+      "Write(/bin/**)",
+      "Write(/sbin/**)",
+      "Write(/System/**)",
+      "Read(.env)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title 'Claude Code' -message 'Claude Code needs your attention'"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "claude-code-setup@claude-plugins-official": true,
+    "worktrunk@worktrunk": true
+  },
+  "extraKnownMarketplaces": {
+    "worktrunk": {
+      "source": {
+        "source": "github",
+        "repo": "max-sixty/worktrunk"
+      }
+    }
+  }
+}
