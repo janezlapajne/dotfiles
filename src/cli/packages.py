@@ -22,7 +22,7 @@ def install_packages(config: Config) -> None:
         )
 
     run(["brew", "update"])
-    run(["brew", "upgrade"])
+    run(["brew", "upgrade"], check=False)
 
     for cask in brew_casks:
         run(["brew", "install", "--cask", cask])
