@@ -77,6 +77,10 @@
 		"key": "shift+cmd+a",
 		"command": "workbench.view.extension.test"
 	},
+	{
+		"key": "shift+cmd+b",
+		"command": "workbench.view.extension.gitlab-workflow"
+	},
 	// Terminal
 	{
 		"key": "cmd+shift+backspace",

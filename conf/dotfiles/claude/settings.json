@@ -36,7 +36,8 @@
   },
   "enabledPlugins": {
     "claude-code-setup@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {

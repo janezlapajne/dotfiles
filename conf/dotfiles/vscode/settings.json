@@ -491,11 +491,19 @@
             "maxResults": 20
         },
         {
-            "name": "Merge Requests",
+            "name": "MR: Assigned to Me",
             "type": "merge_requests",
             "scope": "assigned_to_me",
             "state": "opened",
             "noItemText": "No merge requests assigned to you."
+        },
+        {
+            "name": "MR: Awaiting My Review",
+            "type": "merge_requests",
+            "state": "opened",
+            "scope": "all",
+            "reviewer": "janez.lapajne",
+            "noItemText": "No merge requests awaiting your review."
         },
     ],
     // #########################################################
