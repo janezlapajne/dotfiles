@@ -45,6 +45,9 @@
     "type": "command",
     "command": "node $HOME/.claude/hud/omc-hud.mjs"
   },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "extraKnownMarketplaces": {
     "worktrunk": {
       "source": {
