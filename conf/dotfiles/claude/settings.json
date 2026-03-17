@@ -37,13 +37,25 @@
   "enabledPlugins": {
     "claude-code-setup@claude-plugins-official": true,
     "worktrunk@worktrunk": true,
-    "slack@claude-plugins-official": true
+    "slack@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "oh-my-claudecode@omc": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node $HOME/.claude/hud/omc-hud.mjs"
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
       "source": {
         "source": "github",
         "repo": "max-sixty/worktrunk"
+      }
+    },
+    "omc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
       }
     }
   }
