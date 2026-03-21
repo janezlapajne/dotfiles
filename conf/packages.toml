@@ -35,3 +35,8 @@ packages = [
 ]
 
 casks = ["font-fira-code-nerd-font", "git-credential-manager"]
+
+[npm]
+packages = [
+	"fkill-cli",
+]

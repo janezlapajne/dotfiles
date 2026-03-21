@@ -56,6 +56,9 @@ alias wtr='wt remove'
 alias wtlogs='wt config state logs'
 alias wtlog='cat "$(find "$(realpath "$(git rev-parse --git-common-dir)")/wt-logs" -name "*.log" -size +0 -print0 | xargs -0 ls -t | head -1)"'
 
+# Process management
+alias fk='fkill'
+
 # Other
 alias idea='open -a "IntelliJ IDEA"'
 alias cl='claude'
