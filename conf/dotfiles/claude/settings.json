@@ -1,87 +1,77 @@
 {
-  "permissions": {
-    "allow": [],
-    "deny": [],
-    "ask": [
-      "Bash(rm:*)",
-      "Bash(rmdir:*)",
-      "Bash(sudo:*)",
-      "Bash(chmod:*)",
-      "Bash(chown:*)",
-      "Bash(docker:*)",
-      "Bash(systemctl:*)",
-      "Bash(service:*)",
-      "Bash(kill:*)",
-      "Bash(pkill:*)",
-      "Write(/etc/**)",
-      "Write(/usr/**)",
-      "Write(/bin/**)",
-      "Write(/sbin/**)",
-      "Write(/System/**)",
-      "Read(.env)"
-    ]
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "terminal-notifier -title 'Claude Code' -message 'Claude Code needs your attention'"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/cmux-notify.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Task",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/cmux-notify.sh"
-          }
-        ]
-      }
-    ]
-  },
-  "enabledPlugins": {
-    "claude-code-setup@claude-plugins-official": true,
-    "worktrunk@worktrunk": true,
-    "slack@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "oh-my-claudecode@omc": true
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "node $HOME/.claude/hud/omc-hud.mjs"
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
-  "extraKnownMarketplaces": {
-    "worktrunk": {
-      "source": {
-        "source": "github",
-        "repo": "max-sixty/worktrunk"
-      }
-    },
-    "omc": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
-      }
-    }
-  }
+	"env": {
+		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+	},
+	"permissions": {
+		"allow": [],
+		"deny": [],
+		"ask": [
+			"Bash(rm:*)",
+			"Bash(rmdir:*)",
+			"Bash(sudo:*)",
+			"Bash(chmod:*)",
+			"Bash(chown:*)",
+			"Bash(docker:*)",
+			"Bash(systemctl:*)",
+			"Bash(service:*)",
+			"Bash(kill:*)",
+			"Bash(pkill:*)",
+			"Write(/etc/**)",
+			"Write(/usr/**)",
+			"Write(/bin/**)",
+			"Write(/sbin/**)",
+			"Write(/System/**)",
+			"Read(.env)"
+		]
+	},
+	"hooks": {
+		"Stop": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/cmux-notify.sh"
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Task",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/cmux-notify.sh"
+					}
+				]
+			}
+		]
+	},
+	"statusLine": {
+		"type": "command",
+		"command": "node $HOME/.claude/hud/omc-hud.mjs"
+	},
+	"enabledPlugins": {
+		"claude-code-setup@claude-plugins-official": true,
+		"worktrunk@worktrunk": true,
+		"slack@claude-plugins-official": true,
+		"superpowers@claude-plugins-official": true,
+		"oh-my-claudecode@omc": true,
+		"security-guidance@claude-plugins-official": true
+	},
+	"extraKnownMarketplaces": {
+		"worktrunk": {
+			"source": {
+				"source": "github",
+				"repo": "max-sixty/worktrunk"
+			}
+		},
+		"omc": {
+			"source": {
+				"source": "git",
+				"url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+			}
+		}
+	}
 }
