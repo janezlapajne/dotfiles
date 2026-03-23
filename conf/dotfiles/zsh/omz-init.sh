@@ -12,6 +12,7 @@ plugins=(
 	docker
 	docker-compose
 	eza
+	fzf
 	fzf-tab
 	gh
 	git
