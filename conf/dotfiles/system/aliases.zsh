@@ -59,6 +59,16 @@ alias wtlog='cat "$(find "$(realpath "$(git rev-parse --git-common-dir)")/wt-log
 # Process management
 alias fk='fkill'
 
+# Modern ls with eza
+alias ls="eza --no-filesize --long --color=always --icons=always --no-user"
+
+# Tree views (eza-based)
+alias tree="eza --tree --level=3 --icons=always --color=always -a --ignore-glob='.git'"
+alias dtree="eza --tree --level=3 --icons=always --color=always -a -D --ignore-glob='.git'"
+
+# Fuzzy find and open man pages
+alias fman="compgen -c | fzf | xargs man"
+
 # Other
 alias idea='open -a "IntelliJ IDEA"'
 alias cl='claude'
