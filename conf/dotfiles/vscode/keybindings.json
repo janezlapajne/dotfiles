@@ -219,12 +219,7 @@
 		"command": "editor.action.copyLinesUpAction",
 		"when": "editorTextFocus && !editorReadonly"
 	},
-	{
-		"key": "shift+space",
-		"command": "editor.action.triggerSuggest",
-		"when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"
-	},
-	// Debug 
+	// Debug
 	{
 		"key": "shift+alt+backspace",
 		"command": "workbench.debug.panel.action.clearReplAction"
