@@ -5,6 +5,14 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
 
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# vi-mode
+VI_MODE_SET_CURSOR=true
+
 # Oh-my-zsh Plugins
 plugins=(
 	aliases
@@ -23,9 +31,6 @@ plugins=(
 	zoxide
 	zsh-interactive-cd
 )
-
-# vi-mode
-VI_MODE_SET_CURSOR=true
 
 # alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default

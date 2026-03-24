@@ -1,8 +1,3 @@
-# History
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
 # Setup options
 setopt SHARE_HISTORY      # share history across sessions
 setopt APPEND_HISTORY     # adds history
@@ -23,6 +18,14 @@ setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
 setopt NO_LIST_BEEP
 # unsetopt BEEP # Turn off all beeps
+
+# Prefix-based history navigation in vi insert mode
+# Type a prefix then Ctrl+P/N to cycle matching history entries
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey -M viins '^P' up-line-or-beginning-search
+bindkey -M viins '^N' down-line-or-beginning-search
 
 # Add functions to fpath
 # chmod go-w "$DOTFILES_ZSH"
