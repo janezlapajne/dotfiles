@@ -23,3 +23,4 @@ root = [
 "vscode/keybindings.json" = "Library/Application Support/Code/User"
 "claude/settings.json" = ".claude"
 "claude/hooks/cmux-notify.sh" = ".claude/hooks"
+"starship/starship.toml" = ".config"
