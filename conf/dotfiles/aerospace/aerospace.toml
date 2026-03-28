@@ -69,6 +69,7 @@ alt-comma = 'layout accordion horizontal vertical'
 
 # Toggle floating/tiling for current window
 alt-shift-f = 'layout floating tiling'
+alt-ctrl-shift-f = 'fullscreen'
 
 # Quick resize (press / and + on keyboard)
 alt-minus = 'resize smart -50'
