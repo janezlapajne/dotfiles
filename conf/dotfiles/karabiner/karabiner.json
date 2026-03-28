@@ -276,6 +276,36 @@
 								"type": "basic"
 							}
 						]
+					},
+					{
+						"description": "Shift+Alt+V → @ symbol (via clipboard paste)",
+						"manipulators": [
+							{
+								"from": {
+									"key_code": "v",
+									"modifiers": {
+										"mandatory": [
+											"shift",
+											"option"
+										]
+									}
+								},
+								"to": [
+									{
+										"shell_command": "printf '@' | pbcopy"
+									},
+									{
+										"key_code": "vk_none",
+										"hold_down_milliseconds": 50
+									},
+									{
+										"key_code": "v",
+										"modifiers": ["left_command"]
+									}
+								],
+								"type": "basic"
+							}
+						]
 					}
 				]
 			},
