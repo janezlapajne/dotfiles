@@ -10,6 +10,9 @@
 			"Grep(/**)",
 			"Bash(*)"
 		],
+		"deny": [
+			"Read(**/.env)"
+		],
 		"defaultMode": "acceptEdits"
 	},
 	"sandbox": {
