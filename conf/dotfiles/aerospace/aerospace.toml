@@ -63,7 +63,7 @@ alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
-# Layout toggles
+# Layout toggles (press - and , on keyboard)
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
@@ -101,7 +101,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 # Enter modes
 alt-shift-r = 'mode resize'
-alt-shift-semicolon = 'mode service'
+alt-shift-comma = 'mode service'
 
 # -----------------------------------------------------------------------------
 # Resize mode: h/j/k/l to resize, b to balance, esc/enter to exit
