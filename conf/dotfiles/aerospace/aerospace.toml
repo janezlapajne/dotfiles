@@ -36,7 +36,7 @@ persistent-workspaces = [
 	'T', # Terminal (cmux)
 	'B', # Browser (Chrome)
 	'C', # Code (VSCode)
-	'N', # Notes (Obsidian)
+	'I', # Idea (IntelliJ)
 	'W', # Chat (WhatsApp)
 ]
 
@@ -77,6 +77,7 @@ alt-comma = 'layout accordion horizontal vertical'
 # Toggle floating/tiling for current window
 alt-shift-f = 'layout floating tiling'
 alt-ctrl-shift-f = 'fullscreen'
+alt-shift-m = 'macos-native-minimize'
 
 # Quick resize (press / and + on keyboard)
 alt-minus = 'resize smart -50'
@@ -89,7 +90,7 @@ alt-3 = 'workspace 3'
 alt-t = 'workspace T'
 alt-b = 'workspace B'
 alt-c = 'workspace C'
-alt-n = 'workspace N'
+alt-i = 'workspace I'
 alt-w = 'workspace W'
 
 # Move window to workspace: alt + shift + number/letter
@@ -99,7 +100,7 @@ alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
-alt-shift-n = 'move-node-to-workspace N'
+alt-shift-i = 'move-node-to-workspace I'
 alt-shift-w = 'move-node-to-workspace W'
 
 # Workspace navigation
@@ -157,10 +158,10 @@ run = 'move-node-to-workspace B'
 if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace C'
 
-# Obsidian → Notes workspace
+# IntelliJ IDEA → Idea workspace
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace N'
+if.app-id = 'com.jetbrains.intellij'
+run = 'move-node-to-workspace I'
 
 # WhatsApp → Chat workspace
 [[on-window-detected]]
