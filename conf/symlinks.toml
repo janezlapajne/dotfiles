@@ -24,3 +24,4 @@ root = [
 "claude/settings.json" = ".claude"
 "claude/hooks/cmux-notify.sh" = ".claude/hooks"
 "starship/starship.toml" = ".config"
+"aerospace/aerospace.toml" = ".config/aerospace"

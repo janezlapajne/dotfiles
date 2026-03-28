@@ -210,17 +210,6 @@
 		"when": "editorTextFocus && !editorReadOnly"
 	},
 	{
-		"key": "shift+alt+j",
-		"command": "editor.action.copyLinesDownAction",
-		"when": "editorTextFocus && !editorReadonly"
-	},
-	{
-		"key": "shift+alt+k",
-		"command": "editor.action.copyLinesUpAction",
-		"when": "editorTextFocus && !editorReadonly"
-	},
-	// Debug
-	{
 		"key": "shift+alt+backspace",
 		"command": "workbench.debug.panel.action.clearReplAction"
 	},

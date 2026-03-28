@@ -1,0 +1,165 @@
+# AeroSpace tiling window manager configuration
+# Docs: https://nikitabobko.github.io/AeroSpace/guide
+config-version = 2
+
+# Start at login (required for after-login-command to work)
+start-at-login = true
+
+# Normalizations: keep the tree tidy automatically
+# https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Layout defaults
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+
+# Turn off macOS "Hide application" (cmd-h)
+automatically-unhide-macos-hidden-apps = true
+
+# Mouse follows focus when switching monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Workspaces that persist even when empty
+persistent-workspaces = [
+	'1',
+	'2',
+	'3',
+	'T', # Terminal (cmux)
+	'B', # Browser (Chrome)
+	'C', # Code (VSCode)
+	'N', # Notes (Obsidian)
+	'W', # Chat (WhatsApp)
+]
+
+# Keyboard layout
+[key-mapping]
+preset = 'qwerty'
+
+# Gaps between windows (inner) and screen edges (outer)
+[gaps]
+inner.horizontal = 4
+inner.vertical = 4
+outer.left = 4
+outer.bottom = 4
+outer.top = 4
+outer.right = 4
+
+# -----------------------------------------------------------------------------
+# Main keybindings
+# -----------------------------------------------------------------------------
+[mode.main.binding]
+
+# Focus: alt + h/j/k/l (vim-style)
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move window: alt + shift + h/j/k/l
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Layout toggles
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+
+# Toggle floating/tiling for current window
+alt-shift-f = 'layout floating tiling'
+
+# Quick resize (press / and + on keyboard)
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# Switch workspace: alt + number/letter
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-t = 'workspace T'
+alt-b = 'workspace B'
+alt-c = 'workspace C'
+alt-n = 'workspace N'
+alt-w = 'workspace W'
+
+# Move window to workspace: alt + shift + number/letter
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-t = 'move-node-to-workspace T'
+alt-shift-b = 'move-node-to-workspace B'
+alt-shift-c = 'move-node-to-workspace C'
+alt-shift-n = 'move-node-to-workspace N'
+alt-shift-w = 'move-node-to-workspace W'
+
+# Workspace navigation
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# Enter modes
+alt-shift-r = 'mode resize'
+alt-shift-semicolon = 'mode service'
+
+# -----------------------------------------------------------------------------
+# Resize mode: h/j/k/l to resize, b to balance, esc/enter to exit
+# -----------------------------------------------------------------------------
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+b = 'balance-sizes'
+enter = 'mode main'
+esc = 'mode main'
+
+# -----------------------------------------------------------------------------
+# Service mode: utilities and tree manipulation
+# -----------------------------------------------------------------------------
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# Join window with adjacent container
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+
+# -----------------------------------------------------------------------------
+# Window detection rules: auto-assign apps to workspaces
+# Run `aerospace list-apps` to find bundle IDs
+# -----------------------------------------------------------------------------
+
+# cmux → Terminal workspace
+[[on-window-detected]]
+if.app-name-regex-substring = 'cmux'
+run = 'move-node-to-workspace T'
+
+# Chrome → Browser workspace
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace B'
+
+# VSCode → Code workspace
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace C'
+
+# Obsidian → Notes workspace
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace N'
+
+# WhatsApp → Chat workspace
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace W'
+
+# Finder → float (doesn't tile well)
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
