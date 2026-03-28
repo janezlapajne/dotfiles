@@ -76,7 +76,7 @@ alt-comma = 'layout accordion horizontal vertical'
 
 # Toggle floating/tiling for current window
 alt-shift-f = 'layout floating tiling'
-alt-ctrl-shift-f = 'fullscreen'
+alt-shift-s = 'fullscreen'
 alt-shift-m = 'macos-native-minimize'
 
 # Quick resize (press / and + on keyboard)
