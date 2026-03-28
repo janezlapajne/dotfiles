@@ -2,7 +2,7 @@
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 # Ctrl+T: fuzzy find files and insert path at cursor (with bat preview)
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# Alt+C (or Esc+C on Mac): fuzzy find directories and cd into selection (with tree preview)
+# Esc+C: fuzzy find directories and cd into selection (with tree preview)
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 
 # FZF: appearance (applies globally to all fzf usage)
