@@ -21,6 +21,7 @@
 			"Write(/bin/**)",
 			"Write(/sbin/**)",
 			"Write(/System/**)",
+			"Read(**/.history/**)",
 			"Read(.env)"
 		]
 	},
