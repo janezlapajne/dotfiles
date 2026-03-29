@@ -95,11 +95,12 @@
 		"command": "workbench.action.terminal.resizePaneDown"
 	},
 	{
-		"key": "ctrl+shift+f4",
+		"key": "alt+cmd+backspace",
 		"command": "workbench.action.terminal.killAll"
 	},
 	{
-		"key": "ctrl+f4",
+		"key": "cmd+backspace",
+		"when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus",
 		"command": "workbench.action.terminal.kill"
 	},
 	{
