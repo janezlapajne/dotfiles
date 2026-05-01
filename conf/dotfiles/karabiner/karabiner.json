@@ -1,388 +1,214 @@
 {
-	"profiles": [
-		{
-			"complex_modifications": {
-				"rules": [
-					{
-						"description": "Caps Lock → Hyper Key (tap=Escape, hold=Ctrl+Opt+Shift+Cmd)",
-						"manipulators": [
-							{
-								"from": {
-									"key_code": "caps_lock",
-									"modifiers": {
-										"optional": [
-											"any"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "left_shift",
-										"modifiers": [
-											"left_control",
-											"left_option",
-											"left_command"
-										]
-									}
-								],
-								"to_if_alone": [
-									{
-										"key_code": "escape"
-									}
-								],
-								"type": "basic"
-							}
-						]
-					},
-					{
-						"description": "Hyper+q → Control (ctrl key at a convenient position)",
-						"manipulators": [
-							{
-								"from": {
-									"key_code": "q",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "left_control"
-									}
-								],
-								"type": "basic"
-							}
-						]
-					},
-					{
-						"description": "Hyper Key sublayers (app launchers)",
-						"manipulators": [
-							{
-								"from": {
-									"key_code": "t",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'cmux'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "b",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'Google Chrome'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "c",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'Visual Studio Code'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "n",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'Obsidian'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "w",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'WhatsApp'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "e",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open 'raycast://extensions/raycast/emoji-symbols/search-emoji-symbols'"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "i",
-									"modifiers": {
-										"mandatory": [
-											"left_control",
-											"left_option",
-											"left_shift",
-											"left_command"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "open -a 'IntelliJ IDEA'"
-									}
-								],
-								"type": "basic"
-							}
-						]
-					},
-					{
-						"description": "Change right_command+hjkl to arrow keys",
-						"manipulators": [
-							{
-								"from": {
-									"key_code": "h",
-									"modifiers": {
-										"mandatory": [
-											"right_command"
-										],
-										"optional": [
-											"any"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "left_arrow"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "j",
-									"modifiers": {
-										"mandatory": [
-											"right_command"
-										],
-										"optional": [
-											"any"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "down_arrow"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "k",
-									"modifiers": {
-										"mandatory": [
-											"right_command"
-										],
-										"optional": [
-											"any"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "up_arrow"
-									}
-								],
-								"type": "basic"
-							},
-							{
-								"from": {
-									"key_code": "l",
-									"modifiers": {
-										"mandatory": [
-											"right_command"
-										],
-										"optional": [
-											"any"
-										]
-									}
-								},
-								"to": [
-									{
-										"key_code": "right_arrow"
-									}
-								],
-								"type": "basic"
-							}
-						]
-					},
-					{
-						"description": "Shift+Alt+V → @ symbol (via clipboard paste)",
-						"manipulators": [
-							{
-								"from": {
-									"key_code": "v",
-									"modifiers": {
-										"mandatory": [
-											"shift",
-											"option"
-										]
-									}
-								},
-								"to": [
-									{
-										"shell_command": "printf '@' | pbcopy"
-									},
-									{
-										"key_code": "vk_none",
-										"hold_down_milliseconds": 50
-									},
-									{
-										"key_code": "v",
-										"modifiers": ["left_command"]
-									}
-								],
-								"type": "basic"
-							}
-						]
-					}
-				]
-			},
-			"devices": [
-				{
-					"identifiers": {
-						"is_keyboard": true
-					},
-					"simple_modifications": [
-						{
-							"from": {
-								"key_code": "grave_accent_and_tilde"
-							},
-							"to": [
-								{
-									"key_code": "non_us_backslash"
-								}
-							]
-						},
-						{
-							"from": {
-								"key_code": "non_us_backslash"
-							},
-							"to": [
-								{
-									"key_code": "grave_accent_and_tilde"
-								}
-							]
-						}
-					]
-				},
-				{
-					"identifiers": {
-						"is_keyboard": true,
-						"product_id": 50475,
-						"vendor_id": 1133
-					},
-					"simple_modifications": [
-						{
-							"from": {
-								"key_code": "left_command"
-							},
-							"to": [
-								{
-									"key_code": "left_option"
-								}
-							]
-						},
-						{
-							"from": {
-								"key_code": "left_option"
-							},
-							"to": [
-								{
-									"key_code": "left_command"
-								}
-							]
-						},
-						{
-							"from": {
-								"key_code": "right_option"
-							},
-							"to": [
-								{
-									"key_code": "right_command"
-								}
-							]
-						}
-					]
-				}
-			],
-			"name": "Default profile",
-			"selected": true,
-			"simple_modifications": [],
-			"virtual_hid_keyboard": {
-				"keyboard_type_v2": "iso"
-			}
-		}
-	]
+    "profiles": [
+        {
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "Caps Lock → Hyper Key (tap=Escape, hold=Ctrl+Opt+Shift+Cmd)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": ["left_control", "left_option", "left_command"]
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Hyper+q → Control (ctrl key at a convenient position)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "q",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "key_code": "left_control" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Hyper Key sublayers (app launchers)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'cmux'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "b",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'Google Chrome'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "c",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'Visual Studio Code'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'Obsidian'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'WhatsApp'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "e",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open 'raycast://extensions/raycast/emoji-symbols/search-emoji-symbols'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "i",
+                                    "modifiers": { "mandatory": ["left_control", "left_option", "left_shift", "left_command"] }
+                                },
+                                "to": [{ "shell_command": "open -a 'IntelliJ IDEA'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Change right_command+hjkl to arrow keys",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "left_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "down_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "up_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "right_arrow" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Shift+Alt+V → @ symbol (via clipboard paste)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "v",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [
+                                    { "shell_command": "printf '@' | pbcopy" },
+                                    {
+                                        "hold_down_milliseconds": 50,
+                                        "key_code": "vk_none"
+                                    },
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": ["left_command"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "identifiers": { "is_keyboard": true },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 50475,
+                        "vendor_id": 1133
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
+                        },
+                        {
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
+                        },
+                        {
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
+                        }
+                    ]
+                }
+            ],
+            "name": "Default profile",
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+        }
+    ]
 }
