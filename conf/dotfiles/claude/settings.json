@@ -59,7 +59,8 @@
     "slack@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "oh-my-claudecode@omc": true,
-    "security-guidance@claude-plugins-official": true
+    "security-guidance@claude-plugins-official": true,
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -75,10 +76,17 @@
         "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
       },
       "autoUpdate": true
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
     }
   },
   "editorMode": "vim",
   "teammateMode": "in-process",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
