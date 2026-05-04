@@ -9,4 +9,4 @@ fi
 
 # farming-data-layer specific hooks
 [projects."gitlab.com/login5/login-eko/reports/farming-data-layer"]
-post-create.setup = "bash ~/.config/worktrunk/setup-farming-data-layer.sh {{ worktree_path }}"
+post-start.setup = "bash ~/.config/worktrunk/setup-farming-data-layer.sh {{ worktree_path }}"
