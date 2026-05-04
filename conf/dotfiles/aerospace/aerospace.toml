@@ -33,11 +33,15 @@ persistent-workspaces = [
 	'1',
 	'2',
 	'3',
+	'4',
+	'5',
 	'T', # Terminal (cmux)
 	'B', # Browser (Chrome)
 	'C', # Code (VSCode)
 	'I', # Idea (IntelliJ)
 	'W', # Chat (WhatsApp)
+	'N', # Notes/Chat (Obsidian + Slack)
+	'A', # Agents (Claude, Codex, Perplexity)
 ]
 
 # Keyboard layout
@@ -88,21 +92,29 @@ alt-equal = 'resize smart +50'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
 alt-t = 'workspace T'
 alt-b = 'workspace B'
 alt-c = 'workspace C'
 alt-i = 'workspace I'
 alt-w = 'workspace W'
+alt-n = 'workspace N'
+alt-a = 'workspace A'
 
 # Move window to workspace: alt + shift + number/letter
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
 alt-shift-i = 'move-node-to-workspace I'
 alt-shift-w = 'move-node-to-workspace W'
+alt-shift-n = 'move-node-to-workspace N'
+alt-shift-a = 'move-node-to-workspace A'
 
 # Workspace navigation
 alt-tab = 'workspace-back-and-forth'
@@ -173,3 +185,28 @@ run = 'move-node-to-workspace W'
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
+
+# Obsidian → Notes workspace
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace N'
+
+# Slack → Notes workspace
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace N'
+
+# Claude → Agents workspace
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace A'
+
+# Codex → Agents workspace
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = 'move-node-to-workspace A'
+
+# Perplexity → Agents workspace
+[[on-window-detected]]
+if.app-id = 'ai.perplexity.mac'
+run = 'move-node-to-workspace A'
