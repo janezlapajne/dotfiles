@@ -59,8 +59,7 @@
     "slack@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "oh-my-claudecode@omc": true,
-    "security-guidance@claude-plugins-official": true,
-    "caveman@caveman": false
+    "security-guidance@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {

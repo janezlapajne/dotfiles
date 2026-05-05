@@ -247,6 +247,10 @@
 		"command": "editor.action.startFindReplaceAction",
 		"when": "editorFocus || editorIsOpen"
 	},
+	{
+		"key": "shift+alt+r",
+		"command": "workbench.files.action.showActiveFileInExplorer"
+	},
 	// Copilot
 	{
 		"key": "ctrl+l",
