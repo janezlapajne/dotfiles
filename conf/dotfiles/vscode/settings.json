@@ -96,6 +96,7 @@
     "terminal.integrated.shellIntegration.enabled": true,
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
     "terminal.integrated.scrollback": 20000,
+    "terminal.integrated.mouseWheelScrollSensitivity": 3,
     "terminal.integrated.inheritEnv": true,
     // "terminal.integrated.env.linux": {
     //     "PYTHONPATH": "${workspaceFolder}"
@@ -129,9 +130,9 @@
         "terminal.ansiRed": "#FB543F",
         "terminal.ansiWhite": "#A89984",
         "terminal.ansiYellow": "#FAC03B",
-        "statusBar.background": "#8FBCBB",
-        "statusBar.noFolderBackground": "#8FBCBB",
-        "statusBar.debuggingBackground": "#8FBCBB",
+        "statusBar.background": "#B48EAD",
+        "statusBar.noFolderBackground": "#B48EAD",
+        "statusBar.debuggingBackground": "#B48EAD",
         "statusBar.foreground": "#000000",
         "statusBar.debuggingForeground": "#000000"
     },
