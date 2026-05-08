@@ -22,6 +22,16 @@ fi
 echo "==> Copying .env..."
 cp "$ENV_SRC" "$TOOLS/.env"
 
+# Apply any wtv-stashed per-branch vars to .env as UPPER_SNAKE keys, replacing
+# any pre-existing line for the same key.
+while IFS=$'\t' read -r key val; do
+    [ -z "$key" ] && continue
+    envkey="$(printf '%s' "$key" | tr 'a-z-' 'A-Z_')"
+    sed -i.bak "/^${envkey}=/d" "$TOOLS/.env" && rm -f "$TOOLS/.env.bak"
+    printf '%s=%s\n' "$envkey" "$val" >> "$TOOLS/.env"
+    echo "==> override .env: ${envkey}=${val}"
+done < <(wt -C "$WORKTREE" config state vars list 2>/dev/null)
+
 unset VIRTUAL_ENV
 
 echo "==> Installing dependencies..."
