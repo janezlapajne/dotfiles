@@ -81,12 +81,22 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
     }
+  },
+  "advisorModel": "opus",
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
   "editorMode": "vim",
   "teammateMode": "in-process",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "advisorModel": "opus"
+  "skipAutoPermissionPrompt": true
 }
