@@ -27,9 +27,7 @@ class TmuxModule(DotfileModule):
         (tmux_module_dir / TMUX_CONF_LOCAL_TEMPLATE).write_text(
             (tmux_dir / TMUX_CONF_LOCAL).read_text()
         )
-        (tmux_module_dir / TMUX_CONF).write_text(
-            (tmux_dir / TMUX_CONF).read_text()
-        )
+        (tmux_module_dir / TMUX_CONF).write_text((tmux_dir / TMUX_CONF).read_text())
 
     def setup(self) -> None:
         tmux_module_dir = self.config.tmux_module_dir
