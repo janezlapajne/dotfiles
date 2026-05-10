@@ -7,17 +7,17 @@ description: Obsidian Vault — Daily Commit
 
 ## Metadata
 
-| Field         | Value                                                                                         |
-| ------------- | --------------------------------------------------------------------------------------------- |
-| Trigger       | Daily                                                                                         |
-| Purpose       | Snapshot all changes in the Obsidian vault to git on `main` with an agent-readable message.   |
-| Vault         | `~/mydrive/brain/Notes`                                                                       |
-| Branch        | `main` (commit only — repository has no remote, nothing is pushed).                           |
-| Execution env | Local checkout of the vault. No worktree, no extra tooling.                                   |
+| Field         | Value                                                                                       |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| Trigger       | Daily                                                                                       |
+| Purpose       | Snapshot all changes in the Obsidian vault to git on `main` with an agent-readable message. |
+| Vault         | `~/mydrive/brain/Notes`                                                                     |
+| Branch        | `main` (commit only — repository has no remote, nothing is pushed).                         |
+| Execution env | Local checkout of the vault. No worktree, no extra tooling.                                 |
 
 ## Workflow
 
-The routine runs the steps below **in order**. A step must succeed before the next one starts. If any step aborts, follow the *Failure handling summary* and post the failure verdict per *Slack notification*.
+The routine runs the steps below **in order**. A step must succeed before the next one starts. If any step aborts, follow the _Failure handling summary_ and post the failure verdict per _Slack notification_.
 
 All steps run from the vault root: `cd ~/mydrive/brain/Notes`.
 
@@ -38,7 +38,7 @@ git symbolic-ref --short HEAD   # must print: main
 git status --porcelain
 ```
 
-If the output is empty, print the *No-op* block from *Routine output contract* and exit success. Skip the remaining steps.
+If the output is empty, print the _No-op_ block from _Routine output contract_ and exit success. Skip the remaining steps.
 
 Otherwise continue to Step 3.
 
@@ -57,13 +57,15 @@ Read the staged diff (`git diff --cached`) and write the message. Format is inte
 If the diff is very large (>~2000 lines), truncate before reading — a runaway diff must not blow the context window. In that case use the fallback subject below.
 
 **Subject (required, 50–72 chars total, including the prefix):**
-- **Required prefix:** `[auto] ` — marks the commit as produced by this scheduled routine, so `git log` makes the human-vs-agent split obvious at a glance. This is the *only* permitted prefix.
+
+- **Required prefix:** `[auto] ` — marks the commit as produced by this scheduled routine, so `git log` makes the human-vs-agent split obvious at a glance. This is the _only_ permitted prefix.
 - After the prefix, write a natural-language summary in **content** terms — name the topics, ideas, sections, or templates that changed.
 - Specifics over generics: `[auto] Expand systematic-debugging chapter; add weekly-review template` beats `[auto] Update notes`.
 - **No** Conventional Commits prefix (`notes:`, `chore:`, etc.) on top of `[auto]` — those carry no signal here. The `[auto]` marker is the only prefix that matters.
 - **No** date or file count in the subject — the date is already on the commit, the file list is in `git log --name-status`.
 
 **Body (required trailer, plus optional prose):**
+
 - Always end the body with the trailer line `Routine: daily-obsidian-vault-commit` so the source skill is recoverable from the commit alone.
 - Optionally precede the trailer with 1–3 sentences of prose, but only when the diff covers multiple unrelated themes that don't fit in the subject. Describe themes in prose; do **not** list files.
 
@@ -114,7 +116,7 @@ EOF
 
 **Do not** pass `--no-verify`. **Do not** amend a prior commit. **Do not** retry with skip-hook flags if a hook fails.
 
-**On failure (hook rejected the commit, working tree changed mid-run, etc.):** Stop. Leave the changes staged on disk. Report the failing hook (or other reason) and its output verbatim in the routine output. Post the failure verdict per *Slack notification*.
+**On failure (hook rejected the commit, working tree changed mid-run, etc.):** Stop. Leave the changes staged on disk. Report the failing hook (or other reason) and its output verbatim in the routine output. Post the failure verdict per _Slack notification_.
 
 ### Step 6 — Pattern observation pass
 
@@ -186,18 +188,18 @@ Slack is best-effort — it is **not** part of the routine's success criteria. I
 
 The routine is considered successful only when **one** of the following holds:
 
-1. Step 2 found a clean working tree → *No-op* block printed.
-2. Steps 3–5 completed: every change staged, a commit landed on `main` with a synthesized message, and the *Success* block was printed. Step 6 may be empty or non-empty; either is fine.
+1. Step 2 found a clean working tree → _No-op_ block printed.
+2. Steps 3–5 completed: every change staged, a commit landed on `main` with a synthesized message, and the _Success_ block was printed. Step 6 may be empty or non-empty; either is fine.
 
 Any aborted step (1, 3, or 5) is a failure regardless of how far the routine got.
 
 ## Failure handling summary
 
-| Step | Failure mode                                | Action                                                                                       |
-| ---- | ------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 1    | Branch ≠ `main`                             | Stop. Do not auto-switch branches. Report actual branch in output.                           |
-| 2    | `git status` errors                         | Stop. Likely repo corruption — investigate manually before next run.                         |
-| 3    | `git add -A` errors                         | Stop. Could be a permission issue or a refused large file. Report the offending path.        |
-| 4    | Diff too large / synthesis fails            | Fall back to `Daily snapshot — N files changed`. Still commit. Not a failure.                |
-| 5    | Pre-commit hook rejects the commit          | Stop. Do **not** retry with `--no-verify`. Leave changes staged. Report hook output verbatim.|
-| 6    | Observation pass errors                     | Log inline and proceed. Non-fatal.                                                           |
+| Step | Failure mode                       | Action                                                                                        |
+| ---- | ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| 1    | Branch ≠ `main`                    | Stop. Do not auto-switch branches. Report actual branch in output.                            |
+| 2    | `git status` errors                | Stop. Likely repo corruption — investigate manually before next run.                          |
+| 3    | `git add -A` errors                | Stop. Could be a permission issue or a refused large file. Report the offending path.         |
+| 4    | Diff too large / synthesis fails   | Fall back to `Daily snapshot — N files changed`. Still commit. Not a failure.                 |
+| 5    | Pre-commit hook rejects the commit | Stop. Do **not** retry with `--no-verify`. Leave changes staged. Report hook output verbatim. |
+| 6    | Observation pass errors            | Log inline and proceed. Non-fatal.                                                            |
