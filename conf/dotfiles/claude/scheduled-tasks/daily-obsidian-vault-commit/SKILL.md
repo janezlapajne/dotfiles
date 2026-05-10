@@ -56,40 +56,58 @@ Read the staged diff (`git diff --cached`) and write the message. Format is inte
 
 If the diff is very large (>~2000 lines), truncate before reading — a runaway diff must not blow the context window. In that case use the fallback subject below.
 
-**Subject (required, 50–72 chars):**
-- Natural-language summary in **content** terms — name the topics, ideas, sections, or templates that changed.
-- Specifics over generics: `Expand systematic-debugging chapter and add weekly-review template` beats `Update notes`.
-- **No** Conventional Commits prefix (`notes:`, `chore:`, etc.) — every commit would have the same prefix, so it adds no signal.
-- **No** date, file count, or `Daily snapshot`-style phrasing — the date is already on the commit, the file list is in `git log --name-status`.
+**Subject (required, 50–72 chars total, including the prefix):**
+- **Required prefix:** `[auto] ` — marks the commit as produced by this scheduled routine, so `git log` makes the human-vs-agent split obvious at a glance. This is the *only* permitted prefix.
+- After the prefix, write a natural-language summary in **content** terms — name the topics, ideas, sections, or templates that changed.
+- Specifics over generics: `[auto] Expand systematic-debugging chapter; add weekly-review template` beats `[auto] Update notes`.
+- **No** Conventional Commits prefix (`notes:`, `chore:`, etc.) on top of `[auto]` — those carry no signal here. The `[auto]` marker is the only prefix that matters.
+- **No** date or file count in the subject — the date is already on the commit, the file list is in `git log --name-status`.
 
-**Body (optional, 1–3 sentences):**
-- Add only when the diff covers multiple unrelated themes that don't fit in the subject.
-- Describe the themes in prose. Do **not** list files.
+**Body (required trailer, plus optional prose):**
+- Always end the body with the trailer line `Routine: daily-obsidian-vault-commit` so the source skill is recoverable from the commit alone.
+- Optionally precede the trailer with 1–3 sentences of prose, but only when the diff covers multiple unrelated themes that don't fit in the subject. Describe themes in prose; do **not** list files.
 
 Examples:
 
 ```
-Capture daily-commit skill design and expand systematic-debugging chapter
+[auto] Expand systematic-debugging chapter; tweak weekly-review template
+
+Routine: daily-obsidian-vault-commit
 ```
 
 ```
-Reorganize project-management notes; add weekly-review template
+[auto] Reorganize project-management notes; add weekly-review template
 
 Split the Areas/Projects PARA folder by lifecycle stage. New template under
 Templates/weekly-review.md collects the prompts I've been using ad-hoc.
+
+Routine: daily-obsidian-vault-commit
 ```
 
-**Fallback (if synthesis fails or the diff was truncated):** use a generic subject of the form `Daily snapshot — N files changed` (where N is from `git diff --stat HEAD`). Still proceed to Step 5; do not abort.
+**Fallback (if synthesis fails or the diff was truncated):** use a generic subject of the form `[auto] Vault snapshot — N files changed` (where N is from `git diff --cached --stat`). Keep the `[auto]` prefix and the body trailer. Still proceed to Step 5; do not abort.
 
 ### Step 5 — Commit
 
-Pass the message via heredoc to preserve formatting:
+Pass the message via heredoc to preserve formatting. The `[auto]` subject prefix and the `Routine:` trailer are mandatory — they are how downstream tools (and the user) tell agent commits apart from human commits.
 
 ```bash
 git commit -m "$(cat <<'EOF'
-<subject>
+[auto] <subject>
 
-<optional body>
+<optional prose body>
+
+Routine: daily-obsidian-vault-commit
+EOF
+)"
+```
+
+If there is no prose body, the message is just the subject + a blank line + the trailer:
+
+```bash
+git commit -m "$(cat <<'EOF'
+[auto] <subject>
+
+Routine: daily-obsidian-vault-commit
 EOF
 )"
 ```
