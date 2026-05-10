@@ -21,6 +21,8 @@ The routine runs the steps below **in order**. A step must succeed before the ne
 
 All steps run from the vault root: `cd ~/mydrive/brain/Notes`.
 
+**Sandbox:** the harness sandbox denies writes inside `.git/`, so any git command that mutates the repo (`git add`, `git commit`) will fail with `Unable to create '.git/index.lock': Operation not permitted` under default sandboxing. Run those commands with `dangerouslyDisableSandbox: true`. Read-only commands (`git symbolic-ref`, `git status`, `git diff`, `git log`) stay sandboxed.
+
 ### Step 1 — Confirm branch is `main`
 
 The routine runs directly in the main vault checkout — no worktree, no isolation. The only precondition is the branch.
