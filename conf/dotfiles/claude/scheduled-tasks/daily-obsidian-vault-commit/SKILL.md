@@ -141,6 +141,46 @@ Do **not** auto-edit `.gitignore`. Observations are advisory and live only in th
 
 This step is non-fatal: if it errors, log the error inline and still report the routine as successful.
 
+### Step 7 — Update knowledge graph
+
+If Step 5 committed, refresh the vault's knowledge graph via the wrapper script at `wiki/graph/graphify.sh`. This step is **best-effort and non-fatal** — the commit has already landed, so a graph failure must not fail the routine.
+
+**Precondition check** — run the update if **either** signal indicates pending work:
+
+1. The just-made commit (`HEAD~1..HEAD`) touched markdown outside `wiki/graph/`, **or**
+2. `wiki/graph/graphify-out/needs_update` exists — the `flag`-mode post-commit hook set this on some earlier commit (typically a manual commit made during the day) that hasn't been processed yet.
+
+Skip only when **both** are false: this commit doesn't change markdown AND no flag is pending. Pure-attachment, pure-config, or graph-only commits with no pending flag don't change the graph corpus and would waste LLM tokens.
+
+```bash
+changed_md=$(git diff HEAD~1 HEAD --name-only -- '*.md' ':!wiki/graph/**')
+flag_set=0
+[ -f wiki/graph/graphify-out/needs_update ] && flag_set=1
+
+if [ -z "$changed_md" ] && [ "$flag_set" -eq 0 ]; then
+  # Report "Graph: skipped (no pending changes)" in the Success block and stop here.
+  :
+fi
+```
+
+Note: the flag alone doesn't tell us *what* changed (the hook sets it on every commit, content-blind), so it may occasionally trigger an `update` run that finds little real work. That's acceptable — graphify's manifest-based change detection keeps actual LLM extraction cost proportional to real markdown deltas.
+
+**Run** (synchronous; the script writes to `wiki/graph/graphify-out/`, never to `.git/`, so it stays inside the harness sandbox):
+
+```bash
+./wiki/graph/graphify.sh update
+```
+
+The script handles its own locking (`~/.cache/graphify-vault-locks/`) and logging (`~/.cache/graphify-vault.log`). It clears `graphify-out/needs_update` on success.
+
+**Reporting:**
+
+- Exit 0 → `Graph: updated`
+- Non-zero exit, or timeout → `Graph: failed (<short reason>)`, and include the last ~10 lines of stderr in the routine's Details block. Do **not** abort the routine.
+- Precondition skipped the run → `Graph: skipped (no pending changes)`
+
+**Flag interaction:** when this step starts, `graphify-out/needs_update` will usually be set — the `flag`-mode post-commit hook touched it after Step 5. A successful `update` clears the flag. If the update failed, the flag remains, so tomorrow's run will see it and try again — that's the intended recovery hand-off.
+
 ## Routine output contract
 
 The routine prints exactly one terminal block at the end. Stable headings make the output easy to skim and trivial to parse.
@@ -151,6 +191,7 @@ The routine prints exactly one terminal block at the end. Stable headings make t
 :white_check_mark: daily-obsidian-vault-commit <YYYY-MM-DD>
 Commit: <short SHA> — <subject>
 Files: <added>+ <modified>~ <deleted>-
+Graph: updated | skipped (no pending changes) | failed (<reason>)
 Observations: <count>
 
 <observation lines, if any — one per line, format from Step 6>
@@ -193,15 +234,18 @@ The routine is considered successful only when **one** of the following holds:
 1. Step 2 found a clean working tree → _No-op_ block printed.
 2. Steps 3–5 completed: every change staged, a commit landed on `main` with a synthesized message, and the _Success_ block was printed. Step 6 may be empty or non-empty; either is fine.
 
+Step 7's outcome (`updated` / `skipped` / `failed`) does **not** affect routine success — only Steps 1–5 do.
+
 Any aborted step (1, 3, or 5) is a failure regardless of how far the routine got.
 
 ## Failure handling summary
 
-| Step | Failure mode                       | Action                                                                                        |
-| ---- | ---------------------------------- | --------------------------------------------------------------------------------------------- |
-| 1    | Branch ≠ `main`                    | Stop. Do not auto-switch branches. Report actual branch in output.                            |
-| 2    | `git status` errors                | Stop. Likely repo corruption — investigate manually before next run.                          |
-| 3    | `git add -A` errors                | Stop. Could be a permission issue or a refused large file. Report the offending path.         |
-| 4    | Diff too large / synthesis fails   | Fall back to `Daily snapshot — N files changed`. Still commit. Not a failure.                 |
-| 5    | Pre-commit hook rejects the commit | Stop. Do **not** retry with `--no-verify`. Leave changes staged. Report hook output verbatim. |
-| 6    | Observation pass errors            | Log inline and proceed. Non-fatal.                                                            |
+| Step | Failure mode                           | Action                                                                                                                                                                            |
+| ---- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Branch ≠ `main`                        | Stop. Do not auto-switch branches. Report actual branch in output.                                                                                                                |
+| 2    | `git status` errors                    | Stop. Likely repo corruption — investigate manually before next run.                                                                                                              |
+| 3    | `git add -A` errors                    | Stop. Could be a permission issue or a refused large file. Report the offending path.                                                                                             |
+| 4    | Diff too large / synthesis fails       | Fall back to `Daily snapshot — N files changed`. Still commit. Not a failure.                                                                                                     |
+| 5    | Pre-commit hook rejects the commit     | Stop. Do **not** retry with `--no-verify`. Leave changes staged. Report hook output verbatim.                                                                                     |
+| 6    | Observation pass errors                | Log inline and proceed. Non-fatal.                                                                                                                                                |
+| 7    | `graphify.sh update` fails / times out | Report `Graph: failed (<reason>)` in the Success block; include last ~10 stderr lines in Details. Routine still succeeds; `needs_update` flag persists so tomorrow's run retries. |
