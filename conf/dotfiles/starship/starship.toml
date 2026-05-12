@@ -3,6 +3,13 @@
 
 "$schema" = "https://starship.rs/config-schema.json"
 
+# Timestamp on every prompt (disabled by default in starship)
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%m-%d %H:%M"
+style = "bold yellow"
+
 # Git status with counts (default shows symbols but not how many files)
 [git_status]
 staged = "[+${count} ](green)"
