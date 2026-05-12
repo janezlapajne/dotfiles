@@ -22,6 +22,16 @@ fi
 echo "==> Copying .env..."
 cp "$ENV_SRC" "$TOOLS/.env"
 
+# settings.local.json is gitignored, so it doesn't follow the worktree checkout —
+# symlink to the primary so Claude permission changes are shared across worktrees.
+PRIMARY="$(git -C "$WORKTREE" worktree list --porcelain | awk '/^worktree / {print $2; exit}')"
+SETTINGS_SRC="$PRIMARY/.claude/settings.local.json"
+if [ -f "$SETTINGS_SRC" ] && [ "$PRIMARY" != "$WORKTREE" ]; then
+    echo "==> Linking .claude/settings.local.json -> $SETTINGS_SRC"
+    mkdir -p "$WORKTREE/.claude"
+    ln -sfn "$SETTINGS_SRC" "$WORKTREE/.claude/settings.local.json"
+fi
+
 # Apply any wtv-stashed per-branch vars to .env as UPPER_SNAKE keys, replacing
 # any pre-existing line for the same key.
 while IFS=$'\t' read -r key val; do
