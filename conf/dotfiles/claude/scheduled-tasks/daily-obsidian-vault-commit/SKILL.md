@@ -212,18 +212,17 @@ Details:
 <verbatim error / hook output>
 ```
 
-## Slack notification (failure only)
+## Slack notification (verdict only)
 
-Post a Slack DM **only** when the routine fails. Successes and no-op runs are silent — daily green pings are noise.
+After the routine reaches a terminal state — success, no-op, or failure — post one short Slack DM to the routine owner so they get a passive ping without opening the routine output. The owner reads the routine's text output for everything else (commit SHA, observations, graph status, etc.); Slack carries only the verdict.
 
-- **Destination:** Self-DM to the routine owner — resolve identity from session context (e.g. the `# userEmail` block) rather than hard-coding it.
+- **Destination:** Direct message to the routine owner (self-DM in the authenticated workspace) — resolve identity from session context (e.g. the `# userEmail` block) rather than hard-coding it.
 - **Channel:** Slack via the `plugin:slack:slack` MCP server.
 - **Auth:** If the server reports as unauthenticated, call `mcp__plugin_slack_slack__authenticate` to start the OAuth flow, then `mcp__plugin_slack_slack__complete_authentication` with the callback URL. Subsequent runs reuse the stored credentials.
-- **Message format** (one line, Slack mrkdwn):
-
-  ```
-  :x: daily-obsidian-vault-commit <YYYY-MM-DD> — <step> failed (<short reason>). See routine output for details.
-  ```
+- **Message format** (one line each, Slack mrkdwn):
+  - On success (something committed): `:white_check_mark: daily-obsidian-vault-commit <YYYY-MM-DD> — committed <short SHA>, <N> files changed.`
+  - On no-op (clean tree): `:information_source: daily-obsidian-vault-commit <YYYY-MM-DD> — nothing to commit.`
+  - On failure: `:x: daily-obsidian-vault-commit <YYYY-MM-DD> — <step> failed (<short reason>). See routine output for details.`
 
 Slack is best-effort — it is **not** part of the routine's success criteria. If the Slack call fails or the server is unauthenticated, log the failure inline in the routine's text output and continue. The routine output is the source of truth either way.
 
