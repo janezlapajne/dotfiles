@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from cli import log
 from cli.runner import run
 from modules.base import DotfileModule
@@ -22,4 +24,10 @@ class SshModule(DotfileModule):
         cmd += ["-f", str(key_path)]
 
         run(cmd)
+        self._write_allowed_signers(email, key_path)
         log.success("SSH key setup successful")
+
+    def _write_allowed_signers(self, email: str, key_path: Path) -> None:
+        pub_key = key_path.parent / f"{key_path.name}.pub"
+        allowed_signers = key_path.parent / "allowed_signers"
+        allowed_signers.write_text(f"{email} {pub_key.read_text().strip()}\n")

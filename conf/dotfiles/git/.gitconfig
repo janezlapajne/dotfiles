@@ -13,7 +13,7 @@ signingkey = ~/.ssh/id_rsa.pub
 format = ssh
 
 [gpg "ssh"]
-allowedSignersFile = /Users/janezlapajne/.ssh/allowed_signers
+allowedSignersFile = ~/.ssh/allowed_signers
 
 [commit]
 gpgsign = true
