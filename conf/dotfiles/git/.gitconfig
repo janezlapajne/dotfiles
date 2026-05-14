@@ -12,6 +12,12 @@ signingkey = ~/.ssh/id_rsa.pub
 [gpg]
 format = ssh
 
+[gpg "ssh"]
+	allowedSignersFile = /Users/janezlapajne/.ssh/allowed_signers
+
+[commit]
+	gpgsign = true
+
 [hub]
 protocol = https
 
