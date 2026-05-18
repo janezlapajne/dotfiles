@@ -25,5 +25,6 @@ root = [
 "claude/hooks/cmux-notify.sh" = ".claude/hooks"
 "claude/scheduled-tasks" = ".claude"
 "claude/skills/fdl-worktree-create" = ".claude/skills"
+"claude/skills/fdl-glab-review-plan" = ".claude/skills"
 "starship/starship.toml" = ".config"
 "aerospace/aerospace.toml" = ".config/aerospace"
