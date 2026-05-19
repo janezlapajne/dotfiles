@@ -143,7 +143,9 @@ This step is non-fatal: if it errors, log the error inline and still report the 
 
 ### Step 7 — Update knowledge graph
 
-If Step 5 committed, refresh the vault's knowledge graph via the wrapper script at `wiki/graph/graphify.sh`. This step is **best-effort and non-fatal** — the commit has already landed, so a graph failure must not fail the routine.
+If Step 5 committed, refresh the vault's knowledge graph by invoking the `/graphify` skill **directly in this session** via the `Skill` tool. This step is **best-effort and non-fatal** — the commit has already landed, so a graph failure must not fail the routine.
+
+**Why direct invocation, not `wiki/graph/graphify.sh`:** the script runs `claude --print` to drive the skill in a nested headless session. From inside an already-headless scheduled-task session that nests poorly (harness runtime limits, sandbox denies on credential paths, the script's `mkdir`-based lock leaking when the nested process is SIGKILL'd). Running the skill in this session sidesteps all of it — no nested Claude, no lock to leak, no `~/.cache/graphify-vault-locks/` involvement. The standalone `wiki/graph/graphify.sh` remains for manual CLI use; the routine just doesn't go through it anymore.
 
 **Precondition check** — run the update if **either** signal indicates pending work:
 
@@ -165,21 +167,38 @@ fi
 
 Note: the flag alone doesn't tell us *what* changed (the hook sets it on every commit, content-blind), so it may occasionally trigger an `update` run that finds little real work. That's acceptable — graphify's manifest-based change detection keeps actual LLM extraction cost proportional to real markdown deltas.
 
-**Run** (synchronous; the script writes to `wiki/graph/graphify-out/`, never to `.git/`, so it stays inside the harness sandbox):
+**Run** — preconditions met:
 
-```bash
-./wiki/graph/graphify.sh update
-```
+1. Change cwd into `wiki/graph/`. This is **required**: the `/graphify` skill writes outputs (`graph.json`, `graph.html`, `GRAPH_REPORT.md`, `manifest.json`, `cost.json`, plus internal `.graphify_*` artifacts) to `./graphify-out/` relative to cwd. Running it from anywhere else would scatter outputs into the wrong directory.
 
-The script handles its own locking (`~/.cache/graphify-vault-locks/`) and logging (`~/.cache/graphify-vault.log`). It clears `graphify-out/needs_update` on success.
+   ```bash
+   cd ~/mydrive/brain/Notes/wiki/graph
+   ```
+
+2. Invoke the skill with the vault root as an absolute path and `--update` for incremental re-extraction:
+
+   ```
+   Skill(skill: "graphify", args: "/Users/janezlapajne/mydrive/brain/Notes --update")
+   ```
+
+   The absolute path is essential: cwd is `wiki/graph/`, but the corpus we want graphified is the whole vault. `--update` re-extracts only files changed since the last manifest, so incremental cost stays proportional to today's deltas.
+
+3. Follow the skill's steps inline. AST extraction, semantic subagent dispatch, build/cluster/analyze, and Step 9 (manifest + cost.json + cleanup) all run in this session — no shell-out to `claude --print`.
+
+4. When the skill completes successfully, clear the flag and return to the vault root for any later steps:
+
+   ```bash
+   rm -f ~/mydrive/brain/Notes/wiki/graph/graphify-out/needs_update
+   cd ~/mydrive/brain/Notes
+   ```
 
 **Reporting:**
 
-- Exit 0 → `Graph: updated`
-- Non-zero exit, or timeout → `Graph: failed (<short reason>)`, and include the last ~10 lines of stderr in the routine's Details block. Do **not** abort the routine.
-- Precondition skipped the run → `Graph: skipped (no pending changes)`
+- Skill completes → `Graph: updated`
+- Skill aborts (empty extraction, subagent failures > half the chunks, write errors) → `Graph: failed (<short reason>)`, include the relevant detail in the routine's Details block. Do **not** abort the routine.
+- Precondition skipped the invocation → `Graph: skipped (no pending changes)`
 
-**Flag interaction:** when this step starts, `graphify-out/needs_update` will usually be set — the `flag`-mode post-commit hook touched it after Step 5. A successful `update` clears the flag. If the update failed, the flag remains, so tomorrow's run will see it and try again — that's the intended recovery hand-off.
+**Flag interaction:** when this step starts, `graphify-out/needs_update` will usually be set — the `flag`-mode post-commit hook touched it after Step 5. A successful run clears the flag (step 4 above). If the run failed, leave the flag in place so tomorrow's routine sees it and retries — that's the intended recovery hand-off.
 
 ## Routine output contract
 
@@ -247,4 +266,4 @@ Any aborted step (1, 3, or 5) is a failure regardless of how far the routine got
 | 4    | Diff too large / synthesis fails       | Fall back to `Daily snapshot — N files changed`. Still commit. Not a failure.                                                                                                     |
 | 5    | Pre-commit hook rejects the commit     | Stop. Do **not** retry with `--no-verify`. Leave changes staged. Report hook output verbatim.                                                                                     |
 | 6    | Observation pass errors                | Log inline and proceed. Non-fatal.                                                                                                                                                |
-| 7    | `graphify.sh update` fails / times out | Report `Graph: failed (<reason>)` in the Success block; include last ~10 stderr lines in Details. Routine still succeeds; `needs_update` flag persists so tomorrow's run retries. |
+| 7    | `/graphify --update` aborts or errors  | Report `Graph: failed (<reason>)` in the Success block; include the relevant skill output in Details. Routine still succeeds; leave `needs_update` flag in place so tomorrow's run retries. |
