@@ -1,7 +1,6 @@
 ---
 name: fdl-worktree-create
-description: Set up an isolated farming-data-layer worktree (per-branch dbt-target). User-invoked via /fdl-worktree-create when starting any new change, fix, feature, or investigation — typically after pasting a GitLab issue or MR URL. Refuses to run inside an existing worktree. Creates an MR linked to the issue only when one does not already exist (or the existing one has commits); never creates a new issue.
-disable-model-invocation: true
+description: Set up an isolated farming-data-layer worktree (per-branch dbt-target). Use whenever starting any new change, fix, feature, or investigation in the farming-data-layer repo — typically after the user pastes a GitLab issue or MR URL, asks to "investigate", "look into", "fix", or "create a worktree". Refuses to run inside an existing worktree. Creates an MR linked to the issue only when one does not already exist (or the existing one has commits); never creates a new issue.
 allowed-tools: Bash(wt:*), Bash(wts:*), Bash(wtc:*), Bash(wtv:*), Bash(git fetch:*), Bash(git checkout:*), Bash(git pull:*), Bash(git rev-parse:*), Bash(git rev-list:*), Bash(glab mr view:*), Bash(glab mr list:*), Bash(glab mr create:*), Bash(glab issue view:*), Bash(jq:*), Read
 ---
 
