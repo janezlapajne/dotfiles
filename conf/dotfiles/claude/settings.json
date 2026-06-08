@@ -7,7 +7,6 @@
     "pr": ""
   },
   "permissions": {
-    "defaultMode": "auto",
     "allow": [],
     "deny": [
       "Read(~/.ssh/**)",
@@ -174,7 +173,8 @@
       "Read(~/.bashrc)",
       "Read(~/.zshrc)",
       "Read(~/.profile)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "hooks": {
     "Stop": [
@@ -211,7 +211,8 @@
     "superpowers@claude-plugins-official": true,
     "oh-my-claudecode@omc": true,
     "security-guidance@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -241,15 +242,16 @@
       }
     }
   },
+  "effortLevel": "xhigh",
   "advisorModel": "opus",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "editorMode": "vim",
   "teammateMode": "in-process",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  }
+  "voiceEnabled": true
 }
