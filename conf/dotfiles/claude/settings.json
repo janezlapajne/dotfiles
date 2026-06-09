@@ -242,7 +242,7 @@
       }
     }
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "advisorModel": "opus",
   "voice": {
     "enabled": true,
@@ -251,6 +251,7 @@
   "editorMode": "vim",
   "teammateMode": "in-process",
   "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
