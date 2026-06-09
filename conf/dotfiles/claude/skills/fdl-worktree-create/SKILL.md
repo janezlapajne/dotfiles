@@ -104,7 +104,7 @@ Runs only when there is a known `ISSUE_NUM` and no usable MR. Never creates a ne
    ```bash
    glab mr create \
      --repo "login5/login-eko/reports/farming-data-layer" \
-     --title 'Draft: Resolve "<issue title>"' \
+     --title 'Resolve "<issue title>"' \
      --description "Closes #<ISSUE_NUM>" \
      --source-branch "<BRANCH_NAME>" \
      --target-branch main \
@@ -120,6 +120,7 @@ Runs only when there is a known `ISSUE_NUM` and no usable MR. Never creates a ne
    - `--remove-source-branch` — branch auto-deletes when the MR merges (hygiene).
    - `--no-editor` — never opens `$EDITOR`; required for non-interactive use.
    - `--yes` — skip confirmation prompts.
+   - `--draft` — owns the draft status; it prepends the `Draft:` title prefix itself. **Do not** also put `Draft:` in `--title`, or GitLab renders `Draft: Draft: …` (the second is literal text). The `--title` value must be the bare title.
 5. Capture the new `MR_NUM` from the URL printed on stdout. Set `MR_REUSED=false`.
 
 ### Step 2 — Resolve `DECIDE`, `TARGET_VAR`, `BRANCH_NAME`
