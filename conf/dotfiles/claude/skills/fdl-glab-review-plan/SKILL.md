@@ -13,7 +13,7 @@ Turns reviewer feedback on an open GitLab MR into an ordered task list **the nex
 
 The "next-turn executor" is whatever runs the plan in a *following* turn — by default, plain Claude reading this plan back from context (no separate skill is required). This skill only prints the plan; it never performs the Implement / Validate / Post / Cleanup steps itself.
 
-Reviewer discussions that the user (`@janez.lapajne`) has annotated in-thread with a leading number (e.g. `1`, `2.`, `(3)`) get grouped into one atomic task per number. Threads where the user gave a non-numbered reply — or no reply at all — become independent items at the end of the plan.
+Reviewer discussions that the user (`@<plan_user>`) has annotated in-thread with a leading number (e.g. `1`, `2.`, `(3)`) get grouped into one atomic task per number. Threads where the user gave a non-numbered reply — or no reply at all — become independent items at the end of the plan.
 
 Each emitted task is self-contained and includes three steps in fixed order:
 
@@ -21,7 +21,7 @@ Each emitted task is self-contained and includes three steps in fixed order:
 2. **Validate (gate)** — explicit pass/fail checks confirming the change actually addresses every reviewer ask grouped into this task. If validation fails on a thread, the executor must **skip Step 3 for that thread** and report the gap to the user instead of posting a misleading resolution.
 3. **Post resolution** — a single reply added under each reviewer comment that passed Step 2, with the canonical `Resolved in <sha>: …` body.
 
-After every task's Step 3 has run, the plan ends with one **Final cleanup** task that deletes the user's *original* pre-plan notes (everything `@janez.lapajne` wrote before the plan was emitted) while preserving the fresh resolution replies. Cleanup runs last, once, across every thread — not per task. Its full rules live in the [Final cleanup](#final-cleanup--delete-your-original-pre-plan-notes-run-last-once) section.
+After every task's Step 3 has run, the plan ends with one **Final cleanup** task that deletes the user's *original* pre-plan notes (everything `@<plan_user>` wrote before the plan was emitted) while preserving the fresh resolution replies. Cleanup runs last, once, across every thread — not per task. Its full rules live in the [Final cleanup](#final-cleanup--delete-your-original-pre-plan-notes-run-last-once) section.
 
 The plan is the contract between this skill and the executor. Everything needed to close the task must be on the page; nothing implicit.
 
@@ -47,9 +47,18 @@ If missing, ask **once** via `AskUserQuestion` with header `MR URL`, then stop i
 
 Parse into `{host, project_path, mr_iid}`. URL-encode `project_path` when calling APIs.
 
-## Hardcoded identity
+## Determine the planning user (the assignee)
 
-The user is `@janez.lapajne` (note the dot — different from the git author `janezlapajne`). All "did the user reply?" checks compare discussion note `author.username == "janez.lapajne"`.
+The **planning user** (`@<plan_user>`) is the person whose in-thread notes drive task grouping and whose pre-plan notes Final cleanup deletes. Their comments are read **directly as instructions to the executor**, so resolving the wrong user silently corrupts the whole plan — get this right before anything else. Do **not** hardcode a username; resolve it from the MR each run.
+
+Resolve `<plan_user>` from the MR's `assignees`, in this order (first match wins):
+
+1. **Exactly one assignee** → use that assignee's `username`. No confirmation needed.
+2. **Two or more assignees** → ambiguous. Ask the user **once** via `AskUserQuestion` (header `Assignee`) to pick whose comments should be read as the plan instructions; offer each assignee `username` as an option. If the authenticated account (`mcp__gitlab__whoami`, or `GITLAB_HOST=<host> glab api user`) is among the assignees, list it first and mark it `(Recommended)` — it is most likely the one running the plan. Use the chosen `username` as `<plan_user>`.
+3. **No assignee on the MR** → fall back to the authenticated account running this skill (`mcp__gitlab__whoami`, or `GITLAB_HOST=<host> glab api user`). Use its `username` as `<plan_user>`.
+4. **Step 3 fallback also fails** (no assignee AND whoami unavailable) → ask **once** via `AskUserQuestion` (header `Assignee`) for the GitLab username whose notes drive the plan; stop if still unknown.
+
+Use the GitLab `username` field exactly as the API returns it (e.g. `jane.doe`) — note it may differ from the git **commit author** name (e.g. `janedoe`); always match on the GitLab username, never the commit author. Every "did the planning user reply?" check in the phases below compares discussion note `author.username == "<plan_user>"`. Throughout this document `@<plan_user>` is a placeholder for the resolved username — substitute the real value when emitting the plan.
 
 ## Tool selection — probe at runtime
 
@@ -79,7 +88,8 @@ If `glab` is installed but `glab auth status` fails (e.g. an OAuth/TLS hiccup on
 
 1. Parse the URL. If unparseable, ask once and stop on failure.
 2. Probe tool selection (above).
-3. Fetch MR metadata. If `state != "opened"`, print one line (`MR !<iid> is <state> — nothing to plan.`) and stop.
+3. Fetch MR metadata (must include `assignees`). If `state != "opened"`, print one line (`MR !<iid> is <state> — nothing to plan.`) and stop.
+4. Resolve `<plan_user>` from the MR's assignees per [Determine the planning user](#determine-the-planning-user-the-assignee). If resolution can't settle on a username (ambiguous fallback unanswered), stop.
 
 ### Phase 2 — Fetch discussions
 
@@ -89,7 +99,7 @@ Pull every discussion on the MR (paginate). Keep only those where:
 
 If zero discussions remain, print `No open discussions on MR !<iid>.` and stop.
 
-Discussions that are already `resolved == true` are excluded here and are **out of scope for the entire run**: they never enter a task, never appear in the plan, and their notes are **never deleted or modified** by Final cleanup. Resolved threads — and every `@janez.lapajne` comment inside them — are preserved as-is.
+Discussions that are already `resolved == true` are excluded here and are **out of scope for the entire run**: they never enter a task, never appear in the plan, and their notes are **never deleted or modified** by Final cleanup. Resolved threads — and every `@<plan_user>` comment inside them — are preserved as-is.
 
 ### Phase 3 — Parse each open discussion
 
@@ -103,7 +113,7 @@ For each surviving discussion, extract from the **first note**:
 - `head_sha = position.head_sha` (or MR head SHA for general threads)
 - Permalink: `<mr_web_url>#note_<first_note_id>`
 
-Then walk the remaining notes in the discussion. For every note where `author.username == "janez.lapajne"`, record `note_id`, `created_at`, and `body`, then:
+Then walk the remaining notes in the discussion. For every note where `author.username == "<plan_user>"`, record `note_id`, `created_at`, and `body`, then:
 - Strip leading whitespace.
 - **Group number** — match the first integer token using this regex (apply in order, first match wins):
   - `^#?\(?(\d+)\)?\s*[.)\-:]?\s*` — captures `1`, `1.`, `1)`, `(1)`, `#1`, `1 -`, `1:`
@@ -130,7 +140,7 @@ Record two cutoff anchors and print both in the header:
 - **`plan_emit_time`** — an ISO-8601 UTC timestamp. This is the cutoff for *notes*: it separates the user's *original* notes (`created_at <= plan_emit_time` → deleted in Final cleanup) from the *resolution replies* the executor posts during the run (`created_at > plan_emit_time` → kept). Notes carry a `created_at`, so a timestamp is the right key here.
 - **`base_sha`** — the current head SHA of `<source_branch>` at plan-emit (the MR head SHA you already fetched). This is the cutoff for *commits*, used by the Step 2 gate. Do **not** reuse `plan_emit_time` for the commit check: `git log --since` keys off commit dates, which are timezone-sensitive, clock-skewed against the planning host, and rewritable. `git log <base_sha>..<source_branch>` is exact.
 
-For every covered thread, collect **all** `@janez.lapajne` notes whose `created_at <= plan_emit_time` — both numbering markers and any un-numbered instruction notes the user added for the executor. For each such note, record three things as a **baseline reference**: its `note_id`, its permalink (`<mr_web_url>#note_<note_id>`), and its **verbatim body**. These baseline references are printed per thread in the plan (they are both the record of what drove each task and the delete-list for the single Final cleanup task). Capturing the body verbatim matters: Final cleanup deletes these notes, so the plan is the only surviving record of the comments the tasks were generated from.
+For every covered thread, collect **all** `@<plan_user>` notes whose `created_at <= plan_emit_time` — both numbering markers and any un-numbered instruction notes the user added for the executor. For each such note, record three things as a **baseline reference**: its `note_id`, its permalink (`<mr_web_url>#note_<note_id>`), and its **verbatim body**. These baseline references are printed per thread in the plan (they are both the record of what drove each task and the delete-list for the single Final cleanup task). Capturing the body verbatim matters: Final cleanup deletes these notes, so the plan is the only surviving record of the comments the tasks were generated from.
 
 ## Output template
 
@@ -142,7 +152,7 @@ Each task block contains three numbered steps in fixed order. The executor MUST 
 Source: `<source_branch>` → `<target_branch>` (head `<short_sha>`)
 Project: `<project_path>`  •  MR IID: `<iid>`
 Open discussions: <N>  •  Grouped tasks: <M>  •  Ungrouped: <K>
-Plan emitted at: `<plan_emit_time>` (ISO-8601 UTC — cutoff for Final cleanup: only `@janez.lapajne` notes created at or before this instant are deleted; resolution replies posted after it are kept)
+Plan emitted at: `<plan_emit_time>` (ISO-8601 UTC — cutoff for Final cleanup: only `@<plan_user>` notes created at or before this instant are deleted; resolution replies posted after it are kept)
 Commit baseline: `<base_sha>` (head of `<source_branch>` at plan-emit — Step 2 checks `git log <base_sha>..<source_branch>` for new work)
 
 ## Task <number> — <short summary derived from your direction>
@@ -202,7 +212,7 @@ Resolved in <short_sha>: <one sentence on what changed and why it satisfies the 
 - `<short_sha>` is the 7-char prefix of the implementing commit on `<source_branch>`. Multiple commits → comma-separate.
 - "Won't do" outcomes use: `Out of scope: <reason captured in your direction>.` (no SHA).
 - Never `@`-mention the reviewer; the reply already threads under their note.
-- Post the fresh reply even if a stale identical-bodied `@janez.lapajne` note from a prior run still sits in the thread — that stale duplicate is a pre-plan note and gets removed in Final cleanup. Do **not** skip the post to avoid a duplicate; the cleanup, not the post step, resolves duplicates.
+- Post the fresh reply even if a stale identical-bodied `@<plan_user>` note from a prior run still sits in the thread — that stale duplicate is a pre-plan note and gets removed in Final cleanup. Do **not** skip the post to avoid a duplicate; the cleanup, not the post step, resolves duplicates.
 
 After all Step 3 posts for the task succeed, emit a one-line per-task close summary to chat:
 `Task <N> resolved — <X> discussion(s) replied, <S> skipped (see ⚠ blocks above). Original notes will be removed in Final cleanup.`
@@ -233,10 +243,10 @@ Run this **after every task's Step 3 has completed**, once, across all threads. 
 
 For each thread that **passed Step 2** (skip threads still in a ⚠ failed state — keep their original notes for the rerun):
 
-- Delete every `@janez.lapajne` note listed under "Your baseline notes" for that thread. These are exactly the notes with `created_at <= <plan_emit_time>`: numbering markers (`1`, `2 use CTE`), any un-numbered instructions you added for the executor, and stale duplicate resolution notes from prior runs. Their verbatim bodies are already recorded in the plan above, so deleting them loses nothing.
+- Delete every `@<plan_user>` note listed under "Your baseline notes" for that thread. These are exactly the notes with `created_at <= <plan_emit_time>`: numbering markers (`1`, `2 use CTE`), any un-numbered instructions you added for the executor, and stale duplicate resolution notes from prior runs. Their verbatim bodies are already recorded in the plan above, so deleting them loses nothing.
 - **Never** delete a note with `created_at > <plan_emit_time>` — that is a resolution reply this run posted in Step 3. Keep it.
 - **Never** touch a thread that was already `resolved == true` (those are excluded from the plan entirely — see Phase 2). Comments under resolved threads are preserved, full stop.
-- **Never** delete the reviewer's first note, or any note authored by anyone other than `janez.lapajne`.
+- **Never** delete the reviewer's first note, or any note authored by anyone other than `<plan_user>`.
 - **Guard — classify each pre-plan note by *exclusion*, not by judgment.** Apply these three tests in order; the first match decides:
   1. Body matches the **group-number marker** regex (`1`, `2 use CTE`, `(3)`, …) → **delete** (it's an executor instruction).
   2. Body matches this skill's **canonical output shape** — `Resolved in <sha>: …` or `Out of scope: …` → **delete** (it's a stale prior-run resolution; Step 3 re-posts a fresh equivalent). This is why it is *not* treated as a substantive reply.
@@ -255,7 +265,7 @@ Render tasks in ascending numeric order, then the `Ungrouped` section, then the 
 The executor operates from the plan alone, so every plan must carry — see the Phases above for the *how*; this is the closing checklist of *what must be present*:
 
 - Per thread: `discussion_id` + first `note_id` as raw IDs (the executor calls delete/post endpoints with them, not permalinks).
-- Per thread: **every** `@janez.lapajne` note with `created_at <= plan_emit_time` as a baseline reference (`note_id` + permalink + **verbatim** body) — the full pre-plan set, not just numbered notes (an un-numbered `also handle nulls` counts). Verbatim, because cleanup deletes the note and the plan becomes its only record.
+- Per thread: **every** `@<plan_user>` note with `created_at <= plan_emit_time` as a baseline reference (`note_id` + permalink + **verbatim** body) — the full pre-plan set, not just numbered notes (an un-numbered `also handle nulls` counts). Verbatim, because cleanup deletes the note and the plan becomes its only record.
 - Per thread: the **atomic reviewer asks** — one bullet per distinct request, since Step 2 checks each separately.
 - Header: `plan_emit_time` (note cutoff) and `base_sha` (commit gate), plus `project_path`, `iid`, and `source_branch`.
 
@@ -283,24 +293,26 @@ The executor operates from the plan alone, so every plan must carry — see the 
 - **MR has draft notes** (only visible to author) — `glab` and MCP both expose these; treat them like regular notes when matching your username.
 - **Multiple reviewers in one thread** — credit the first non-system note's author as the reviewer; mention subsequent reviewer authors inline if their bodies add new asks.
 - **`glab auth status` fails on this host** — fall back to MCP silently; do not surface the auth error unless MCP also fails.
-- **Duplicate resolution comments already in the thread** from a prior run (the case the user reported: two identical `Broken onto one property per line in commit …` notes from `@janez.lapajne` posted seconds apart). They were created before this plan, so they fall inside the `created_at <= plan_emit_time` cutoff and are deleted by Final cleanup — record them (id + permalink + verbatim body) under "Your baseline notes". The fresh Step 3 reply (posted after the cutoff) is the one that survives.
+- **Duplicate resolution comments already in the thread** from a prior run (the case the user reported: two identical `Broken onto one property per line in commit …` notes from `@<plan_user>` posted seconds apart). They were created before this plan, so they fall inside the `created_at <= plan_emit_time` cutoff and are deleted by Final cleanup — record them (id + permalink + verbatim body) under "Your baseline notes". The fresh Step 3 reply (posted after the cutoff) is the one that survives.
 - **Reviewer's comment contains multiple distinct asks** ("rename X and add a comment"). Split into separate bullets under `Reviewer asks (atomic)` — each becomes its own validation check in Step 2. Aggregating them lets a half-done implementation pass validation.
 - **One task spans multiple reviewer threads** (your number reply grouped them). Collect IDs and atomic asks for every thread under the same task; Step 2 must check each thread independently, and Final cleanup deletes each thread's pre-plan notes.
 - **Thread is already `resolved=true` when planning runs.** It is out of scope: not fetched (Phase 2), not planned, and Final cleanup never deletes its notes. Comments under resolved threads are preserved unconditionally. If the user explicitly asks to re-open and rework such a thread, that is a fresh request — do not silently pull resolved threads into the plan or delete their comments.
 - **No pre-plan notes in a thread** (e.g. an ungrouped item where the user never replied). The thread's "Your baseline notes" reads `(none)` and Final cleanup is a no-op for it — still list it.
-- **A pre-plan `@janez.lapajne` note is a real reviewer-facing reply, not an instruction marker** — the Final cleanup guard holds it back and asks the user rather than deleting, so a substantive comment is never lost to the timing rule.
+- **A pre-plan `@<plan_user>` note is a real reviewer-facing reply, not an instruction marker** — the Final cleanup guard holds it back and asks the user rather than deleting, so a substantive comment is never lost to the timing rule.
 
 ## Common mistakes
 
 | Mistake | Why it's wrong | Do instead |
 |---|---|---|
 | Including resolved discussions in plan | They've already been addressed; clutters the plan | Filter on `resolved == false` at fetch time |
-| Matching `janezlapajne` instead of `janez.lapajne` | That's the git author, not the GitLab username | Use the dotted form, always |
+| Hardcoding a username instead of resolving the MR assignee | The planning user varies per MR; a hardcoded name reads the wrong person's notes | Resolve `<plan_user>` from MR assignees each run (see [Determine the planning user](#determine-the-planning-user-the-assignee)) |
+| Matching the git commit-author name instead of the GitLab username | They often differ (e.g. `janedoe` vs `jane.doe`); matching the author misses every reply | Always match on the GitLab `username` from the API |
+| Silently picking one of several assignees | Guessing whose notes are instructions corrupts the plan | When 2+ assignees, ask once via `AskUserQuestion` which one is the planning user |
 | Skipping ungrouped threads | They are still real work | List them under `Ungrouped`, sorted by file:line |
 | Writing the plan to a file | User asked for chat-only output | Print to chat; let the next turn read it from context |
 | Calling any GitLab write endpoint from this skill | The skill is read-only by design; the next-turn executor performs writes | Encode every write as a step in the plan, not an action here |
 | Emitting a task without `discussion_id` / note IDs / atomic asks | Executor can't call delete/post endpoints or validate per-ask without them | Always collect raw IDs and split multi-ask reviewer bodies into bullets |
-| Collecting only numbered notes for deletion | Un-numbered follow-up instructions then survive cleanup — the bug the user hit | Collect **every** `@janez.lapajne` note with `created_at <= plan_emit_time`, numbered or not |
+| Collecting only numbered notes for deletion | Un-numbered follow-up instructions then survive cleanup — the bug the user hit | Collect **every** `@<plan_user>` note with `created_at <= plan_emit_time`, numbered or not |
 | Deleting notes per-task before posting | Two overlapping deletion mechanisms; risks wiping a note a later task still needs | Defer all deletion to the single Final cleanup task that runs after every Step 3 |
 | Deleting a note created after plan_emit_time | That is a resolution reply this run just posted — the one thing to keep | Cutoff is strict: delete only `created_at <= plan_emit_time` |
 | Aggregating multiple reviewer asks into one validation check | A half-done implementation passes | Split each ask into its own bullet under `Reviewer asks (atomic)` so Step 2 checks each one |
@@ -311,4 +323,4 @@ The executor operates from the plan alone, so every plan must carry — see the 
 
 ## Keywords (for retrieval)
 
-GitLab MR, merge request review, reviewer comments, non-resolved discussions, review plan, code review tasks, address review feedback, post resolution reply, delete original comments, final cleanup, clear old notes, pre-plan notes, baseline reference, preserve resolution replies, preserve resolved threads, cleanup instruction notes, verify reviewer comment addressed, glab CLI, GitLab MCP, janez.lapajne, atomic task grouping.
+GitLab MR, merge request review, reviewer comments, non-resolved discussions, review plan, code review tasks, address review feedback, post resolution reply, delete original comments, final cleanup, clear old notes, pre-plan notes, baseline reference, preserve resolution replies, preserve resolved threads, cleanup instruction notes, verify reviewer comment addressed, glab CLI, GitLab MCP, planning user, MR assignee, resolve assignee, multiple assignees, atomic task grouping.
