@@ -38,6 +38,7 @@ casks = [
 	"font-fira-code-nerd-font",
 	"git-credential-manager",
 	"nikitabobko/tap/aerospace",
+	"prince",
 ]
 
 [npm]

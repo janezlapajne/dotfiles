@@ -176,6 +176,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "hooks": {
     "Stop": [
       {
@@ -243,7 +244,6 @@
     }
   },
   "effortLevel": "high",
-  "advisorModel": "opus",
   "voice": {
     "enabled": true,
     "mode": "hold"
