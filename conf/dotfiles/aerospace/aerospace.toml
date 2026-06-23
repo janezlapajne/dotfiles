@@ -166,15 +166,15 @@ run = 'move-node-to-workspace T'
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace B'
 
-# VSCode → Code workspace
+# VSCode → Code workspace, floating + fullscreen (mimics alt-shift-f then alt-shift-s)
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
-run = 'move-node-to-workspace C'
+run = ['layout floating', 'move-node-to-workspace C', 'fullscreen']
 
-# IntelliJ IDEA → Idea workspace
+# IntelliJ IDEA → Idea workspace, floating + fullscreen (mimics alt-shift-f then alt-shift-s)
 [[on-window-detected]]
 if.app-id = 'com.jetbrains.intellij'
-run = 'move-node-to-workspace I'
+run = ['layout floating', 'move-node-to-workspace I', 'fullscreen']
 
 # WhatsApp → Chat workspace
 [[on-window-detected]]
