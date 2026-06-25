@@ -1,257 +1,258 @@
 {
-	"env": {
-		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-	},
-	"attribution": {
-		"commit": "",
-		"pr": ""
-	},
-	"permissions": {
-		"allow": [],
-		"deny": [
-			"Read(~/.ssh/**)",
-			"Read(~/.gnupg/**)",
-			"Read(**/id_rsa)",
-			"Read(**/id_dsa)",
-			"Read(**/id_ecdsa)",
-			"Read(**/id_ed25519)",
-			"Read(**/*_rsa)",
-			"Read(**/*_ed25519)",
-			"Read(**/*.p12)",
-			"Read(**/*.pfx)",
-			"Read(**/*.keystore)",
-			"Read(**/*.jks)",
-			"Read(**/*.mobileprovision)",
-			"Read(**/*.p8)",
-			"Read(**/privkey.pem)",
-			"Read(**/private-key.pem)",
-			"Read(**/private.pem)",
-			"Read(~/.aws/**)",
-			"Read(~/.gcp/**)",
-			"Read(~/.config/gcloud/**)",
-			"Read(~/.azure/**)",
-			"Read(~/.kube/**)",
-			"Read(~/.docker/config.json)",
-			"Read(~/.terraform.d/credentials*)",
-			"Read(~/.tofu.d/credentials*)",
-			"Read(~/.config/gh/hosts.yml)",
-			"Read(~/.config/glab-cli/config.yml)",
-			"Read(~/.config/doctl/**)",
-			"Read(~/.config/heroku/**)",
-			"Read(~/.fly/**)",
-			"Read(~/.vercel/**)",
-			"Read(~/.netlify/**)",
-			"Read(~/.config/cloudflared/**)",
-			"Read(~/.circleci/cli.yml)",
-			"Read(~/.snowsql/config)",
-			"Read(~/.databrickscfg)",
-			"Read(~/.netrc)",
-			"Read(~/.git-credentials)",
-			"Read(~/.cargo/credentials)",
-			"Read(~/.cargo/credentials.toml)",
-			"Read(~/.gem/credentials)",
-			"Read(~/.m2/settings.xml)",
-			"Read(~/.composer/auth.json)",
-			"Read(~/.nuget/NuGet/NuGet.Config)",
-			"Read(~/.bundle/config)",
-			"Read(~/.claude/.credentials.json)",
-			"Read(~/.anthropic/**)",
-			"Read(~/.password-store/**)",
-			"Read(~/.config/op/**)",
-			"Read(**/*.kdbx)",
-			"Read(**/*.kdb)",
-			"Read(~/Library/Keychains/**)",
-			"Read(~/Library/Cookies/**)",
-			"Read(~/Library/Application Support/Google/Chrome/**)",
-			"Read(~/Library/Application Support/Firefox/**)",
-			"Read(~/Library/Application Support/BraveSoftware/**)",
-			"Read(~/Library/Application Support/Microsoft Edge/**)",
-			"Read(~/Library/Application Support/Arc/**)",
-			"Read(~/Library/Application Support/Vivaldi/**)",
-			"Read(~/Library/Application Support/1Password/**)",
-			"Read(~/Library/Application Support/Bitwarden/**)",
-			"Read(~/.bitcoin/**)",
-			"Read(~/.ethereum/**)",
-			"Read(~/.config/solana/**)",
-			"Read(**/wallet.dat)",
-			"Read(**/keystore)",
-			"Read(**/UTC--*)",
-			"Read(**/mnemonic*)",
-			"Read(**/seed-phrase*)",
-			"Read(**/.env)",
-			"Read(**/.env.local)",
-			"Read(**/.env.production)",
-			"Read(**/.env.development)",
-			"Read(**/.env.staging)",
-			"Read(**/.env.test)",
-			"Read(**/.env.secret)",
-			"Read(**/.env.secrets)",
-			"Read(**/credentials.json)",
-			"Read(**/credentials.yaml)",
-			"Read(**/credentials.yml)",
-			"Read(**/secrets.json)",
-			"Read(**/secrets.yaml)",
-			"Read(**/secrets.yml)",
-			"Read(**/service-account*.json)",
-			"Read(**/google-services.json)",
-			"Read(**/GoogleService-Info.plist)",
-			"Read(**/.bash_history)",
-			"Read(**/.zsh_history)",
-			"Read(**/.psql_history)",
-			"Read(**/.mysql_history)",
-			"Read(**/.python_history)",
-			"Read(**/.node_repl_history)",
-			"Read(**/.irb_history)",
-			"Read(**/.sqlite_history)",
-			"Read(**/.rediscli_history)",
-			"Read(**/.lesshst)",
-			"Read(**/.viminfo)",
-			"Read(**/.atuin/**)",
-			"Read(**/.history/**)",
-			"Read(**/.zsh_sessions/**)",
-			"Grep(~/.ssh/**)",
-			"Grep(~/.gnupg/**)",
-			"Grep(~/.aws/**)",
-			"Grep(~/.gcp/**)",
-			"Grep(~/.config/gcloud/**)",
-			"Grep(~/.azure/**)",
-			"Grep(~/.kube/**)",
-			"Grep(~/.password-store/**)",
-			"Grep(~/Library/Keychains/**)",
-			"Grep(~/Library/Cookies/**)",
-			"Grep(**/.env)",
-			"Grep(**/.env.local)",
-			"Grep(**/.env.production)",
-			"Grep(**/credentials.json)",
-			"Grep(**/secrets.json)",
-			"Grep(**/service-account*.json)",
-			"Grep(**/id_rsa)",
-			"Grep(**/id_ed25519)",
-			"Write(**/.env)",
-			"Write(**/.env.local)",
-			"Write(**/.env.production)",
-			"Write(**/.env.development)",
-			"Write(**/.env.staging)",
-			"Write(**/.env.test)",
-			"Write(**/credentials.json)",
-			"Write(**/secrets.json)",
-			"Write(**/service-account*.json)",
-			"Write(**/.git/config)",
-			"Write(**/.git/hooks/**)",
-			"Edit(**/.env)",
-			"Edit(**/.env.local)",
-			"Edit(**/.env.production)",
-			"Edit(**/.env.development)",
-			"Edit(**/.env.staging)",
-			"Edit(**/.env.test)",
-			"Edit(**/credentials.json)",
-			"Edit(**/secrets.json)",
-			"Edit(**/service-account*.json)",
-			"Edit(**/.git/config)",
-			"Edit(**/.git/hooks/**)"
-		],
-		"ask": [
-			"Bash(rm:*)",
-			"Bash(rmdir:*)",
-			"Bash(sudo:*)",
-			"Bash(chmod:*)",
-			"Bash(chown:*)",
-			"Bash(systemctl:*)",
-			"Bash(service:*)",
-			"Bash(kill:*)",
-			"Bash(pkill:*)",
-			"Write(/etc/**)",
-			"Write(/usr/**)",
-			"Write(/bin/**)",
-			"Write(/sbin/**)",
-			"Write(/System/**)",
-			"Read(**/*.pem)",
-			"Read(**/*.key)",
-			"Read(~/.npmrc)",
-			"Read(~/.pypirc)",
-			"Read(~/.bashrc)",
-			"Read(~/.zshrc)",
-			"Read(~/.profile)"
-		],
-		"defaultMode": "auto"
-	},
-	"model": "opus[1m]",
-	"hooks": {
-		"Stop": [
-			{
-				"matcher": "",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "~/.claude/hooks/cmux-notify.sh"
-					}
-				]
-			}
-		],
-		"PostToolUse": [
-			{
-				"matcher": "Task",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "~/.claude/hooks/cmux-notify.sh"
-					}
-				]
-			}
-		]
-	},
-	"statusLine": {
-		"type": "command",
-		"command": "sh ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud-cache.sh ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
-	},
-	"enabledPlugins": {
-		"claude-code-setup@claude-plugins-official": true,
-		"worktrunk@worktrunk": true,
-		"slack@claude-plugins-official": true,
-		"superpowers@claude-plugins-official": true,
-		"oh-my-claudecode@omc": true,
-		"security-guidance@claude-plugins-official": true,
-		"code-simplifier@claude-plugins-official": true,
-		"context7@claude-plugins-official": true
-	},
-	"extraKnownMarketplaces": {
-		"worktrunk": {
-			"source": {
-				"source": "github",
-				"repo": "max-sixty/worktrunk"
-			},
-			"autoUpdate": true
-		},
-		"omc": {
-			"source": {
-				"source": "git",
-				"url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
-			},
-			"autoUpdate": true
-		},
-		"caveman": {
-			"source": {
-				"source": "github",
-				"repo": "JuliusBrussee/caveman"
-			}
-		},
-		"obsidian-skills": {
-			"source": {
-				"source": "github",
-				"repo": "kepano/obsidian-skills"
-			}
-		}
-	},
-	"effortLevel": "high",
-	"voice": {
-		"enabled": true,
-		"mode": "hold"
-	},
-	"editorMode": "vim",
-	"teammateMode": "in-process",
-	"remoteControlAtStartup": true,
-	"inputNeededNotifEnabled": true,
-	"agentPushNotifEnabled": true,
-	"skipAutoPermissionPrompt": true,
-	"voiceEnabled": true
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Read(**/id_rsa)",
+      "Read(**/id_dsa)",
+      "Read(**/id_ecdsa)",
+      "Read(**/id_ed25519)",
+      "Read(**/*_rsa)",
+      "Read(**/*_ed25519)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/*.keystore)",
+      "Read(**/*.jks)",
+      "Read(**/*.mobileprovision)",
+      "Read(**/*.p8)",
+      "Read(**/privkey.pem)",
+      "Read(**/private-key.pem)",
+      "Read(**/private.pem)",
+      "Read(~/.aws/**)",
+      "Read(~/.gcp/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.terraform.d/credentials*)",
+      "Read(~/.tofu.d/credentials*)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.config/glab-cli/config.yml)",
+      "Read(~/.config/doctl/**)",
+      "Read(~/.config/heroku/**)",
+      "Read(~/.fly/**)",
+      "Read(~/.vercel/**)",
+      "Read(~/.netlify/**)",
+      "Read(~/.config/cloudflared/**)",
+      "Read(~/.circleci/cli.yml)",
+      "Read(~/.snowsql/config)",
+      "Read(~/.databrickscfg)",
+      "Read(~/.netrc)",
+      "Read(~/.git-credentials)",
+      "Read(~/.cargo/credentials)",
+      "Read(~/.cargo/credentials.toml)",
+      "Read(~/.gem/credentials)",
+      "Read(~/.m2/settings.xml)",
+      "Read(~/.composer/auth.json)",
+      "Read(~/.nuget/NuGet/NuGet.Config)",
+      "Read(~/.bundle/config)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.anthropic/**)",
+      "Read(~/.password-store/**)",
+      "Read(~/.config/op/**)",
+      "Read(**/*.kdbx)",
+      "Read(**/*.kdb)",
+      "Read(~/Library/Keychains/**)",
+      "Read(~/Library/Cookies/**)",
+      "Read(~/Library/Application Support/Google/Chrome/**)",
+      "Read(~/Library/Application Support/Firefox/**)",
+      "Read(~/Library/Application Support/BraveSoftware/**)",
+      "Read(~/Library/Application Support/Microsoft Edge/**)",
+      "Read(~/Library/Application Support/Arc/**)",
+      "Read(~/Library/Application Support/Vivaldi/**)",
+      "Read(~/Library/Application Support/1Password/**)",
+      "Read(~/Library/Application Support/Bitwarden/**)",
+      "Read(~/.bitcoin/**)",
+      "Read(~/.ethereum/**)",
+      "Read(~/.config/solana/**)",
+      "Read(**/wallet.dat)",
+      "Read(**/keystore)",
+      "Read(**/UTC--*)",
+      "Read(**/mnemonic*)",
+      "Read(**/seed-phrase*)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.production)",
+      "Read(**/.env.development)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.test)",
+      "Read(**/.env.secret)",
+      "Read(**/.env.secrets)",
+      "Read(**/credentials.json)",
+      "Read(**/credentials.yaml)",
+      "Read(**/credentials.yml)",
+      "Read(**/secrets.json)",
+      "Read(**/secrets.yaml)",
+      "Read(**/secrets.yml)",
+      "Read(**/service-account*.json)",
+      "Read(**/google-services.json)",
+      "Read(**/GoogleService-Info.plist)",
+      "Read(**/.bash_history)",
+      "Read(**/.zsh_history)",
+      "Read(**/.psql_history)",
+      "Read(**/.mysql_history)",
+      "Read(**/.python_history)",
+      "Read(**/.node_repl_history)",
+      "Read(**/.irb_history)",
+      "Read(**/.sqlite_history)",
+      "Read(**/.rediscli_history)",
+      "Read(**/.lesshst)",
+      "Read(**/.viminfo)",
+      "Read(**/.atuin/**)",
+      "Read(**/.history/**)",
+      "Read(**/.zsh_sessions/**)",
+      "Grep(~/.ssh/**)",
+      "Grep(~/.gnupg/**)",
+      "Grep(~/.aws/**)",
+      "Grep(~/.gcp/**)",
+      "Grep(~/.config/gcloud/**)",
+      "Grep(~/.azure/**)",
+      "Grep(~/.kube/**)",
+      "Grep(~/.password-store/**)",
+      "Grep(~/Library/Keychains/**)",
+      "Grep(~/Library/Cookies/**)",
+      "Grep(**/.env)",
+      "Grep(**/.env.local)",
+      "Grep(**/.env.production)",
+      "Grep(**/credentials.json)",
+      "Grep(**/secrets.json)",
+      "Grep(**/service-account*.json)",
+      "Grep(**/id_rsa)",
+      "Grep(**/id_ed25519)",
+      "Write(**/.env)",
+      "Write(**/.env.local)",
+      "Write(**/.env.production)",
+      "Write(**/.env.development)",
+      "Write(**/.env.staging)",
+      "Write(**/.env.test)",
+      "Write(**/credentials.json)",
+      "Write(**/secrets.json)",
+      "Write(**/service-account*.json)",
+      "Write(**/.git/config)",
+      "Write(**/.git/hooks/**)",
+      "Edit(**/.env)",
+      "Edit(**/.env.local)",
+      "Edit(**/.env.production)",
+      "Edit(**/.env.development)",
+      "Edit(**/.env.staging)",
+      "Edit(**/.env.test)",
+      "Edit(**/credentials.json)",
+      "Edit(**/secrets.json)",
+      "Edit(**/service-account*.json)",
+      "Edit(**/.git/config)",
+      "Edit(**/.git/hooks/**)"
+    ],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(sudo:*)",
+      "Bash(chmod:*)",
+      "Bash(chown:*)",
+      "Bash(systemctl:*)",
+      "Bash(service:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)",
+      "Write(/etc/**)",
+      "Write(/usr/**)",
+      "Write(/bin/**)",
+      "Write(/sbin/**)",
+      "Write(/System/**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(~/.npmrc)",
+      "Read(~/.pypirc)",
+      "Read(~/.bashrc)",
+      "Read(~/.zshrc)",
+      "Read(~/.profile)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/cmux-notify.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/cmux-notify.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud-cache.sh ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
+  },
+  "enabledPlugins": {
+    "claude-code-setup@claude-plugins-official": true,
+    "worktrunk@worktrunk": true,
+    "slack@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "oh-my-claudecode@omc": true,
+    "security-guidance@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "worktrunk": {
+      "source": {
+        "source": "github",
+        "repo": "max-sixty/worktrunk"
+      },
+      "autoUpdate": true
+    },
+    "omc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+      },
+      "autoUpdate": true
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "editorMode": "vim",
+  "teammateMode": "in-process",
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "tui": "fullscreen"
 }
