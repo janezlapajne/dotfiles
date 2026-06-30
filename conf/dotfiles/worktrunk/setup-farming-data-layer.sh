@@ -58,4 +58,8 @@ uv run project_configs.py claude symlink --target root --yolo --force
 uv run project_configs.py skills symlink --target root --agent claude --yolo --force
 uv run project_configs.py dbt copy --yolo --force --no-backup
 
+echo "==> Refresh env..."
+just bq_reset_env --yolo
+
+
 echo "==> Done! Worktree ready: $WORKTREE"
